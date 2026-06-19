@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Franklin Expedition — 1845–1848</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════
+       HERO SECTION
+  ══════════════════════════════════════════════ -->
+  <section class="hero" id="hero" aria-label="The Franklin Expedition hero">
+
+    <!-- Full-bleed painting background -->
+    <div class="hero-bg"></div>
+
+    <!-- Layered overlays: bottom vignette + top bar gradient -->
+    <div class="hero-overlay"></div>
+
+    <!-- Floating nav bar inside the hero -->
+    <nav class="hero-nav">
+      <div class="hero-nav-brand">
+        <svg class="nav-logo" viewBox="0 0 40 40" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="20" cy="20" r="2.5" fill="currentColor"/>
+          <path d="M20 4 L21.5 18 L20 16 L18.5 18 Z" fill="currentColor" opacity="0.9"/>
+          <path d="M20 36 L21.5 22 L20 24 L18.5 22 Z" fill="currentColor" opacity="0.4"/>
+          <path d="M4 20 L18 21.5 L16 20 L18 18.5 Z" fill="currentColor" opacity="0.4"/>
+          <path d="M36 20 L22 21.5 L24 20 L22 18.5 Z" fill="currentColor" opacity="0.4"/>
+          <path d="M13 26 Q15 23 20 23 Q25 23 27 26 L27 28 Q20 30 13 28 Z" stroke="currentColor" stroke-width="1" fill="none" opacity="0.6"/>
+          <path d="M20 23 L20 17 M17 20 L23 20" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+        </svg>
+        <span class="nav-site-name">Franklin Expedition</span>
+      </div>
+      <div class="hero-nav-actions">
+        <button class="btn-icon" data-theme-toggle aria-label="Toggle theme">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero content: centred title + stats + CTA -->
+    <div class="hero-content">
+      <p class="hero-eyebrow">Royal Navy · Northwest Passage Expedition</p>
+      <h1 class="hero-title">
+        <span class="hero-title-the">The</span>
+        <span class="hero-title-main">Franklin</span>
+        <span class="hero-title-main">Expedition</span>
+      </h1>
+      <p class="hero-dates">HMS Erebus &amp; HMS Terror &ensp;·&ensp; 1845 – 1848</p>
+
+      <!-- Stat strip -->
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">129</span>
+          <span class="hero-stat-label">Men Lost</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">3</span>
+          <span class="hero-stat-label">Years Icebound</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">169</span>
+          <span class="hero-stat-label">Years to Find</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">2</span>
+          <span class="hero-stat-label">Wrecks Discovered</span>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <a href="#map-section" class="hero-cta" id="exploreCta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        Explore the Map
+      </a>
+    </div>
+
+    <!-- Scroll-down arrow -->
+    <button class="hero-scroll-arrow" id="scrollArrow" aria-label="Scroll to map">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+
+    <!-- Bottom caption -->
+    <p class="hero-caption">HMS Erebus &amp; HMS Terror beset in the ice of Victoria Strait, 12 September 1846</p>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════
+       MAP SECTION
+  ══════════════════════════════════════════════ -->
+  <section class="map-section" id="map-section">
+
+    <!-- 180px image banner header for map section -->
+    <div class="map-banner" id="map-banner">
+      <!-- Reuses the same painting, cropped to show ships -->
+      <div class="map-banner-bg"></div>
+      <!-- Overlay: dark top bar + strong bottom fade into map -->
+      <div class="map-banner-overlay"></div>
+      <!-- Content row: title left, back-to-top right -->
+      <div class="map-banner-bar">
+        <div class="map-header-left">
+          <svg class="nav-logo" style="width:22px;height:22px;flex-shrink:0" viewBox="0 0 40 40" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+            <circle cx="20" cy="20" r="2.5" fill="currentColor"/>
+            <path d="M20 4 L21.5 18 L20 16 L18.5 18 Z" fill="currentColor" opacity="0.9"/>
+            <path d="M20 36 L21.5 22 L20 24 L18.5 22 Z" fill="currentColor" opacity="0.4"/>
+            <path d="M4 20 L18 21.5 L16 20 L18 18.5 Z" fill="currentColor" opacity="0.4"/>
+            <path d="M36 20 L22 21.5 L24 20 L22 18.5 Z" fill="currentColor" opacity="0.4"/>
+          </svg>
+          <div class="map-banner-titles">
+            <span class="map-banner-heading">The Franklin Expedition</span>
+            <span class="map-banner-sub">Interactive Route Map &nbsp;·&nbsp; 1845–1848</span>
+          </div>
+        </div>
+        <a href="#hero" class="map-header-back">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+          Back to top
+        </a>
+      </div>
+      <!-- Caption bottom-right -->
+      <p class="map-banner-caption">HMS Erebus &amp; HMS Terror — beset in the ice of Victoria Strait, 12 September 1846</p>
+    </div>
+
+    <!-- Map + Sidebar layout -->
+    <div class="main-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <!-- Timeline Panel -->
+        <section class="panel" id="timeline-panel">
+          <h2 class="panel-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Voyage Timeline
+          </h2>
+
+          <div class="timeline-slider-wrap">
+            <input type="range" id="timelineSlider" class="timeline-slider" min="0" max="19" value="0" step="1" aria-label="Timeline position" />
+            <div class="timeline-ticks" id="timelineTicks"></div>
+          </div>
+
+          <div class="event-card" id="eventCard">
+            <div class="event-date" id="eventDate">May 1845</div>
+            <div class="event-title" id="eventTitle">Departure from Greenhithe</div>
+            <div class="event-desc" id="eventDesc">HMS Erebus and HMS Terror depart Greenhithe, Kent on 19 May 1845 with 134 officers and men under Sir John Franklin's command.</div>
+            <div class="event-coords" id="eventCoords">51.4504°N, 0.2823°E</div>
+          </div>
+
+          <div class="timeline-nav">
+            <button class="btn-nav" id="prevBtn" aria-label="Previous event">&#8592; Prev</button>
+            <span class="event-counter" id="eventCounter">1 / 20</span>
+            <button class="btn-nav" id="nextBtn" aria-label="Next event">Next &#8594;</button>
+          </div>
+
+          <button class="btn-play" id="playBtn">
+            <svg id="playIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span id="playLabel">Auto-Play</span>
+          </button>
+        </section>
+
+        <!-- Layers Panel -->
+        <section class="panel" id="layers-panel">
+          <h2 class="panel-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            Map Layers
+          </h2>
+          <div class="layer-list">
+            <label class="layer-toggle">
+              <input type="checkbox" id="layerRoute" checked />
+              <span class="layer-dot" style="background:#4a9eff"></span>
+              <span>Expedition Route</span>
+            </label>
+            <label class="layer-toggle">
+              <input type="checkbox" id="layerSearch" checked />
+              <span class="layer-dot" style="background:#fbbf24"></span>
+              <span>Search Expeditions</span>
+            </label>
+            <label class="layer-toggle">
+              <input type="checkbox" id="layerSightings" checked />
+              <span class="layer-dot" style="background:#34d399"></span>
+              <span>Historical Sightings</span>
+            </label>
+            <label class="layer-toggle">
+              <input type="checkbox" id="layerSupply" checked />
+              <span class="layer-dot" style="background:#f59e0b"></span>
+              <span>Supply Points</span>
+            </label>
+            <label class="layer-toggle">
+              <input type="checkbox" id="layerVictory" checked />
+              <span class="layer-dot" style="background:#a78bfa"></span>
+              <span>Victory Point Record</span>
+            </label>
+            <label class="layer-toggle">
+              <input type="checkbox" id="layerWrecks" checked />
+              <span class="layer-dot" style="background:#f87171"></span>
+              <span>Wreck Discoveries</span>
+            </label>
+            <label class="layer-toggle">
+              <input type="checkbox" id="layerDeaths" checked />
+              <span class="layer-dot" style="background:#fb923c"></span>
+              <span>Notable Locations</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Legend -->
+        <section class="panel" id="legend-panel">
+          <h2 class="panel-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Key Facts
+          </h2>
+          <div class="fact-grid">
+            <div class="fact-item">
+              <span class="fact-num">129</span>
+              <span class="fact-label">Men aboard</span>
+            </div>
+            <div class="fact-item">
+              <span class="fact-num">0</span>
+              <span class="fact-label">Survivors</span>
+            </div>
+            <div class="fact-item">
+              <span class="fact-num">3</span>
+              <span class="fact-label">Years trapped</span>
+            </div>
+            <div class="fact-item">
+              <span class="fact-num">2014</span>
+              <span class="fact-label">Erebus found</span>
+            </div>
+          </div>
+          <p class="fact-note">The expedition was lost for 169 years before the wrecks were discovered using modern sonar and Inuit oral history.</p>
+        </section>
+      </aside>
+
+      <!-- Map Container -->
+      <div class="map-wrap">
+        <div id="map"></div>
+        <div class="map-overlay-title">
+          <span>Northwest Passage Attempt · Arctic Canada</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>
