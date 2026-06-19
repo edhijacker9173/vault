@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Templar Timeline Atlas</title>
+    <meta
+      name="description"
+      content="An interactive timeline and atlas of the Knights Templar, the Crusades, and the order's rise, fall, and legends."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#atlas">Skip to atlas</a>
+
+    <header class="site-header">
+      <a class="brand" href="../index.html" aria-label="Back to Local Literary Archives">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 6v30M10 14h22M13 14l8 8 8-8M15 29h12" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <span>
+          <strong>Templar Timeline Atlas</strong>
+          <small>Crusades, order, finance, fall, myth</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="#atlas">Atlas</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#notes">Notes</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-media" aria-hidden="true">
+          <img src="assets/templar-map-hero.png" alt="" />
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">1095 to 1314</p>
+          <h1 id="hero-title">Templar Timeline Atlas</h1>
+          <p>
+            Track how crusading warfare, pilgrim routes, castles, finance, papal
+            privilege, royal debt, and later legends shaped the Knights Templar.
+          </p>
+          <div class="hero-stats">
+            <div><span data-stat="events">0</span><small>events</small></div>
+            <div><span data-stat="locations">0</span><small>places</small></div>
+            <div><span>6</span><small>layers</small></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="atlas" class="atlas-shell" aria-label="Interactive Templar atlas">
+        <aside class="controls">
+          <div>
+            <p class="eyebrow">Controls</p>
+            <h2>Time lens</h2>
+          </div>
+
+          <label class="search-box">
+            <span>Search</span>
+            <input id="search" type="search" placeholder="Jerusalem, finance, treasure..." autocomplete="off" />
+          </label>
+
+          <label class="range-box">
+            <span>Show events up to <b id="yearLabel">1314</b></span>
+            <input id="yearRange" type="range" min="1095" max="1314" value="1314" />
+          </label>
+
+          <div class="category-panel" aria-labelledby="category-title">
+            <span id="category-title">Layers</span>
+            <div id="categoryButtons" class="category-buttons"></div>
+          </div>
+
+          <div class="location-focus">
+            <span>Location focus</span>
+            <strong id="locationFocus">All places</strong>
+            <button id="clearLocation" type="button">Clear place</button>
+          </div>
+
+          <button id="reset" class="reset-btn" type="button">Reset atlas</button>
+        </aside>
+
+        <section class="atlas-main">
+          <div class="map-card">
+            <div class="map-heading">
+              <div>
+                <p class="eyebrow">Atlas</p>
+                <h2>Eastern Mediterranean network</h2>
+              </div>
+              <p id="resultCount" class="result-count">0 events visible</p>
+            </div>
+
+            <div class="map-stage">
+              <svg id="routeSvg" viewBox="0 0 1000 620" aria-hidden="true"></svg>
+              <div id="mapPins" class="map-pins"></div>
+              <div class="map-label europe">Europe</div>
+              <div class="map-label levant">Levant</div>
+              <div class="map-label egypt">Egypt</div>
+            </div>
+          </div>
+
+          <article id="detailPanel" class="detail-panel" aria-live="polite"></article>
+        </section>
+      </section>
+
+      <section id="timeline" class="timeline-section" aria-labelledby="timeline-title">
+        <div class="section-heading">
+          <p class="eyebrow">Chronology</p>
+          <h2 id="timeline-title">Event cards</h2>
+        </div>
+        <ol id="eventList" class="event-list" aria-label="Templar timeline events"></ol>
+      </section>
+
+      <section id="notes" class="notes-section" aria-labelledby="notes-title">
+        <div class="section-heading">
+          <p class="eyebrow">Briefing source</p>
+          <h2 id="notes-title">Scope notes</h2>
+        </div>
+        <div class="notes-grid">
+          <div>
+            <h3>Built from the briefing</h3>
+            <p>
+              This atlas converts the local Knights Templar briefing into a structured
+              event dataset: formation, crusading battles, financial rise, political
+              destruction, and later legends.
+            </p>
+          </div>
+          <div>
+            <h3>Interpretive map</h3>
+            <p>
+              Pins are approximate and designed for learning. They show relationships
+              across regions rather than exact geographic coordinates.
+            </p>
+          </div>
+          <div>
+            <h3>History vs legend</h3>
+            <p>
+              Treasure, Grail, Rosslyn, and escape claims are grouped as legends unless
+              the briefing describes them as historically established.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        Local static project. Source briefing:
+        <a href="../../Files_by_Type/MD/knights_templar_briefing.md">knights_templar_briefing.md</a>.
+      </p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
