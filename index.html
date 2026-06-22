@@ -34,9 +34,64 @@
       </a>
 
       <nav class="nav" aria-label="Primary">
-        <a href="#collections">Collections</a>
+        <button
+          class="browse-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="vault-drawer"
+          data-drawer-open
+        >
+          <span class="desktop-label">Browse the Vault</span>
+          <span class="mobile-label">Browse</span>
+        </button>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="https://cadeau2.gumroad.com/" target="_blank" rel="noopener">Gumroad</a>
       </nav>
     </header>
+
+    <div class="drawer-backdrop" data-drawer-close></div>
+
+    <aside class="vault-drawer" id="vault-drawer" aria-labelledby="vault-drawer-title" aria-hidden="true">
+      <div class="drawer-head">
+        <div>
+          <p class="eyebrow">Archive index</p>
+          <h2 id="vault-drawer-title">Browse the Vault</h2>
+        </div>
+        <button class="drawer-close" type="button" data-drawer-close>Close</button>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Collections</p>
+        <a href="stephenking-bibliography/index.html" data-drawer-link>
+          <span>The King Shelf</span>
+          <small>Stephen King bibliography</small>
+        </a>
+        <a href="grhplovecraftmythos08/index.html" data-drawer-link>
+          <span>The Mythos Concordance</span>
+          <small>Lovecraft Mythos map</small>
+        </a>
+        <a href="templar-timeline-atlas/index.html" data-drawer-link>
+          <span>Templar Timeline Atlas</span>
+          <small>Crusades and treasure legends</small>
+        </a>
+        <a href="The Franklin Expedition 1845–1848/index.html" data-drawer-link>
+          <span>The Franklin Expedition</span>
+          <small>Arctic route and discoveries</small>
+        </a>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Elsewhere</p>
+        <a href="about.html" data-drawer-link>
+          <span>About The Vault</span>
+          <small>Why this exists</small>
+        </a>
+        <a href="https://cadeau2.gumroad.com/" target="_blank" rel="noopener" data-drawer-link>
+          <span>Gumroad</span>
+          <small>cadeau2.gumroad.com</small>
+        </a>
+      </div>
+    </aside>
 
     <main>
       <section class="hero" aria-labelledby="hero-title">
@@ -131,23 +186,63 @@
                 <span>Arctic atlas</span>
                 <span>1845-1848</span>
               </div>
-              <h3>The Franklin Expedition 1845-1848</h3>
+              <h3>The Franklin Expedition 1845–1848</h3>
               <p>
                 An interactive route map tracing Franklin's lost Northwest Passage
                 voyage, search expeditions, sightings, wreck discoveries, and key facts.
               </p>
               <div class="card-actions">
                 <a class="primary-link" href="The Franklin Expedition 1845–1848/index.html">Open site</a>
-                <span class="path">The Franklin Expedition 1845-1848/</span>
+                <span class="path">The Franklin Expedition 1845–1848/</span>
               </div>
             </div>
           </article>
         </div>
+      </section>
+
+      <section id="about" class="about-section" aria-labelledby="about-title">
+        <p class="eyebrow">About</p>
+        <h2 id="about-title">A growing cabinet of curiosities</h2>
+        <p>
+          The Vault is a personal archive of interactive collections: literary timelines,
+          historical obsessions, strange maps, and reference tools built one subject at a time.
+        </p>
       </section>
     </main>
 
     <footer class="site-footer">
       <p>© 2026 hijacker9173. All rights reserved.</p>
     </footer>
+    <script>
+      (() => {
+        const drawer = document.getElementById("vault-drawer");
+        const openButton = document.querySelector("[data-drawer-open]");
+        const closeTargets = document.querySelectorAll("[data-drawer-close], [data-drawer-link]");
+
+        function setDrawerState(isOpen) {
+          document.body.classList.toggle("drawer-open", isOpen);
+          drawer.setAttribute("aria-hidden", String(!isOpen));
+          openButton.setAttribute("aria-expanded", String(isOpen));
+
+          if (isOpen) {
+            drawer.querySelector("[data-drawer-close]").focus();
+          } else {
+            openButton.focus();
+          }
+        }
+
+        openButton.addEventListener("click", () => setDrawerState(true));
+
+        closeTargets.forEach((target) => {
+          target.addEventListener("click", () => setDrawerState(false));
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && document.body.classList.contains("drawer-open")) {
+            setDrawerState(false);
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

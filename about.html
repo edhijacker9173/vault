@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About The Vault by hijacker9173</title>
+    <meta
+      name="description"
+      content="About The Vault by hijacker9173, a digital cabinet of curiosities built one obsession at a time."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#about-main">Skip to about</a>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="The Vault by hijacker9173 home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 10.5h10.5c3 0 5.5 2.4 5.5 5.5v18c0-3.1-2.5-5.5-5.5-5.5H9z" />
+            <path d="M33 10.5H22.5c-3 0-5.5 2.4-5.5 5.5v18c0-3.1 2.5-5.5 5.5-5.5H33z" />
+          </svg>
+        </span>
+        <span>
+          <strong>The Vault</strong>
+          <small>by hijacker9173</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <button
+          class="browse-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="vault-drawer"
+          data-drawer-open
+        >
+          <span class="desktop-label">Browse the Vault</span>
+          <span class="mobile-label">Browse</span>
+        </button>
+        <a class="nav-link" href="about.html" aria-current="page">About</a>
+        <a class="nav-link" href="https://cadeau2.gumroad.com/" target="_blank" rel="noopener">Gumroad</a>
+      </nav>
+    </header>
+
+    <div class="drawer-backdrop" data-drawer-close></div>
+
+    <aside class="vault-drawer" id="vault-drawer" aria-labelledby="vault-drawer-title" aria-hidden="true">
+      <div class="drawer-head">
+        <div>
+          <p class="eyebrow">Archive index</p>
+          <h2 id="vault-drawer-title">Browse the Vault</h2>
+        </div>
+        <button class="drawer-close" type="button" data-drawer-close>Close</button>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Collections</p>
+        <a href="stephenking-bibliography/index.html" data-drawer-link>
+          <span>The King Shelf</span>
+          <small>Stephen King bibliography</small>
+        </a>
+        <a href="grhplovecraftmythos08/index.html" data-drawer-link>
+          <span>The Mythos Concordance</span>
+          <small>Lovecraft timeline and entities</small>
+        </a>
+        <a href="templar-timeline-atlas/index.html" data-drawer-link>
+          <span>Templar Timeline Atlas</span>
+          <small>Crusades, finance, myth</small>
+        </a>
+        <a href="The Franklin Expedition 1845–1848/index.html" data-drawer-link>
+          <span>The Franklin Expedition</span>
+          <small>Arctic route and discoveries</small>
+        </a>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Elsewhere</p>
+        <a href="about.html" data-drawer-link>
+          <span>About The Vault</span>
+          <small>Why this exists</small>
+        </a>
+        <a href="https://cadeau2.gumroad.com/" target="_blank" rel="noopener" data-drawer-link>
+          <span>Gumroad</span>
+          <small>cadeau2.gumroad.com</small>
+        </a>
+      </div>
+    </aside>
+
+    <main id="about-main">
+      <section class="about-page-hero" aria-labelledby="about-title">
+        <div class="hero-media" aria-hidden="true">
+          <img src="assets/literary-archives-hero.png" alt="" />
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">About The Vault</p>
+          <h1 id="about-title">A digital cabinet of curiosities.</h1>
+          <p>
+            Built one obsession at a time: strange histories, literary universes,
+            timelines, maps, shelves, and reference tools that are more useful when
+            they can be explored rather than simply read.
+          </p>
+        </div>
+      </section>
+
+      <section class="about-page-content" aria-label="About The Vault">
+        <div class="about-copy">
+          <div>
+            <p class="eyebrow">Why it exists</p>
+            <h2>For the subjects that refuse to stay in one neat box.</h2>
+            <p>
+              The Vault is where I collect the rabbit holes I keep coming back to:
+              authors, expeditions, orders, myths, chronologies, and the little
+              connective tissue that makes a topic feel alive.
+            </p>
+            <p>
+              Each collection is designed as a small working archive. Some are shelves,
+              some are maps, some are timelines, and some are experiments in how to
+              make dense material easier to scan, compare, and revisit.
+            </p>
+            <div class="about-cta-row">
+              <a class="primary-link" href="index.html">Return to collections</a>
+              <a class="primary-link muted" href="https://cadeau2.gumroad.com/" target="_blank" rel="noopener">Visit Gumroad</a>
+            </div>
+          </div>
+
+          <div class="about-focus">
+            <article>
+              <h3>Curiosity first</h3>
+              <p>Built around subjects that reward slow attention, cross-references, and repeat visits.</p>
+            </article>
+            <article>
+              <h3>Useful structure</h3>
+              <p>Timelines, filters, maps, and summaries are used when they make the material easier to navigate.</p>
+            </article>
+            <article>
+              <h3>One obsession at a time</h3>
+              <p>The archive grows through focused collections rather than one giant, shapeless catalogue.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 hijacker9173. All rights reserved.</p>
+    </footer>
+
+    <script>
+      (() => {
+        const drawer = document.getElementById("vault-drawer");
+        const openButton = document.querySelector("[data-drawer-open]");
+        const closeTargets = document.querySelectorAll("[data-drawer-close], [data-drawer-link]");
+
+        function setDrawerState(isOpen) {
+          document.body.classList.toggle("drawer-open", isOpen);
+          drawer.setAttribute("aria-hidden", String(!isOpen));
+          openButton.setAttribute("aria-expanded", String(isOpen));
+
+          if (isOpen) {
+            drawer.querySelector("[data-drawer-close]").focus();
+          } else {
+            openButton.focus();
+          }
+        }
+
+        openButton.addEventListener("click", () => setDrawerState(true));
+
+        closeTargets.forEach((target) => {
+          target.addEventListener("click", () => setDrawerState(false));
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && document.body.classList.contains("drawer-open")) {
+            setDrawerState(false);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
