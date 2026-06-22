@@ -25,10 +25,18 @@
     clearLocation: document.getElementById("clearLocation"),
     reset: document.getElementById("reset"),
     resultCount: document.getElementById("resultCount"),
+    mapStage: document.querySelector(".map-stage"),
+    leafletMap: document.getElementById("leafletMap"),
     routeSvg: document.getElementById("routeSvg"),
     mapPins: document.getElementById("mapPins"),
     detailPanel: document.getElementById("detailPanel"),
     eventList: document.getElementById("eventList")
+  };
+
+  const atlasMap = {
+    map: null,
+    routes: null,
+    pins: null
   };
 
   document.querySelector('[data-stat="events"]').textContent = events.length;
@@ -37,6 +45,7 @@
   refs.yearRange.max = state.year;
   refs.yearRange.value = state.year;
 
+  initLeafletMap();
   renderCategoryButtons();
   render();
 
@@ -159,8 +168,75 @@
     });
   }
 
+  function initLeafletMap() {
+    if (!window.L || !refs.leafletMap) return;
+
+    atlasMap.map = L.map(refs.leafletMap, {
+      zoomControl: false,
+      attributionControl: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: true,
+      boxZoom: false,
+      keyboard: true,
+      minZoom: 3,
+      maxZoom: 8
+    });
+
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+      maxZoom: 8
+    }).addTo(atlasMap.map);
+
+    L.control
+      .zoom({
+        position: "topleft",
+        zoomInTitle: "Zoom in",
+        zoomOutTitle: "Zoom out"
+      })
+      .addTo(atlasMap.map);
+
+    L.control.attribution({ prefix: false, position: "bottomright" }).addTo(atlasMap.map);
+    atlasMap.map.attributionControl.addAttribution(
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    );
+
+    atlasMap.routes = L.layerGroup().addTo(atlasMap.map);
+    atlasMap.pins = L.layerGroup().addTo(atlasMap.map);
+    refs.mapStage.classList.add("has-leaflet");
+    atlasMap.map.fitBounds(
+      [
+        [27, -8],
+        [57, 39]
+      ],
+      { padding: [18, 18] }
+    );
+  }
+
   function renderRoutes(visibleEvents) {
     const pathEvents = visibleEvents.filter((event) => event.locationIds.length);
+    if (atlasMap.map) {
+      atlasMap.routes.clearLayers();
+
+      for (let i = 1; i < pathEvents.length; i += 1) {
+        const from = locationMap.get(pathEvents[i - 1].locationIds[0]);
+        const to = locationMap.get(pathEvents[i].locationIds[0]);
+        const fromPoint = getLatLng(from);
+        const toPoint = getLatLng(to);
+        if (!fromPoint || !toPoint || from.id === to.id) continue;
+
+        const selected = pathEvents[i].id === state.selectedId || pathEvents[i - 1].id === state.selectedId;
+        L.polyline([fromPoint, toPoint], {
+          color: selected ? "#d54545" : "#c58b3a",
+          weight: selected ? 3 : 1.6,
+          opacity: selected ? 0.88 : 0.48,
+          dashArray: selected ? null : "6 8",
+          interactive: false
+        }).addTo(atlasMap.routes);
+      }
+
+      refs.routeSvg.innerHTML = "";
+      return;
+    }
+
     const paths = [];
     for (let i = 1; i < pathEvents.length; i += 1) {
       const from = locationMap.get(pathEvents[i - 1].locationIds[0]);
@@ -189,6 +265,48 @@
         locationStats.set(id, current);
       });
     });
+
+    if (atlasMap.map) {
+      atlasMap.pins.clearLayers();
+      refs.mapPins.innerHTML = "";
+
+      [...locationStats.entries()].forEach(([id, stats]) => {
+        const location = locationMap.get(id);
+        const point = getLatLng(location);
+        if (!location || !point) return;
+
+        const dominant = [...stats.categories.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+        const category = categoryMap.get(dominant) || categories[0];
+        const active = stats.selected || state.location === id;
+        const marker = L.circleMarker(point, {
+          radius: active ? 10 : 7,
+          weight: active ? 3 : 2,
+          color: active ? "#f4ead2" : category.color,
+          fillColor: category.color,
+          fillOpacity: active ? 0.95 : 0.78,
+          opacity: 0.95,
+          className: active ? "leaflet-pin active" : "leaflet-pin"
+        });
+
+        marker.bindTooltip(location.name, {
+          permanent: true,
+          direction: "bottom",
+          offset: [0, 10],
+          opacity: 1,
+          className: "leaflet-pin-label"
+        });
+
+        marker.on("click", () => {
+          state.location = state.location === id ? "" : id;
+          state.selectedId = nearestVisibleEvent()?.id || "";
+          render();
+        });
+
+        marker.addTo(atlasMap.pins);
+      });
+
+      return;
+    }
 
     refs.mapPins.innerHTML = [...locationStats.entries()]
       .map(([id, stats]) => {
@@ -292,6 +410,11 @@
     const location = locationMap.get(id);
     if (!location) return id;
     return `${location.name}, ${location.region}`;
+  }
+
+  function getLatLng(location) {
+    if (!location || !Number.isFinite(location.lat) || !Number.isFinite(location.lng)) return null;
+    return [location.lat, location.lng];
   }
 
   function escapeHtml(value) {

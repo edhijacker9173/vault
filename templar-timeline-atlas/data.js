@@ -8,25 +8,25 @@ window.ATLAS_CATEGORIES = [
 ];
 
 window.ATLAS_LOCATIONS = [
-  { id: "clermont", name: "Clermont", region: "France", x: 19, y: 36 },
-  { id: "paris", name: "Paris", region: "France", x: 21, y: 30 },
-  { id: "troyes", name: "Troyes", region: "France", x: 23, y: 34 },
-  { id: "la-rochelle", name: "La Rochelle", region: "Atlantic France", x: 14, y: 44 },
-  { id: "europe", name: "European commanderies", region: "Western Europe", x: 28, y: 42 },
-  { id: "civetot", name: "Civetot", region: "Anatolia", x: 63, y: 47 },
-  { id: "nicaea", name: "Nicaea", region: "Anatolia", x: 62, y: 49 },
-  { id: "dorylaeum", name: "Dorylaeum", region: "Anatolia", x: 66, y: 50 },
-  { id: "constantinople", name: "Constantinople", region: "Byzantium", x: 59, y: 45 },
-  { id: "antioch", name: "Antioch", region: "Syria", x: 75, y: 62 },
-  { id: "acre", name: "Acre", region: "Levant coast", x: 77, y: 68 },
-  { id: "hattin", name: "Hattin", region: "Galilee", x: 79, y: 70 },
-  { id: "arsuf", name: "Arsuf", region: "Levant coast", x: 78, y: 73 },
-  { id: "jerusalem", name: "Jerusalem", region: "Holy Land", x: 80, y: 75 },
-  { id: "ascalon", name: "Ascalon", region: "Holy Land", x: 78, y: 77 },
-  { id: "damascus", name: "Damascus", region: "Syria", x: 82, y: 65 },
-  { id: "damietta", name: "Damietta", region: "Egypt", x: 72, y: 84 },
-  { id: "cyprus", name: "Cyprus", region: "Eastern Mediterranean", x: 74, y: 71 },
-  { id: "rosslyn", name: "Rosslyn Chapel", region: "Scotland", x: 16, y: 17 }
+  { id: "clermont", name: "Clermont", region: "France", x: 19, y: 36, lat: 45.78, lng: 3.08 },
+  { id: "paris", name: "Paris", region: "France", x: 21, y: 30, lat: 48.86, lng: 2.35 },
+  { id: "troyes", name: "Troyes", region: "France", x: 23, y: 34, lat: 48.30, lng: 4.07 },
+  { id: "la-rochelle", name: "La Rochelle", region: "Atlantic France", x: 14, y: 44, lat: 46.16, lng: -1.15 },
+  { id: "europe", name: "European commanderies", region: "Western Europe", x: 28, y: 42, lat: 47.00, lng: 8.00 },
+  { id: "civetot", name: "Civetot", region: "Anatolia", x: 63, y: 47, lat: 40.74, lng: 29.83 },
+  { id: "nicaea", name: "Nicaea", region: "Anatolia", x: 62, y: 49, lat: 40.43, lng: 29.72 },
+  { id: "dorylaeum", name: "Dorylaeum", region: "Anatolia", x: 66, y: 50, lat: 39.78, lng: 30.52 },
+  { id: "constantinople", name: "Constantinople", region: "Byzantium", x: 59, y: 45, lat: 41.01, lng: 28.98 },
+  { id: "antioch", name: "Antioch", region: "Syria", x: 75, y: 62, lat: 36.20, lng: 36.16 },
+  { id: "acre", name: "Acre", region: "Levant coast", x: 77, y: 68, lat: 32.92, lng: 35.08 },
+  { id: "hattin", name: "Hattin", region: "Galilee", x: 79, y: 70, lat: 32.82, lng: 35.45 },
+  { id: "arsuf", name: "Arsuf", region: "Levant coast", x: 78, y: 73, lat: 32.20, lng: 34.82 },
+  { id: "jerusalem", name: "Jerusalem", region: "Holy Land", x: 80, y: 75, lat: 31.78, lng: 35.23 },
+  { id: "ascalon", name: "Ascalon", region: "Holy Land", x: 78, y: 77, lat: 31.67, lng: 34.57 },
+  { id: "damascus", name: "Damascus", region: "Syria", x: 82, y: 65, lat: 33.51, lng: 36.29 },
+  { id: "damietta", name: "Damietta", region: "Egypt", x: 72, y: 84, lat: 31.42, lng: 31.81 },
+  { id: "cyprus", name: "Cyprus", region: "Eastern Mediterranean", x: 74, y: 71, lat: 35.13, lng: 33.43 },
+  { id: "rosslyn", name: "Rosslyn Chapel", region: "Scotland", x: 16, y: 17, lat: 55.86, lng: -3.16 }
 ];
 
 window.ATLAS_EVENTS = [

@@ -410,10 +410,11 @@ h2 {
 }
 
 .atlas-main {
+  --atlas-panel-height: clamp(430px, 31vw, 500px);
   display: grid;
   grid-template-columns: minmax(0, 1.9fr) minmax(330px, 0.62fr);
   gap: 20px;
-  align-items: start;
+  align-items: stretch;
   min-width: 0;
 }
 
@@ -426,6 +427,9 @@ h2 {
 }
 
 .map-card {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: var(--atlas-panel-height);
   min-width: 0;
   overflow: hidden;
 }
@@ -448,14 +452,124 @@ h2 {
 
 .map-stage {
   position: relative;
-  aspect-ratio: 1000 / 620;
+  height: 100%;
   overflow: hidden;
-  min-height: 540px;
+  min-height: 0;
   background:
     radial-gradient(220px 160px at 80% 74%, rgba(197, 139, 58, 0.16), transparent 68%),
     radial-gradient(320px 220px at 21% 39%, rgba(79, 181, 168, 0.12), transparent 70%),
     linear-gradient(140deg, rgba(232, 215, 176, 0.08), transparent 38%),
     #0a0d12;
+}
+
+.leaflet-map {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  background: #0a0d12;
+}
+
+.map-stage.has-leaflet {
+  background: #0a0d12;
+}
+
+.map-stage.has-leaflet .leaflet-map {
+  display: block;
+}
+
+.map-stage.has-leaflet::before,
+.map-stage.has-leaflet #routeSvg,
+.map-stage.has-leaflet .map-pins,
+.map-stage.has-leaflet .map-label {
+  display: none;
+}
+
+.leaflet-container {
+  color: var(--ink);
+  font-family: var(--font-body);
+  background: #0a0d12;
+}
+
+.leaflet-tile-pane {
+  filter: saturate(0.72) contrast(1.08) brightness(0.78);
+}
+
+.leaflet-overlay-pane svg {
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.32));
+}
+
+.leaflet-control-zoom {
+  overflow: hidden;
+  border: 1px solid rgba(232, 215, 176, 0.22);
+  border-radius: var(--radius);
+  background: rgba(13, 17, 23, 0.78);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.34);
+}
+
+.leaflet-control-zoom a {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  color: var(--paper);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 34px;
+}
+
+.leaflet-control-zoom a + a {
+  border-top: 1px solid rgba(232, 215, 176, 0.16);
+}
+
+.leaflet-control-zoom a:hover,
+.leaflet-control-zoom a:focus {
+  color: var(--ink);
+  background: rgba(197, 139, 58, 0.28);
+}
+
+.leaflet-control-zoom a.leaflet-disabled {
+  color: rgba(232, 215, 176, 0.28);
+  background: rgba(13, 17, 23, 0.42);
+}
+
+.leaflet-pin {
+  cursor: pointer;
+  transition: filter 160ms ease;
+}
+
+.leaflet-pin:hover,
+.leaflet-pin.active {
+  filter: drop-shadow(0 0 10px rgba(244, 234, 210, 0.55));
+}
+
+.leaflet-pin-label {
+  border: 1px solid rgba(232, 215, 176, 0.14);
+  border-radius: 999px;
+  color: var(--paper);
+  background: rgba(13, 17, 23, 0.74);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.24);
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.leaflet-tooltip-bottom::before {
+  border-bottom-color: rgba(232, 215, 176, 0.18);
+}
+
+.leaflet-container .leaflet-control-attribution {
+  margin: 0;
+  border-top-left-radius: 6px;
+  color: rgba(232, 215, 176, 0.52);
+  background: rgba(5, 7, 10, 0.88) !important;
+  font-size: 0.62rem;
+  line-height: 1.25;
+}
+
+.leaflet-container .leaflet-control-attribution a {
+  color: rgba(232, 215, 176, 0.66);
 }
 
 .map-stage::before {
@@ -470,6 +584,7 @@ h2 {
 #routeSvg {
   position: absolute;
   inset: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -491,6 +606,7 @@ h2 {
 .map-pins {
   position: absolute;
   inset: 0;
+  z-index: 2;
 }
 
 .pin {
@@ -537,6 +653,7 @@ h2 {
 
 .map-label {
   position: absolute;
+  z-index: 1;
   color: rgba(232, 215, 176, 0.18);
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 4vw, 3.2rem);
@@ -563,6 +680,8 @@ h2 {
   display: grid;
   align-content: start;
   gap: 18px;
+  height: var(--atlas-panel-height);
+  overflow-y: auto;
   padding: 22px;
 }
 
@@ -707,7 +826,18 @@ h2 {
 
 @media (max-width: 1180px) {
   .atlas-main {
+    --atlas-panel-height: auto;
     grid-template-columns: 1fr;
+  }
+
+  .map-card {
+    display: block;
+    height: auto;
+  }
+
+  .detail-panel {
+    height: auto;
+    overflow-y: visible;
   }
 
   .controls {
@@ -735,6 +865,8 @@ h2 {
   }
 
   .map-stage {
+    aspect-ratio: 1000 / 620;
+    height: auto;
     min-height: 460px;
   }
 }
@@ -791,6 +923,17 @@ h2 {
 
   .map-card {
     overflow-x: auto;
+  }
+
+  .map-card:has(.map-stage.has-leaflet) {
+    overflow-x: hidden;
+  }
+
+  .map-stage.has-leaflet {
+    aspect-ratio: 4 / 5;
+    height: auto;
+    min-width: 0;
+    min-height: 520px;
   }
 
   .pin-label {
