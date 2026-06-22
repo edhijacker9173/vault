@@ -170,6 +170,16 @@ p {
   background: var(--surface-2);
 }
 
+.nav a.vault-back-link {
+  border: 1px solid var(--border-soft);
+  color: var(--gold);
+  background: var(--surface);
+}
+
+.nav a.vault-back-link:hover {
+  border-color: var(--gold);
+}
+
 .hero {
   position: relative;
   min-height: clamp(420px, 68vh, 720px);
@@ -733,6 +743,10 @@ h2 {
   .brand small,
   .nav a {
     display: none;
+  }
+
+  .nav a.vault-back-link {
+    display: inline-flex;
   }
 
   .brand-mark {
