@@ -188,7 +188,22 @@ ul, ol { list-style: none; }
   text-transform: uppercase;
 }
 .site-nav a:hover { color: var(--color-text); text-decoration: none; }
-@media (max-width: 540px) { .site-nav a { display: none; } }
+.site-nav a.vault-back-link {
+  padding: 0.48rem 0.7rem;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-md);
+  color: var(--color-primary-hover);
+  background: var(--color-surface);
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+.site-nav a.vault-back-link:hover {
+  border-color: var(--color-primary);
+}
+@media (max-width: 540px) {
+  .site-nav a { display: none; }
+  .site-nav a.vault-back-link { display: inline-flex; align-items: center; }
+}
 
 .theme-toggle {
   width: 36px; height: 36px;
