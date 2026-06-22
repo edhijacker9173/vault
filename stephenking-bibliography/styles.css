@@ -275,6 +275,17 @@ ul {
   background: var(--color-surface-2);
 }
 
+.site-nav a.vault-back-link {
+  border: 1px solid var(--color-border-soft);
+  color: var(--color-primary-hover);
+  background: var(--color-surface);
+}
+
+.site-nav a.vault-back-link:hover {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
 .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -957,6 +968,10 @@ h1 {
   .brand-sub,
   .site-nav a {
     display: none;
+  }
+
+  .site-nav a.vault-back-link {
+    display: inline-flex;
   }
 
   .catalog-intro {
