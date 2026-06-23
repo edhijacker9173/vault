@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gumroad Catalog | The Vault by hijacker9173</title>
+    <meta
+      name="description"
+      content="A visual catalog of Gumroad e-book products from The Vault by hijacker9173."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#gumroad-catalog">Skip to Gumroad catalog</a>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="The Vault by hijacker9173 home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 10.5h10.5c3 0 5.5 2.4 5.5 5.5v18c0-3.1-2.5-5.5-5.5-5.5H9z" />
+            <path d="M33 10.5H22.5c-3 0-5.5 2.4-5.5 5.5v18c0-3.1 2.5-5.5 5.5-5.5H33z" />
+          </svg>
+        </span>
+        <span>
+          <strong>The Vault</strong>
+          <small>by hijacker9173</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <button
+          class="browse-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="vault-drawer"
+          data-drawer-open
+        >
+          <span class="desktop-label">Browse the Vault</span>
+          <span class="mobile-label">Browse</span>
+        </button>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="gumroad.html" aria-current="page">Gumroad</a>
+      </nav>
+    </header>
+
+    <div class="drawer-backdrop" data-drawer-close></div>
+
+    <aside class="vault-drawer" id="vault-drawer" aria-labelledby="vault-drawer-title" aria-hidden="true">
+      <div class="drawer-head">
+        <div>
+          <p class="eyebrow">Archive index</p>
+          <h2 id="vault-drawer-title">Browse the Vault</h2>
+        </div>
+        <button class="drawer-close" type="button" data-drawer-close>Close</button>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Collections</p>
+        <a href="stephenking-bibliography/index.html" data-drawer-link>
+          <span>The King Shelf</span>
+          <small>Stephen King bibliography</small>
+        </a>
+        <a href="grhplovecraftmythos08/index.html" data-drawer-link>
+          <span>The Mythos Concordance</span>
+          <small>Lovecraft timeline and entities</small>
+        </a>
+        <a href="templar-timeline-atlas/index.html" data-drawer-link>
+          <span>Templar Timeline Atlas</span>
+          <small>Crusades, finance, myth</small>
+        </a>
+        <a href="The Franklin Expedition 1845-1848/index.html" data-drawer-link>
+          <span>The Franklin Expedition</span>
+          <small>Arctic route and discoveries</small>
+        </a>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Elsewhere</p>
+        <a href="about.html" data-drawer-link>
+          <span>About The Vault</span>
+          <small>Why this exists</small>
+        </a>
+        <a href="gumroad.html" data-drawer-link>
+          <span>Gumroad Catalog</span>
+          <small>E-books from the cabinet</small>
+        </a>
+      </div>
+    </aside>
+
+    <main id="gumroad-catalog" class="gumroad-page">
+      <section class="gumroad-hero" aria-labelledby="gumroad-title">
+        <div>
+          <p class="eyebrow">Gumroad shelf</p>
+          <h1 id="gumroad-title">Choose by obsession.</h1>
+          <p>
+            A visual catalog of e-book products from The Vault: mythology, hidden
+            histories, science, revolutions, expeditions, and strange media companions.
+          </p>
+        </div>
+        <div class="gumroad-hero-actions" aria-label="Catalog filters">
+          <button class="catalog-filter active" type="button" data-filter="all">All products</button>
+          <button class="catalog-filter" type="button" data-filter="history">History</button>
+          <button class="catalog-filter" type="button" data-filter="science">Science</button>
+          <button class="catalog-filter" type="button" data-filter="myth">Myth and weird</button>
+          <button class="catalog-filter" type="button" data-filter="expedition">Expeditions</button>
+        </div>
+      </section>
+
+      <section class="gumroad-cover-wall" aria-label="Gumroad products">
+        <a
+          class="gumroad-product wide"
+          href="https://cadeau2.gumroad.com/"
+          target="_blank"
+          rel="noopener"
+          data-category="myth"
+        >
+          <img src="assets/Gargoyles.png" alt="A gargoyle above a gothic skyline during a storm." />
+          <span class="product-overlay">
+            <strong>Origins and Evolution of Mythical Monsters</strong>
+          </span>
+        </a>
+
+        <a
+          class="gumroad-product tall"
+          href="https://cadeau2.gumroad.com/"
+          target="_blank"
+          rel="noopener"
+          data-category="science"
+        >
+          <img src="assets/1kZkvqh8VPtillFbYX__S.png" alt="Two scholars studying papers and books at a table." />
+          <span class="product-overlay">
+            <strong>Why Your Brain Lies to You And What the Science Really Says</strong>
+          </span>
+        </a>
+
+        <a
+          class="gumroad-product"
+          href="https://cadeau2.gumroad.com/"
+          target="_blank"
+          rel="noopener"
+          data-category="history"
+        >
+          <img src="assets/GxCFWrw9O8Vp6V1dvfgpz.jpg" alt="A city split between historical revolution and future machinery." />
+          <span class="product-overlay">
+            <strong>The Rhythm of Revolutions</strong>
+          </span>
+        </a>
+
+        <a
+          class="gumroad-product"
+          href="https://cadeau2.gumroad.com/"
+          target="_blank"
+          rel="noopener"
+          data-category="science"
+        >
+          <img src="assets/oiwiU8rxEqJoumB8zxBpv.png" alt="A blue cosmic landscape with distant galaxies and glowing trails." />
+          <span class="product-overlay">
+            <strong>The Invisible Universe - Dark Matter</strong>
+          </span>
+        </a>
+
+        <a
+          class="gumroad-product"
+          href="https://cadeau2.gumroad.com/"
+          target="_blank"
+          rel="noopener"
+          data-category="history"
+        >
+          <img src="assets/Sq.JPG" alt="Paris and the Eiffel Tower beneath a French flag." />
+          <span class="product-overlay">
+            <strong>The French Revolution and Its Aftermath</strong>
+          </span>
+        </a>
+
+        <a
+          class="gumroad-product"
+          href="https://cadeau2.gumroad.com/"
+          target="_blank"
+          rel="noopener"
+          data-category="myth"
+        >
+          <img src="assets/DzcZ6bx26NNPBIC4oIGBY.jpg" alt="Angelic figures descending in shafts of light over ruins." />
+          <span class="product-overlay">
+            <strong>The Hidden World of 1 Enoch</strong>
+          </span>
+        </a>
+
+        <a
+          class="gumroad-product"
+          href="https://cadeau2.gumroad.com/"
+          target="_blank"
+          rel="noopener"
+          data-category="myth"
+        >
+          <img src="assets/67lXGNrrouEDBVuhDcSwk.jpg" alt="A black and white television host speaking at a podium." />
+          <span class="product-overlay">
+            <strong>Fifth Dimension: The Twilight Zone Companion</strong>
+          </span>
+        </a>
+
+        <a
+          class="gumroad-product big"
+          href="https://cadeau2.gumroad.com/"
+          target="_blank"
+          rel="noopener"
+          data-category="myth"
+        >
+          <img src="assets/ly6Ml-G1J8Urv9ER3zfvD.jpg" alt="A cosmic ritual scene with tentacles, light beams, and a glowing book." />
+          <span class="product-overlay">
+            <strong>The Unknown Darkness: A Complete Guide to H.P. Lovecraft and the Cthulhu Mythos (with Audio)</strong>
+          </span>
+        </a>
+
+        <a
+          class="gumroad-product wide"
+          href="https://cadeau2.gumroad.com/"
+          target="_blank"
+          rel="noopener"
+          data-category="history"
+        >
+          <img src="assets/vdkfKXhqcMYEU_jPpbmAT.jpg" alt="Ancient ships and soldiers fighting in a naval battle." />
+          <span class="product-overlay">
+            <strong>Fires of Freedom: The Wars That Forged Greece</strong>
+          </span>
+        </a>
+
+        <a
+          class="gumroad-product wide"
+          href="https://cadeau2.gumroad.com/"
+          target="_blank"
+          rel="noopener"
+          data-category="expedition"
+        >
+          <img src="assets/Square.jpg" alt="Two tall ships locked in Arctic sea ice at sunset." />
+          <span class="product-overlay">
+            <strong>Into the Ice - The Franklin Expedition of 1845 (with Audio)</strong>
+          </span>
+        </a>
+      </section>
+
+      <section class="gumroad-store-cta" aria-labelledby="gumroad-store-title">
+        <div>
+          <p class="eyebrow">External store</p>
+          <h2 id="gumroad-store-title">Open the full Gumroad shelf.</h2>
+          <p>
+            Product cards currently point to the main Gumroad storefront. Individual
+            product links can be dropped in later when you want direct checkout paths.
+          </p>
+        </div>
+        <a class="primary-link" href="https://cadeau2.gumroad.com/" target="_blank" rel="noopener">
+          Visit Gumroad
+        </a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 hijacker9173. All rights reserved.</p>
+    </footer>
+
+    <script>
+      (() => {
+        const drawer = document.getElementById("vault-drawer");
+        const openButton = document.querySelector("[data-drawer-open]");
+        const closeTargets = document.querySelectorAll("[data-drawer-close], [data-drawer-link]");
+
+        function setDrawerState(isOpen) {
+          document.body.classList.toggle("drawer-open", isOpen);
+          drawer.setAttribute("aria-hidden", String(!isOpen));
+          openButton.setAttribute("aria-expanded", String(isOpen));
+
+          if (isOpen) {
+            drawer.querySelector("[data-drawer-close]").focus();
+          } else {
+            openButton.focus();
+          }
+        }
+
+        openButton.addEventListener("click", () => setDrawerState(true));
+
+        closeTargets.forEach((target) => {
+          target.addEventListener("click", () => setDrawerState(false));
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && document.body.classList.contains("drawer-open")) {
+            setDrawerState(false);
+          }
+        });
+      })();
+
+      (() => {
+        const filters = document.querySelectorAll("[data-filter]");
+        const products = document.querySelectorAll("[data-category]");
+
+        filters.forEach((filter) => {
+          filter.addEventListener("click", () => {
+            const selected = filter.dataset.filter;
+
+            filters.forEach((item) => {
+              item.classList.toggle("active", item === filter);
+            });
+
+            products.forEach((product) => {
+              const shouldShow = selected === "all" || product.dataset.category === selected;
+              product.classList.toggle("is-hidden", !shouldShow);
+            });
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

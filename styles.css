@@ -639,6 +639,170 @@ h3 {
   white-space: nowrap;
 }
 
+.gumroad-page {
+  padding: 54px clamp(20px, 5vw, 64px) 72px;
+}
+
+.gumroad-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
+  gap: 36px;
+  align-items: end;
+  max-width: 1400px;
+  margin: 0 auto 34px;
+}
+
+.gumroad-hero h1 {
+  max-width: 760px;
+  font-size: 5rem;
+  line-height: 0.9;
+}
+
+.gumroad-hero p:not(.eyebrow) {
+  max-width: 620px;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.gumroad-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.catalog-filter {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(197, 139, 58, 0.52);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(16, 13, 11, 0.4);
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.catalog-filter:hover,
+.catalog-filter.active {
+  color: #140f0d;
+  background: var(--amber);
+}
+
+.gumroad-cover-wall {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: 172px;
+  gap: 14px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.gumroad-product {
+  position: relative;
+  min-height: 172px;
+  overflow: hidden;
+  border: 1px solid rgba(62, 44, 37, 0.86);
+  border-radius: var(--radius);
+  background: #090706;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+  isolation: isolate;
+}
+
+.gumroad-product.wide,
+.gumroad-product.big {
+  grid-column: span 2;
+}
+
+.gumroad-product.tall,
+.gumroad-product.big {
+  grid-row: span 2;
+}
+
+.gumroad-product img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 220ms ease, filter 220ms ease;
+}
+
+.gumroad-product::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(6, 5, 4, 0.04) 18%, rgba(6, 5, 4, 0.82) 100%),
+    linear-gradient(90deg, rgba(6, 5, 4, 0.62), transparent 58%);
+}
+
+.product-overlay {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
+  z-index: 2;
+  display: grid;
+  gap: 10px;
+}
+
+.product-overlay strong {
+  max-width: 34ch;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.gumroad-product.big .product-overlay strong,
+.gumroad-product.wide .product-overlay strong {
+  font-size: 1.65rem;
+}
+
+.gumroad-product:hover,
+.gumroad-product:focus-visible {
+  border-color: rgba(197, 139, 58, 0.86);
+}
+
+.gumroad-product:hover img,
+.gumroad-product:focus-visible img {
+  filter: saturate(1.12) contrast(1.04);
+  transform: scale(1.035);
+}
+
+.gumroad-product.is-hidden {
+  display: none;
+}
+
+.gumroad-store-cta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  max-width: 1400px;
+  margin: 28px auto 0;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(25, 19, 16, 0.76);
+}
+
+.gumroad-store-cta h2 {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  line-height: 0.96;
+}
+
+.gumroad-store-cta p:not(.eyebrow) {
+  max-width: 780px;
+  margin-top: 10px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
 .site-footer {
   padding: 28px clamp(20px, 5vw, 64px) 42px;
   border-top: 1px solid var(--border-soft);
@@ -750,8 +914,50 @@ h3 {
 
   .site-grid,
   .section-heading,
-  .about-copy {
+  .about-copy,
+  .gumroad-hero,
+  .gumroad-store-cta {
     grid-template-columns: 1fr;
+  }
+
+  .gumroad-page {
+    padding-top: 38px;
+  }
+
+  .gumroad-hero {
+    align-items: start;
+    gap: 22px;
+  }
+
+  .gumroad-hero h1 {
+    font-size: 3.35rem;
+  }
+
+  .gumroad-hero-actions {
+    justify-content: flex-start;
+  }
+
+  .gumroad-cover-wall {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 188px;
+  }
+
+  .gumroad-product,
+  .gumroad-product.wide,
+  .gumroad-product.tall,
+  .gumroad-product.big {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .product-overlay strong,
+  .gumroad-product.big .product-overlay strong,
+  .gumroad-product.wide .product-overlay strong {
+    font-size: 1.22rem;
+  }
+
+  .gumroad-store-cta {
+    align-items: start;
   }
 
   .site-grid {
@@ -773,6 +979,46 @@ h3 {
   }
 }
 
+@media (max-width: 640px) {
+  .brand-mark {
+    display: none;
+  }
+
+  .gumroad-page {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .gumroad-hero,
+  .gumroad-cover-wall,
+  .gumroad-store-cta {
+    width: min(100%, 358px);
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .gumroad-hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .catalog-filter {
+    width: 100%;
+    min-height: 38px;
+    white-space: normal;
+  }
+
+  .gumroad-cover-wall {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+
+  .gumroad-product {
+    min-height: 248px;
+  }
+}
+
 @media (max-width: 520px) {
   .brand-mark {
     display: none;
@@ -786,6 +1032,14 @@ h3 {
 
   h1 {
     font-size: 2.75rem;
+  }
+
+  .gumroad-product {
+    min-height: 220px;
+  }
+
+  .gumroad-store-cta h2 {
+    font-size: 2.2rem;
   }
 }
 
