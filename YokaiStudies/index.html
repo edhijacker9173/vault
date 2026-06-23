@@ -1,0 +1,2614 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>妖怪 Yokai Compendium — Japanese Folklore Studies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300..700;1,300..700&family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+      --text-3xl: clamp(2.5rem, 1rem + 4vw, 5rem);
+      --text-hero: clamp(3rem, 0.5rem + 7vw, 7rem);
+
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --space-24: 6rem;
+
+      --radius-sm: 0.25rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1.25rem;
+      --radius-full: 9999px;
+
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-slow: 360ms cubic-bezier(0.16, 1, 0.3, 1);
+
+      --font-display: 'Cinzel', 'Palatino Linotype', serif;
+      --font-body: 'Crimson Pro', 'Georgia', serif;
+      --font-jp: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+
+      --content-narrow: 640px;
+      --content-default: 1000px;
+      --content-wide: 1280px;
+    }
+
+    /* Dark mode (default) */
+    :root, [data-theme="dark"] {
+      --color-bg: #090912;
+      --color-surface: #111120;
+      --color-surface-2: #18182c;
+      --color-surface-hover: #20203a;
+      --color-border: #2a2a48;
+      --color-border-accent: #44446a;
+      --color-text: #e8e3d5;
+      --color-text-muted: #8a8698;
+      --color-text-faint: #48466a;
+      --color-text-inverse: #0a0a14;
+      --color-accent: #e63946;
+      --color-accent-hover: #c82030;
+      --color-accent-glow: rgba(230, 57, 70, 0.18);
+      --color-gold: #ffd166;
+      --color-gold-muted: #c8a020;
+      --color-teal: #2ec4b6;
+      --color-mist: rgba(232, 227, 213, 0.06);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.6);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.7);
+      --shadow-accent: 0 0 24px rgba(230,57,70,0.2);
+    }
+
+    /* Light mode */
+    [data-theme="light"] {
+      --color-bg: #f5ede0;
+      --color-surface: #ede0cc;
+      --color-surface-2: #e3d3ba;
+      --color-surface-hover: #d8c8a8;
+      --color-border: #c8b4a0;
+      --color-border-accent: #a89480;
+      --color-text: #1a0f00;
+      --color-text-muted: #5c4a3a;
+      --color-text-faint: #9c8a7a;
+      --color-text-inverse: #f5ede0;
+      --color-accent: #8b1a1a;
+      --color-accent-hover: #6b1414;
+      --color-accent-glow: rgba(139,26,26,0.12);
+      --color-gold: #9a6e00;
+      --color-gold-muted: #7a5200;
+      --color-teal: #0a8a78;
+      --color-mist: rgba(26,15,0,0.04);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.14);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.18);
+      --shadow-accent: 0 0 24px rgba(139,26,26,0.1);
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme="dark"]) {
+        --color-bg: #f5ede0;
+        --color-surface: #ede0cc;
+        --color-surface-2: #e3d3ba;
+        --color-surface-hover: #d8c8a8;
+        --color-border: #c8b4a0;
+        --color-border-accent: #a89480;
+        --color-text: #1a0f00;
+        --color-text-muted: #5c4a3a;
+        --color-text-faint: #9c8a7a;
+        --color-text-inverse: #f5ede0;
+        --color-accent: #8b1a1a;
+        --color-accent-hover: #6b1414;
+        --color-accent-glow: rgba(139,26,26,0.12);
+        --color-gold: #9a6e00;
+        --color-gold-muted: #7a5200;
+        --color-teal: #0a8a78;
+        --color-mist: rgba(26,15,0,0.04);
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+        --shadow-md: 0 4px 16px rgba(0,0,0,0.14);
+        --shadow-lg: 0 12px 40px rgba(0,0,0,0.18);
+        --shadow-accent: 0 0 24px rgba(139,26,26,0.1);
+      }
+    }
+
+    /* ============================================================
+       BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      scroll-behavior: smooth;
+      scroll-padding-top: 5rem;
+    }
+    body {
+      min-height: 100dvh;
+      line-height: 1.65;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; height: auto; }
+    button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+    h1,h2,h3,h4 { text-wrap: balance; line-height: 1.2; }
+    p, li { text-wrap: pretty; }
+    ::selection { background: var(--color-accent-glow); color: var(--color-text); }
+    :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: var(--radius-sm); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+      backdrop-filter: blur(16px) saturate(1.2);
+      border-bottom: 1px solid var(--color-border);
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-6);
+      gap: var(--space-6);
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      text-decoration: none;
+      color: var(--color-text);
+      flex-shrink: 0;
+    }
+    .header-logo svg { width: 2rem; height: 2rem; color: var(--color-accent); }
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .logo-kanji {
+      font-family: var(--font-jp);
+      font-size: 1.1rem;
+      color: var(--color-accent);
+      font-weight: 700;
+    }
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      margin-left: auto;
+    }
+    .nav-btn {
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      transition: background var(--transition), color var(--transition);
+    }
+    .nav-btn:hover { background: var(--color-mist); color: var(--color-text); }
+    .nav-btn.active {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .theme-toggle {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-full);
+      color: var(--color-text-muted);
+      transition: background var(--transition), color var(--transition);
+      margin-left: var(--space-2);
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { background: var(--color-mist); color: var(--color-text); }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-24) var(--space-6) var(--space-16);
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 20%, color-mix(in srgb, var(--color-accent) 8%, transparent) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, color-mix(in srgb, #4a2080 12%, transparent) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 20% 70%, color-mix(in srgb, #0a2050 20%, transparent) 0%, transparent 60%);
+    }
+    .firefly {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: drift linear infinite;
+    }
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 0.7; }
+      100% { transform: translate(var(--dx), var(--dy)) scale(0.5); opacity: 0; }
+    }
+    .hero-kanji-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-jp);
+      font-size: clamp(12rem, 40vw, 36rem);
+      font-weight: 700;
+      color: color-mix(in srgb, var(--color-accent) 6%, transparent);
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 820px; }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-6);
+    }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--color-accent);
+      opacity: 0.6;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: var(--text-hero);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
+    }
+    .hero-title span { color: var(--color-accent); }
+    .hero-subtitle {
+      font-family: var(--font-jp);
+      font-size: var(--text-xl);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-8);
+      font-weight: 400;
+    }
+    .hero-desc {
+      font-size: var(--text-lg);
+      color: var(--color-text-muted);
+      max-width: 60ch;
+      margin: 0 auto var(--space-12);
+      line-height: 1.7;
+    }
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+    }
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 900;
+      color: var(--color-accent);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: var(--text-xs);
+      font-family: var(--font-display);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+    .hero-stat-divider {
+      width: 1px;
+      height: 3rem;
+      background: var(--color-border);
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: var(--space-8);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--color-text-faint);
+      font-size: var(--text-xs);
+      font-family: var(--font-display);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ============================================================
+       COMPENDIUM SECTION
+    ============================================================ */
+    .compendium {
+      max-width: var(--content-wide);
+      margin: 0 auto;
+      padding: var(--space-12) var(--space-6);
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      position: sticky;
+      top: 4rem;
+      z-index: 50;
+      background: color-mix(in srgb, var(--color-bg) 90%, transparent);
+      backdrop-filter: blur(12px);
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--space-8);
+    }
+    .filter-top {
+      display: flex;
+      gap: var(--space-4);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 220px;
+    }
+    .search-icon {
+      position: absolute;
+      left: var(--space-4);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-muted);
+      pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      padding: var(--space-3) var(--space-4) var(--space-3) 2.75rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .search-input::placeholder { color: var(--color-text-faint); }
+    .search-input:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-glow);
+      outline: none;
+    }
+    .filter-count {
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      white-space: nowrap;
+      letter-spacing: 0.05em;
+    }
+    .filter-chips {
+      display: flex;
+      gap: var(--space-2);
+      overflow-x: auto;
+      padding: var(--space-3) 0 var(--space-1);
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-chips::-webkit-scrollbar { display: none; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-border);
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: var(--color-text-muted);
+      transition: all var(--transition);
+      cursor: pointer;
+      background: transparent;
+    }
+    .chip:hover { background: var(--color-surface); color: var(--color-text); border-color: var(--color-border-accent); }
+    .chip.active {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: #fff;
+    }
+    .chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.7;
+    }
+
+    /* Danger level filter */
+    .danger-filter {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) 0;
+    }
+    .danger-label {
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      white-space: nowrap;
+    }
+    .danger-levels {
+      display: flex;
+      gap: var(--space-1);
+    }
+    .danger-level-btn {
+      width: 2rem;
+      height: 2rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--color-text-faint);
+      transition: all var(--transition);
+    }
+    .danger-level-btn:hover { border-color: var(--color-border-accent); color: var(--color-text-muted); }
+    .danger-level-btn.active {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: #fff;
+    }
+
+    /* Sort/View controls */
+    .filter-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .sort-select {
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      color: var(--color-text-muted);
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      appearance: none;
+      padding-right: var(--space-6);
+    }
+    .sort-select:focus { outline: 2px solid var(--color-accent); border-color: var(--color-accent); }
+
+    /* ============================================================
+       ENTRY GRID
+    ============================================================ */
+    .entry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--space-6);
+    }
+    .entry-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .entry-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg), var(--shadow-accent);
+      border-color: var(--color-border-accent);
+    }
+    .card-stripe {
+      height: 4px;
+      flex-shrink: 0;
+    }
+    .card-image {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--color-surface-raised);
+    }
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+    .entry-card:hover .card-image img {
+      transform: scale(1.06);
+    }
+    .card-body {
+      padding: var(--space-6);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-3);
+    }
+    .card-names { flex: 1; }
+    .card-name {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: 0.02em;
+    }
+    .card-kanji {
+      font-family: var(--font-jp);
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      letter-spacing: 0.1em;
+    }
+    .card-type-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .badge-yokai { background: color-mix(in srgb, #e63946 15%, transparent); color: #e63946; border: 1px solid color-mix(in srgb, #e63946 30%, transparent); }
+    .badge-yurei { background: color-mix(in srgb, #9b59b6 15%, transparent); color: #b87ee0; border: 1px solid color-mix(in srgb, #9b59b6 30%, transparent); }
+    [data-theme="light"] .badge-yokai { background: color-mix(in srgb, #8b1a1a 12%, transparent); color: #8b1a1a; border: 1px solid color-mix(in srgb, #8b1a1a 25%, transparent); }
+    [data-theme="light"] .badge-yurei { background: color-mix(in srgb, #5a1a8a 12%, transparent); color: #5a1a8a; border: 1px solid color-mix(in srgb, #5a1a8a 25%, transparent); }
+
+    .card-category {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      font-family: var(--font-display);
+      letter-spacing: 0.05em;
+    }
+    .cat-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .card-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-border);
+    }
+    .danger-dots {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .danger-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      transition: background var(--transition);
+    }
+    .card-region {
+      font-size: var(--text-xs);
+      color: var(--color-text-faint);
+      font-family: var(--font-display);
+      letter-spacing: 0.05em;
+    }
+    .card-hover-hint {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: var(--space-4);
+      opacity: 0;
+      transition: opacity var(--transition);
+      pointer-events: none;
+      background: linear-gradient(to top, color-mix(in srgb, var(--color-bg) 60%, transparent) 0%, transparent 60%);
+    }
+    .entry-card:hover .card-hover-hint { opacity: 1; }
+    .view-btn-inner {
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    /* No results */
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: var(--space-20) var(--space-6);
+      color: var(--color-text-faint);
+    }
+    .no-results-kanji {
+      font-family: var(--font-jp);
+      font-size: 4rem;
+      margin-bottom: var(--space-4);
+      opacity: 0.3;
+    }
+    .no-results-text {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      letter-spacing: 0.05em;
+    }
+
+    /* ============================================================
+       MODAL
+    ============================================================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-slow);
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-accent);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 800px;
+      max-height: 90svh;
+      overflow-y: auto;
+      transform: translateY(24px) scale(0.98);
+      transition: transform var(--transition-slow);
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-border) transparent;
+    }
+    .modal-overlay.open .modal {
+      transform: translateY(0) scale(1);
+    }
+    .modal-header {
+      position: sticky;
+      top: 0;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-5) var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      z-index: 1;
+    }
+    .modal-stripe {
+      width: 4px;
+      height: 3rem;
+      border-radius: var(--radius-full);
+      flex-shrink: 0;
+    }
+    .modal-title-group { flex: 1; }
+    .modal-name {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+    .modal-kanji {
+      font-family: var(--font-jp);
+      font-size: var(--text-lg);
+      color: var(--color-text-muted);
+      letter-spacing: 0.1em;
+    }
+    .modal-badges {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .modal-close {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-muted);
+      transition: background var(--transition), color var(--transition);
+      flex-shrink: 0;
+    }
+    .modal-close:hover { background: var(--color-surface-2); color: var(--color-text); }
+    .modal-body {
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+    .modal-illustration {
+      width: 100%;
+      height: 360px;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      background: var(--color-bg);
+      flex-shrink: 0;
+    }
+    .modal-illustration img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+    .modal-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: var(--space-4);
+    }
+    .meta-item {
+      background: var(--color-surface-2, var(--color-bg));
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+    .meta-label {
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-faint);
+      margin-bottom: var(--space-2);
+    }
+    .meta-value {
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      font-weight: 500;
+    }
+    .modal-section-title {
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .modal-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+    .modal-description {
+      font-size: var(--text-base);
+      color: var(--color-text);
+      line-height: 1.75;
+    }
+    .power-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .power-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      line-height: 1.5;
+    }
+    .power-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-top: 0.45em;
+      flex-shrink: 0;
+    }
+    .weakness-item .power-dot { background: var(--color-teal); }
+    .power-item .power-dot { background: var(--color-accent); }
+    .culture-box {
+      background: var(--color-surface-2, var(--color-bg));
+      border-left: 3px solid var(--color-gold-muted);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      padding: var(--space-5);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      line-height: 1.7;
+    }
+    .famous-box {
+      background: var(--color-surface-2, var(--color-bg));
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+    .famous-label {
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-faint);
+      margin-bottom: var(--space-3);
+    }
+    .famous-text {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      font-style: italic;
+      line-height: 1.65;
+    }
+    .danger-display {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .danger-bar {
+      display: flex;
+      gap: 4px;
+    }
+    .danger-segment {
+      height: 8px;
+      width: 2rem;
+      border-radius: var(--radius-full);
+    }
+    .modal-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--color-border);
+    }
+    .modal-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      transition: all var(--transition);
+    }
+    .modal-nav-btn:hover { background: var(--color-surface-2, var(--color-bg)); border-color: var(--color-border-accent); color: var(--color-text); }
+    .modal-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    /* ============================================================
+       STUDY MODE
+    ============================================================ */
+    .study-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: var(--color-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8) var(--space-6);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-slow);
+    }
+    .study-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .study-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-5) var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .study-title {
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+    .study-progress-bar {
+      height: 3px;
+      background: var(--color-border);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      width: 200px;
+    }
+    .study-progress-fill {
+      height: 100%;
+      background: var(--color-accent);
+      border-radius: var(--radius-full);
+      transition: width var(--transition-slow);
+    }
+    .study-counter {
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--color-text-faint);
+    }
+    .study-exit {
+      padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      transition: all var(--transition);
+    }
+    .study-exit:hover { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+    .flashcard-scene {
+      perspective: 1200px;
+      width: 100%;
+      max-width: 640px;
+      cursor: pointer;
+    }
+    .flashcard-inner {
+      position: relative;
+      width: 100%;
+      min-height: 620px;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .flashcard-inner.flipped { transform: rotateY(180deg); }
+    .flashcard-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--color-border-accent);
+      background: var(--color-surface);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .fc-front-image {
+      width: 100%;
+      height: 260px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .fc-front-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .flashcard-front-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: var(--space-6) var(--space-8) var(--space-8);
+      width: 100%;
+    }
+    .flashcard-back { transform: rotateY(180deg); align-items: flex-start; text-align: left; padding: var(--space-8); }
+    .card-front-kanji {
+      font-family: var(--font-jp);
+      font-size: 5rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      margin-bottom: var(--space-4);
+      line-height: 1;
+    }
+    .card-front-name {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 900;
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+    .card-front-reading {
+      font-family: var(--font-jp);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-6);
+    }
+    .card-flip-hint {
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-faint);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    .card-back-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+    .back-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      line-height: 1.7;
+    }
+    .back-powers-label {
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-2);
+    }
+    .back-powers {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .back-power {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      display: flex;
+      gap: var(--space-2);
+      align-items: flex-start;
+    }
+    .back-power::before {
+      content: '▸';
+      color: var(--color-accent);
+      flex-shrink: 0;
+    }
+    .flashcard-height-placeholder {
+      width: 100%;
+      max-width: 640px;
+      min-height: 620px;
+      visibility: hidden;
+    }
+    .study-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      margin-top: var(--space-8);
+    }
+    .study-nav-btn {
+      width: 3rem;
+      height: 3rem;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-muted);
+      transition: all var(--transition);
+      font-size: 1.2rem;
+    }
+    .study-nav-btn:hover:not(:disabled) { background: var(--color-surface); border-color: var(--color-border-accent); color: var(--color-text); }
+    .study-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .study-random-btn {
+      padding: var(--space-3) var(--space-6);
+      background: var(--color-accent);
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .study-random-btn:hover { background: var(--color-accent-hover); transform: scale(1.04); }
+    .study-filter-row {
+      display: flex;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+    }
+    .study-type-btn {
+      padding: var(--space-2) var(--space-5);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      transition: all var(--transition);
+    }
+    .study-type-btn:hover { border-color: var(--color-border-accent); color: var(--color-text); }
+    .study-type-btn.active { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+
+    /* ============================================================
+       LEGEND
+    ============================================================ */
+    .legend-section {
+      max-width: var(--content-wide);
+      margin: 0 auto;
+      padding: var(--space-12) var(--space-6);
+      border-top: 1px solid var(--color-border);
+    }
+    .legend-title {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-8);
+      text-align: center;
+    }
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-4);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      border-top: 1px solid var(--color-border);
+      padding: var(--space-12) var(--space-6);
+      text-align: center;
+      color: var(--color-text-faint);
+      font-size: var(--text-xs);
+      font-family: var(--font-display);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 640px) {
+      .header-nav .nav-btn:not(.active) { display: none; }
+      .hero-stats { gap: var(--space-5); }
+      .hero-stat-divider { height: 2rem; }
+      .entry-grid { grid-template-columns: 1fr; }
+      .modal-meta-grid { grid-template-columns: 1fr 1fr; }
+      .study-header { flex-wrap: wrap; gap: var(--space-2); }
+      .study-progress-bar { width: 100px; }
+    }
+    @media (max-width: 768px) {
+      .filter-top { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <a href="#" class="header-logo" onclick="setTab('all'); return false;">
+      <svg viewBox="0 0 32 32" fill="none" aria-label="Yokai Compendium">
+        <!-- Torii Gate -->
+        <rect x="3" y="6" width="26" height="3" rx="1.5" fill="currentColor"/>
+        <rect x="5" y="9" width="22" height="2.5" rx="1.25" fill="currentColor" opacity="0.7"/>
+        <rect x="7" y="11.5" width="2.5" height="16.5" rx="1.25" fill="currentColor"/>
+        <rect x="22.5" y="11.5" width="2.5" height="16.5" rx="1.25" fill="currentColor"/>
+        <circle cx="16" cy="4" r="2" fill="currentColor" opacity="0.5"/>
+      </svg>
+      <span class="logo-kanji">妖怪</span>
+      <span class="logo-text">Compendium</span>
+    </a>
+    <nav class="header-nav" role="navigation" aria-label="Main navigation">
+      <button class="nav-btn active" id="tab-all" onclick="setTab('all')">All</button>
+      <button class="nav-btn" id="tab-yokai" onclick="setTab('yokai')">妖怪 Yokai</button>
+      <button class="nav-btn" id="tab-yurei" onclick="setTab('yurei')">幽霊 Yūrei</button>
+      <button class="nav-btn" id="tab-study" onclick="openStudy()">Study Mode</button>
+    </nav>
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-bg"></div>
+    <div class="hero-kanji-bg" aria-hidden="true">怪</div>
+    <div id="fireflies"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Japanese Folklore Studies</div>
+      <h1 class="hero-title">Yokai <span>&</span> Yūrei</h1>
+      <p class="hero-subtitle">妖怪と幽霊の事典</p>
+      <p class="hero-desc">
+        A scholarly compendium of Japan's supernatural beings — from ancient mythological creatures
+        and nature spirits to the vengeful dead. Study their origins, powers, and cultural significance.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num" id="total-count">33</span>
+          <span class="hero-stat-label">Total Entries</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">24</span>
+          <span class="hero-stat-label">妖怪 Yokai</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">9</span>
+          <span class="hero-stat-label">幽霊 Yūrei</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">18</span>
+          <span class="hero-stat-label">Categories</span>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Scroll to explore</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- COMPENDIUM -->
+  <main class="compendium" id="compendium">
+    <div class="filter-bar" id="filter-bar">
+      <div class="filter-top">
+        <div class="search-wrap">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input type="search" class="search-input" id="search-input" placeholder="Search by name, power, or region..." autocomplete="off" aria-label="Search entries">
+        </div>
+        <div class="filter-controls">
+          <span class="filter-count" id="filter-count">33 entries</span>
+          <select class="sort-select" id="sort-select" aria-label="Sort entries">
+            <option value="name">A–Z</option>
+            <option value="danger-asc">Least Dangerous</option>
+            <option value="danger-desc">Most Dangerous</option>
+          </select>
+        </div>
+      </div>
+      <div class="filter-chips" id="category-chips" role="list" aria-label="Category filters">
+        <button class="chip active" data-category="all" role="listitem">All Categories</button>
+      </div>
+      <div class="danger-filter">
+        <span class="danger-label">Danger Level:</span>
+        <div class="danger-levels" id="danger-filter" role="group" aria-label="Filter by danger level">
+          <button class="danger-level-btn active" data-danger="0" aria-pressed="true">All</button>
+          <button class="danger-level-btn" data-danger="1" aria-pressed="false">1</button>
+          <button class="danger-level-btn" data-danger="2" aria-pressed="false">2</button>
+          <button class="danger-level-btn" data-danger="3" aria-pressed="false">3</button>
+          <button class="danger-level-btn" data-danger="4" aria-pressed="false">4</button>
+          <button class="danger-level-btn" data-danger="5" aria-pressed="false">5</button>
+        </div>
+      </div>
+    </div>
+    <div class="entry-grid" id="entry-grid" role="list" aria-label="Yokai entries"></div>
+  </main>
+
+  <!-- LEGEND -->
+  <section class="legend-section">
+    <h2 class="legend-title">Danger Level Scale</h2>
+    <div class="legend-grid">
+      <div class="legend-item"><div class="legend-dot" style="background:#2ec4b6"></div><span><strong>Level 1 — Benign:</strong> Helpful or harmless spirits</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ffd166"></div><span><strong>Level 2 — Mischievous:</strong> Tricksters, rarely harmful</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f4a261"></div><span><strong>Level 3 — Dangerous:</strong> Can cause real harm if encountered</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#e63946"></div><span><strong>Level 4 — Very Dangerous:</strong> Lethal in many encounters</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#9b1d20"></div><span><strong>Level 5 — Catastrophic:</strong> Capable of widespread devastation</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>妖怪事典 Yokai Compendium &nbsp;·&nbsp; For Study & Research &nbsp;·&nbsp; Sources: Kojiki, Nihon Shoki, Kwaidan (Lafcadio Hearn), Legends of Tono (Yanagita Kunio), Gazu Hyakki Yakō (Toriyama Sekien)</p>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-label="Entry details">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <div class="modal-stripe" id="modal-stripe"></div>
+        <div class="modal-title-group">
+          <h2 class="modal-name" id="modal-name"></h2>
+          <div class="modal-kanji" id="modal-kanji"></div>
+        </div>
+        <div class="modal-badges" id="modal-badges"></div>
+        <button class="modal-close" id="modal-close" aria-label="Close details">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- STUDY MODE -->
+  <div class="study-overlay" id="study-overlay" role="dialog" aria-modal="true" aria-label="Study mode">
+    <div class="study-header">
+      <span class="study-title">Study Mode — Flash Cards</span>
+      <div class="study-progress-bar">
+        <div class="study-progress-fill" id="study-progress-fill" style="width:0%"></div>
+      </div>
+      <span class="study-counter" id="study-counter">0 / 0</span>
+      <button class="study-exit" onclick="closeStudy()">Exit Study</button>
+    </div>
+    <div class="study-filter-row" style="margin-top:5rem">
+      <button class="study-type-btn active" data-stype="all" onclick="setStudyType('all')">All</button>
+      <button class="study-type-btn" data-stype="yokai" onclick="setStudyType('yokai')">妖怪 Yokai</button>
+      <button class="study-type-btn" data-stype="yurei" onclick="setStudyType('yurei')">幽霊 Yūrei</button>
+    </div>
+    <div style="position:relative; width:100%; max-width:640px;">
+      <div class="flashcard-scene" onclick="flipCard()" aria-label="Click to flip flashcard">
+        <div class="flashcard-inner" id="flashcard-inner">
+          <div class="flashcard-face flashcard-front">
+            <div class="fc-front-image">
+              <img id="fc-image" src="" alt="" onerror="this.parentElement.style.display='none'">
+            </div>
+            <div class="flashcard-front-content">
+              <div class="card-front-kanji" id="fc-kanji"></div>
+              <div class="card-front-name" id="fc-name"></div>
+              <div class="card-front-reading" id="fc-reading"></div>
+              <div class="card-type-badge" id="fc-type" style="margin-bottom:1rem"></div>
+              <div class="card-flip-hint">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+                Click to reveal
+              </div>
+            </div>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <div class="card-back-content">
+              <div class="card-front-name" id="fc-back-name" style="font-size:1.5rem;margin-bottom:0.25rem;text-align:center;width:100%"></div>
+              <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:0.5rem" id="fc-back-badges"></div>
+              <div class="back-desc" id="fc-desc"></div>
+              <div>
+                <div class="back-powers-label">Powers & Abilities</div>
+                <ul class="back-powers" id="fc-powers"></ul>
+              </div>
+              <div>
+                <div class="back-powers-label" style="color:var(--color-teal)">Weaknesses</div>
+                <ul class="back-powers" id="fc-weaknesses"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="study-controls">
+      <button class="study-nav-btn" id="study-prev" onclick="studyNav(-1)" aria-label="Previous card">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button class="study-random-btn" onclick="studyRandom()">Random</button>
+      <button class="study-nav-btn" id="study-next" onclick="studyNav(1)" aria-label="Next card">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+  /* ================================================================
+     DATA
+  ================================================================ */
+  const CATEGORIES = {
+    "shapeshifter":    { label: "Shapeshifter",     color: "#9b59b6" },
+    "mountain-demon":  { label: "Mountain Demon",    color: "#c0392b" },
+    "demon":           { label: "Demon / Oni",       color: "#e74c3c" },
+    "water-creature":  { label: "Water Creature",    color: "#2980b9" },
+    "nature-spirit":   { label: "Nature Spirit",     color: "#27ae60" },
+    "undead":          { label: "Undead",            color: "#8e9ba8" },
+    "celestial":       { label: "Celestial",         color: "#f39c12" },
+    "object-spirit":   { label: "Object Spirit",     color: "#bdc3c7" },
+    "chimera":         { label: "Chimera",           color: "#6d8b3a" },
+    "trickster":       { label: "Trickster",         color: "#e67e22" },
+    "household-spirit":{ label: "Household Spirit",  color: "#d4ac0d" },
+    "vengeful-spirit": { label: "Vengeful Spirit",   color: "#7d3c98" },
+    "sea-ghost":       { label: "Sea Ghost",         color: "#1a5276" },
+    "maternal-spirit": { label: "Maternal Spirit",   color: "#c0a0c8" },
+    "noble-spirit":    { label: "Noble Spirit",      color: "#b7950b" },
+    "hungry-ghost":    { label: "Hungry Ghost",      color: "#a04000" },
+    "living-spirit":   { label: "Living Spirit",     color: "#5d6d7e" },
+    "land-spirit":     { label: "Land Spirit",       color: "#196f3d" },
+    "serpent-god":     { label: "Serpent God",       color: "#1e8449" },
+    "onryo":           { label: "Onryō (Vengeful)",  color: "#943126" },
+  };
+
+  const DANGER_COLORS = {
+    1: "#2ec4b6", 2: "#ffd166", 3: "#f4a261", 4: "#e63946", 5: "#9b1d20"
+  };
+  const DANGER_LABELS = {
+    1: "Benign", 2: "Mischievous", 3: "Dangerous", 4: "Very Dangerous", 5: "Catastrophic"
+  };
+
+  const DATA = [
+    // ===================== YOKAI =====================
+    {
+      id:"kitsune", name:"Kitsune", kanji:"狐", reading:"きつね", type:"yokai", category:"shapeshifter", dangerLevel:3,
+      habitat:"Shrines, forests, mountains", region:"Nationwide", era:"Ancient to present",
+      description:"The divine fox spirit grows more powerful with each passing century, gaining an additional tail every hundred years. At nine tails, it becomes a celestial being of immense power. Kitsune serve as messengers of Inari, the Shinto deity of foxes and rice, and range from benevolent guardian to cunning trickster depending on their alignment and age.",
+      powers:["Shapeshifting into any human form","Fox fire (Kitsunebi) — ethereal floating flames","Illusion creation and reality manipulation","Possession of human hosts","Flight in true form; invisibility"],
+      weaknesses:["Dogs (natural enemies)","Sacred sutras and Shintō prayers","Their fox tail sometimes appears in human form"],
+      culturalNote:"Kitsune appear in Japan's oldest chronicles. The Fushimi Inari Taisha in Kyoto is a major center of fox spirit worship. White Kitsune are considered divine messengers; black Kitsune bring bad fortune.",
+      famousExample:"Tamamo-no-Mae — a legendary nine-tailed fox who disguised herself as a beautiful court lady and caused Emperor Toba to fall gravely ill before being unmasked by the diviner Abe no Yasuchika."
+    },
+    {
+      id:"tengu", name:"Tengu", kanji:"天狗", reading:"てんぐ", type:"yokai", category:"mountain-demon", dangerLevel:3,
+      habitat:"Mountain peaks, ancient cedar forests, Buddhist temples", region:"Mountains nationwide",
+      era:"Heian Period – Present",
+      description:"The Tengu is a proud and powerful mountain deity appearing either as a winged figure with an enormous red nose (the Dai-Tengu or Great Tengu) or with a crow's head (the Ko-Tengu). Masters of martial arts and swordsmanship, they inhabit mountain forests and punish the arrogant, dishonest, and hypocritical. Once regarded as demons, they gradually became protective mountain deities and patrons of the warrior arts.",
+      powers:["Flight with great feathered wings","Mastery of swordsmanship and all martial arts","Weather control — can summon storms","Shapeshifting into priests, monks, and samurai","Supernatural strength and speed"],
+      weaknesses:["Rice cakes mixed with certain ingredients (ominous foresight)","Buddhist prayer and sacred texts","Mackerel — considered dirty; they cannot abide the smell"],
+      culturalNote:"The legendary warrior Yoshitsune (Ushiwakamaru) is said to have received his unparalleled sword skills from the Tengu king Sōjōbō on Mount Kurama near Kyoto.",
+      famousExample:"Sōjōbō — the Great Tengu king of Mount Kurama who trained the young Minamoto no Yoshitsune, one of Japan's greatest warriors."
+    },
+    {
+      id:"oni", name:"Oni", kanji:"鬼", reading:"おに", type:"yokai", category:"demon", dangerLevel:5,
+      habitat:"Jigoku (Buddhist Hell), mountain passes, remote islands", region:"Nationwide",
+      era:"Ancient to present",
+      description:"The Oni is Japan's iconic demon — a hulking supernatural being with wild hair, two or three eyes, claws, fangs, and either one or two horns, wielding an iron club called a kanabō. They dwell in Jigoku serving as torturers and administrators of divine punishment, and roam the earth bringing disease, disaster, and misfortune. Some Oni are reformed and become protectors of temples.",
+      powers:["Immense physical strength beyond measure","Iron club (kanabō) that can shatter mountains","Disease-causing presence","Shapeshifting into various forms","Near-invulnerability to mortal weapons"],
+      weaknesses:["Setsubun roasted soybeans — a handful thrown drives them away","Holy sutras and Shintō prayers","The color red is said to repel them","Moxa (medicinal burning herb)"],
+      culturalNote:"During Setsubun (February 3rd), families throw roasted soybeans shouting 'Oni wa soto! Fuku wa uchi!' (Demons out! Luck in!). The Oni are central to countless Noh plays, Kabuki, festivals, and temple art.",
+      famousExample:"Shuten-dōji — the great demon lord of Mount Ōe, said to be the most powerful Oni, who was defeated through deception by the hero Minamoto no Yorimitsu and his four loyal retainers."
+    },
+    {
+      id:"tanuki", name:"Tanuki", kanji:"狸", reading:"たぬき", type:"yokai", category:"shapeshifter", dangerLevel:2,
+      habitat:"Forests, near sake shops and inns, temples", region:"Nationwide",
+      era:"Ancient to present",
+      description:"The Tanuki (Japanese raccoon dog) is a jolly shapeshifting trickster spirit renowned for its enormous magical scrotum, which it uses as a drum, parachute, weapon, and even a great hall to entertain guests. Less refined than the Kitsune, the Tanuki is associated with abundance, luck, and merriment. Ceramic Tanuki statues with sake flasks and wide-brimmed hats stand guard outside countless restaurants and sake shops.",
+      powers:["Shapeshifting into humans, animals, and objects","Transforming leaves into gold, food, or fake currency","Illusion creation (cruder than Kitsune but exuberant)","Drum-playing with its magical body","Sake mysticism and weather prediction"],
+      weaknesses:["Its transformations are crude and easily seen through","Natural enemy of the dog","Being directly and honestly confronted"],
+      culturalNote:"Tanuki statues are ubiquitous across Japan as symbols of good fortune. Studio Ghibli's 'Pom Poko' (1994) depicted Tanuki as threatened tricksters fighting modern development.",
+      famousExample:"Bunbuku Chagama — the famous folktale of a Tanuki who transformed into a tea kettle to repay a kindly monk who rescued him."
+    },
+    {
+      id:"kappa", name:"Kappa", kanji:"河童", reading:"かっぱ", type:"yokai", category:"water-creature", dangerLevel:3,
+      habitat:"Rivers, ponds, lakes, irrigation ditches", region:"Nationwide (especially Kyushu)",
+      era:"Ancient to present",
+      description:"The Kappa is a reptilian water spirit resembling a child-sized humanoid with a turtle shell, scaly green or blue skin, a beak, and a dish-shaped hollow on its head filled with water — the source of its supernatural power. Kappa drown livestock and humans, drag the unwary into rivers, and in some tales steal the spiritual essence through the anus. Yet they are honorable creatures who keep their promises and possess deep medical knowledge.",
+      powers:["Superhuman strength underwater","Can pull out a victim's shirikodama (soul ball)","Medical knowledge — especially bone-setting","Shapeshifting","Bargaining and contract magic"],
+      weaknesses:["Bow to them and they bow back — spilling the water from their head dish, rendering them helpless","Cucumbers inscribed with family names as offerings","Iron and loud sound"],
+      culturalNote:"Kappa are used as cautionary tales to keep children from rivers. 'Kappamaki' (cucumber sushi roll) is named after their love of cucumbers. Some regions maintain formal 'truces' with local Kappa shrines.",
+      famousExample:"The Kappa of Tono — extensively documented by folklorist Kunio Yanagita in the legendary 'Tōno Monogatari' (1910)."
+    },
+    {
+      id:"yuki-onna", name:"Yuki-onna", kanji:"雪女", reading:"ゆきおんな", type:"yokai", category:"nature-spirit", dangerLevel:4,
+      habitat:"Snowfields, mountain passes, blizzards", region:"Tohoku, Hokkaido, Niigata",
+      era:"Medieval to present",
+      description:"The Yuki-onna appears on the coldest nights as a tall, ethereally beautiful woman with impossibly pale skin, a white kimono, and long black hair. She drifts across snowfields and materializes before travelers lost in blizzards. She may freeze her victims with an icy breath, spirit children away, or — if she finds a man beautiful enough — spare him on the condition that he never speak of their encounter. Some versions make her a loving mother who must return to the snow.",
+      powers:["Freezing breath that kills instantly","Shapeshifting into snowstorm or mist","Walking on snow without leaving footprints","Hypnotic, paralyzing beauty","Passing through sealed doors as freezing mist"],
+      weaknesses:["Fire and sustained warmth","Breaking a promise she has made","In some tales, revealed and destroyed by sunlight"],
+      culturalNote:"Featured in Lafcadio Hearn's 'Kwaidan' (1904), the Yuki-onna varies by region — sometimes deadly, sometimes maternal. She represents both the beauty and the lethal indifference of winter.",
+      famousExample:"The tale of Mosaku and Minokichi in Kwaidan — a woodcutter who encounters Yuki-onna twice and must keep his secret, ultimately keeping it at great personal cost."
+    },
+    {
+      id:"jorogumo", name:"Jorōgumo", kanji:"絡新婦", reading:"じょろうぐも", type:"yokai", category:"shapeshifter", dangerLevel:5,
+      habitat:"Waterfalls, deep forests, ruins, dim interior rooms", region:"Nationwide (esp. Jōren Falls, Shizuoka)",
+      era:"Edo Period",
+      description:"The Jorōgumo ('entangling bride' or 'binding spider') is a golden silk orb-weaver spider that, upon reaching 400 years of age, acquires the power to transform into a beautiful woman. She lures unsuspecting men — typically young samurai — into her lair disguised as a noblewoman playing the biwa. When her victim is entranced by the music, she spins unbreakable silk around them and devours them. She can also command small fire-breathing spiders.",
+      powers:["Perfect human shapeshifting","Spinning unbreakable silk bonds","Commanding fire-breathing spiders","Hypnotic beauty and musical ability","Immense strength in true spider form"],
+      weaknesses:["Perception — some notice her spider reflection in still water","Sudden loud noise breaking her concentration","Salt and sacred boundaries"],
+      culturalNote:"The Jorō spider (Nephila clavata), common across Japan, is named after this yokai. The waterfall of Jōren in Izu is said to be her lair.",
+      famousExample:"The Samurai of Kashiwabara — a young warrior invited to play Go with a beautiful woman near Jōren Falls who barely escapes when he notices her spider shadow."
+    },
+    {
+      id:"nekomata", name:"Nekomata", kanji:"猫又", reading:"ねこまた", type:"yokai", category:"shapeshifter", dangerLevel:3,
+      habitat:"Deep mountains; old urban households", region:"Nationwide",
+      era:"Kamakura Period to present",
+      description:"The Nekomata is an old cat that has lived long enough — typically over ten years — to split its tail in two and gain supernatural powers. Mountain Nekomata are fearsome giant cats. Household Nekomata are subtler — rising on hind legs to dance when they think no one is watching, manipulating the corpses of the dead as puppets, and harboring deep grudges against those who mistreated them in life.",
+      powers:["Necromancy — raising and puppeteering the dead","Shapeshifting into human form","Fire conjuration from its forked tail","Curse casting and possession","Resistance to most exorcism attempts"],
+      weaknesses:["Discovery of the split tail before it fully develops","Mountain Nekomata: loud sound and fire","Dogs, who can sense the supernatural nature"],
+      culturalNote:"The belief that cats become Nekomata if allowed to live too long led many households to keep only young cats or dock cat tails. This originated the Japanese aversion to long-tailed cats.",
+      famousExample:"The Bakeneko of Nabeshima — a court lady killed by her master's cat, which then possesses her ghost and haunts the Nabeshima clan lord; made famous in Kabuki theater."
+    },
+    {
+      id:"rokurokubi", name:"Rokurokubi", kanji:"轆轤首", reading:"ろくろくび", type:"yokai", category:"shapeshifter", dangerLevel:2,
+      habitat:"Inns, roadsides, cities, ordinary households", region:"Nationwide",
+      era:"Edo Period",
+      description:"The Rokurokubi appears perfectly human by day, indistinguishable from ordinary women. But at night — especially while sleeping — their neck stretches to impossible lengths, snaking across rooms to drink lamp oil, blow out candles, or terrify sleeping guests. The Nukekubi variant can detach its head entirely, which flies through the night seeking to bite victims.",
+      powers:["Neck stretches to great length (Rokurokubi)","Detachable flying head (Nukekubi)","Perfect human disguise during daytime","Night vision and silent movement"],
+      weaknesses:["Moving the headless body far away while the Nukekubi's head is detached — the head cannot find its way back","Catching them during daytime inspection"],
+      culturalNote:"The Rokurokubi appears in Lafcadio Hearn's Kwaidan and in many Edo-period ukiyo-e prints. The image of a stretching neck is an iconic motif in Japanese horror art.",
+      famousExample:"Hearn's 'Rokurokubi' — a Buddhist pilgrim seeking shelter at an isolated inn discovers all the inn workers are Rokurokubi when he witnesses their necks stretching in the night."
+    },
+    {
+      id:"noppera-bo", name:"Noppera-bō", kanji:"のっぺらぼう", reading:"のっぺらぼう", type:"yokai", category:"shapeshifter", dangerLevel:2,
+      habitat:"Roads, riverbanks, moats, unfamiliar places", region:"Nationwide (esp. Edo/Tokyo)",
+      era:"Edo Period",
+      description:"The Noppera-bō is a faceless spirit that takes the form of a familiar person — a spouse, friend, or fellow traveler — before revealing a smooth, featureless face where eyes, nose, and mouth should be. Not physically dangerous, it exists solely to cause overwhelming psychological terror. It often works in pairs, with one revealing the blank face, and another waiting at the destination in another familiar form.",
+      powers:["Shapeshifting into any known person","Perfect mimicry of voice, gait, and manner","Creating profound psychological terror","Often works in coordinated pairs"],
+      weaknesses:["Cannot cause physical harm","Its blank face is the inevitable reveal — it cannot sustain extended deception"],
+      culturalNote:"Featured in Lafcadio Hearn's Kwaidan. The 'Mujina of Akasaka' story is set near the old Akasaka moat in what is now Tokyo, a tale still told to children.",
+      famousExample:"The Mujina of Akasaka — a man meets a weeping woman by the moat, who turns to reveal no face. He flees to a noodle-seller and tells his tale — only for the seller to turn and reveal the same blank face."
+    },
+    {
+      id:"gashadokuro", name:"Gashadokuro", kanji:"餓者髑髏", reading:"がしゃどくろ", type:"yokai", category:"undead", dangerLevel:5,
+      habitat:"Battlefields, famine regions, post-midnight roads", region:"Nationwide",
+      era:"Heian Period – Sengoku Period",
+      description:"The Gashadokuro is a colossal skeleton fifteen times the height of a human, formed from the accumulated rage and suffering of soldiers who died on the battlefield or civilians who starved to death and whose bodies were left unburied. It roams at midnight, crunching through the countryside and biting off the heads of those it encounters to drink their blood, all without a sound except for the faint ringing of a bell that warns of its approach.",
+      powers:["Immense size and strength","Biting off heads and drinking blood","Invisibility — only a ringing in the ears signals approach","Near-invulnerability to conventional weapons","Indestructible unless the spirits' rage is appeased"],
+      weaknesses:["Shintō prayers and the intercession of Inari","Dawn — dissolves at sunrise","Gradually dissipates as the spirits' rage fades with proper memorial rites"],
+      culturalNote:"Most famously depicted in Utagawa Kuniyoshi's great woodblock triptych (c.1845) showing the giant skeleton summoned by the sorceress Takiyasha-hime.",
+      famousExample:"Takiyasha-hime — the daughter of the rebel Taira no Masakado — summons a Gashadokuro to battle imperial warriors in Kuniyoshi's iconic print."
+    },
+    {
+      id:"kamaitachi", name:"Kamaitachi", kanji:"鎌鼬", reading:"かまいたち", type:"yokai", category:"nature-spirit", dangerLevel:3,
+      habitat:"Whirlwinds, mountain passes, snowstorms", region:"Alpine Japan (Nagano, Niigata, Toyama)",
+      era:"Muromachi Period",
+      description:"The Kamaitachi ('sickle weasel') is actually a trio of weasel-like creatures that ride whirlwinds in precise formation. The first knocks the victim down, the second slashes deep wounds with razor-sharp sickle claws, and the third applies a mysterious salve that prevents bleeding and eliminates pain. Victims often don't realize they have been attacked until they see the wounds — sometimes only after reaching shelter.",
+      powers:["Riding and generating whirlwinds","Sickle-sharp claws that cut without pain","Mysterious healing salve that prevents bleeding","Extreme supernatural speed","Coordination across all three spirits"],
+      weaknesses:["Calm weather — no wind means no power","Mountain protective charms and salt","Fire"],
+      culturalNote:"The Kamaitachi explained mysterious cuts and wounds sustained in alpine snowstorms. The triple-spirit concept reflects careful folk observation of how storm wounds appeared.",
+      famousExample:"Documented extensively in Edo-period natural history texts as the explanation for unexplained bloodless wounds found on travelers after mountain storms."
+    },
+    {
+      id:"ushi-oni", name:"Ushi-oni", kanji:"牛鬼", reading:"うしおに", type:"yokai", category:"demon", dangerLevel:5,
+      habitat:"Sea coasts, rocky shores, river mouths", region:"Western Japan (Shimane, Tottori, Ehime)",
+      era:"Muromachi Period",
+      description:"The Ushi-oni is a fearsome coastal demon with the head of a bull and the body of a massive spider, crab, or sea serpent. It lurks along rocky shores and attacks fishermen and villagers. One particularly dangerous variety works in partnership with the Nure-onna (a serpent-woman yokai), which lures victims close to the water's edge while the Ushi-oni lurks in the shallows ready to strike.",
+      powers:["Immense physical strength","Poisonous breath that kills anything it touches","Underwater ambush tactics","Terror aura that causes paralysis","Sea-wave and current manipulation"],
+      weaknesses:["Ritual offerings and festival appeasement","Sacred boundaries around shrine gates","Iron weapons wielded by shrine priests"],
+      culturalNote:"The Ushi-oni Matsuri in Uwajima, Ehime, features a famous parade float — a 5-meter mechanical bull-spider beast — used to ritually drive the spirit away each summer.",
+      famousExample:"The Ushi-oni of the Shimane coast — fishermen who ventured out at the full moon were found drowned, with strange hoofprint-like marks in the sand."
+    },
+    {
+      id:"wanyudo", name:"Wanyūdō", kanji:"輪入道", reading:"わにゅうどう", type:"yokai", category:"undead", dangerLevel:5,
+      habitat:"Roads, crossroads, especially around ancient Kyoto", region:"Kinai region",
+      era:"Heian Period",
+      description:"The Wanyūdō ('wheel monk') appears as a burning oxcart wheel with the tormented face of a corrupt former lord embedded and screaming in the hub, ceaselessly rolling through the night roads. Condemned to this eternal punishment for his cruelty in life, he tears out the souls of those who look at him. His passage leaves a trail of fire, and the sound of his approach precedes him like distant rolling thunder.",
+      powers:["Soul extraction from onlookers","Fire generation and fire trail","Flight and supernatural speed","Eternal self-perpetuating motion","Terror aura"],
+      weaknesses:["The sight of a mother holding a newborn child can pause him","Cannot cross sacred boundaries","Cannot enter places protected by Fudō Myōō"],
+      culturalNote:"A Heian court lady reaches down to touch the Wanyūdō as it passes beneath her veranda; it tears off her leg and carries it to hell. This story is one of Japan's oldest kaidan.",
+      famousExample:"The original Heian-period tale: a court lady witnesses the Wanyūdō passing and, ignoring its warning, is attacked — her leg is severed and taken to the underworld."
+    },
+    {
+      id:"ittan-momen", name:"Ittan-momen", kanji:"一反木綿", reading:"いったんもめん", type:"yokai", category:"object-spirit", dangerLevel:3,
+      habitat:"Night skies, countryside roads after dark", region:"Kagoshima, Kyushu",
+      era:"Edo Period",
+      description:"The Ittan-momen ('one tan of cotton') is a long strip of white cotton cloth — exactly one tan, the amount needed to make a kimono — that comes to life at night and takes to the skies. It flies gracefully like a ribbon through the dark air and descends on travelers, wrapping itself around their heads to strangle or suffocate them. Its movement is eerily beautiful until it suddenly drops toward a victim.",
+      powers:["Silent nocturnal flight","Strangling and suffocation","Extreme diving speed","Flexibility and toughness — hard to tear"],
+      weaknesses:["Sharp blades can cut it","Dawn light forces it back to an inert state","Fire"],
+      culturalNote:"A classic tsukumogami — an object that gains spirit after 100 years. The Ittan-momen became beloved through Shigeru Mizuki's 'GeGeGe no Kitarō' manga and anime series.",
+      famousExample:"GeGeGe no Kitarō's companion Ittan-momen, who in the manga serves as a heroic flying transport for the yokai heroes — a gentle rehabilitation of the fearsome spirit."
+    },
+    {
+      id:"baku", name:"Baku", kanji:"獏", reading:"ばく", type:"yokai", category:"celestial", dangerLevel:1,
+      habitat:"The boundary between sleep and wakefulness", region:"Nationwide",
+      era:"Ancient (from Chinese tradition)",
+      description:"The Baku is a divine dream-devouring chimera assembled from the leftover parts when the gods finished creating all other animals — the trunk of an elephant, the eyes of a rhinoceros, the paws of a tiger, the tail of an ox, and the body of a bear. It travels to sleeping humans who call on it after nightmares and consumes the evil dream, bringing peaceful rest. However, calling on it too often may lead it to consume one's good dreams and future fortune as well.",
+      powers:["Consuming and destroying nightmares","Entering the dream realm","Granting peaceful sleep and rest","Absorbing misfortune as well as evil dreams if overused"],
+      weaknesses:["Misuse of its name makes it turn against the dreamer","Bound by the invocation: 'Baku-san, come eat my dream'"],
+      culturalNote:"Pictures of the Baku are placed under pillows to ward off nightmares. Children still invoke 'Baku-san' after bad dreams. The word for tapir in Japanese, 'baku,' comes from this legend.",
+      famousExample:"Katsushika Hokusai depicted the Baku in several illustrated books; its classic form appears on countless New Year's cards and pillow charms across Japan."
+    },
+    {
+      id:"nue", name:"Nue", kanji:"鵺", reading:"ぬえ", type:"yokai", category:"chimera", dangerLevel:4,
+      habitat:"Imperial palace grounds, pine forests at night", region:"Kyoto, Kansai",
+      era:"Heian Period",
+      description:"The Nue is a monstrous chimera with the head of a monkey, the body of a tanuki, the legs of a tiger, and a serpent for a tail. Its cry in the night sounds like a thrush singing — hauntingly beautiful yet deeply unsettling. Its very presence caused Emperor Konoe to fall gravely ill from mysterious dread, and a black cloud was seen to hang over the palace whenever it appeared.",
+      powers:["Causing fatal illness and malaise by proximity","Shapeshifting into a black cloud","Fearsome combat capability","Paralyzing terrifying cry at night"],
+      weaknesses:["A sacred arrow from a divinely-protected archer","Firelight and loud commotion exposing its true form"],
+      culturalNote:"The Nue gave its name to the Japanese expression for something formless yet frightening. It appears in Noh plays and the Heike Monogatari (Tale of the Heike).",
+      famousExample:"Minamoto no Yorimasa shoots the Nue as it passes over the Emperor's palace — recorded in the Heike Monogatari as one of the great heroic feats of the age."
+    },
+    {
+      id:"raiju", name:"Raijū", kanji:"雷獣", reading:"らいじゅう", type:"yokai", category:"nature-spirit", dangerLevel:3,
+      habitat:"Storm clouds, lightning-struck trees", region:"Nationwide",
+      era:"Ancient to present",
+      description:"The Raijū is a creature made of pure lightning energy, typically appearing as a white wolf, blue weasel, or electric cat. It travels inside thunderbolts, and its claws scar the bark of trees that have been struck. Folk belief holds that it sleeps curled inside a person's navel during thunderstorms, which is why people traditionally sleep on their stomachs during storms — to prevent it from nesting there.",
+      powers:["Riding and controlling lightning","Electrical discharge at will","Extreme speed beyond perception","Piercing any material with its claws","Shapeshifting between animal forms"],
+      weaknesses:["Cannot attack once Fujin (the wind god) disperses the storm","Sacred charms of Raijin's shrine"],
+      culturalNote:"The Raijū is the companion of Raijin, the thunder god. Countless artworks by Hiroshige and Hokusai depict Raijin with Raijū companions amid storm clouds.",
+      famousExample:"Numerous woodblock prints by Utagawa Hiroshige and Katsushika Hokusai depict the thunder god Raijin surrounded by his Raijū as living lightning bolts."
+    },
+    {
+      id:"amanojaku", name:"Amanojaku", kanji:"天邪鬼", reading:"あまのじゃく", type:"yokai", category:"trickster", dangerLevel:2,
+      habitat:"Roadsides, under Buddhist guardian statues, crossroads", region:"Nationwide",
+      era:"Ancient to present",
+      description:"The Amanojaku is a small, perverse demon embodying the spirit of contradiction. It reads the hearts and desires of people, then does precisely the opposite — or urges humans toward self-destructive behavior. Despite being antagonistic, it occasionally appears comically crushed beneath the feet of Buddhist guardian statues (Niō), where it has been eternally trapped as a symbol of evil subdued by wisdom.",
+      powers:["Heart-reading — senses desires and wishes","Compulsive perversion and contradiction","Persuasion toward harmful choices","Shapeshifting into desired objects or people"],
+      weaknesses:["Perfectly predictable — always does the opposite, which can be exploited","Buddhist guardian deities can bind it eternally"],
+      culturalNote:"The word 'amanojaku' in modern Japanese means a contrary, cantankerous, or perverse person. The figure under guardian statue feet is found in hundreds of temples nationwide.",
+      famousExample:"The folk tale 'Uriko-hime' — an Amanojaku devours a young princess, takes her form, and is finally exposed and destroyed."
+    },
+    {
+      id:"zashiki-warashi", name:"Zashiki-warashi", kanji:"座敷童子", reading:"ざしきわらし", type:"yokai", category:"household-spirit", dangerLevel:1,
+      habitat:"Old traditional houses, wealthy merchant homes", region:"Tohoku (primarily Iwate Prefecture)",
+      era:"Edo Period to present",
+      description:"The Zashiki-warashi ('parlor child') is a benevolent household spirit appearing as a red-faced child of five or six years old with messy hair — either a boy or a girl. Its presence brings fortune, prosperity, and happiness to the household it inhabits. If it leaves, misfortune follows swiftly — fortunes may collapse and families decline. It must be respected and entertained, as it is fond of mischief and demands playful attention.",
+      powers:["Bestowing fortune and prosperity","Invisible presence detectable only by soft sounds or distant laughter","Appearing in dreams to warn the household","Leaving when disrespected or neglected"],
+      weaknesses:["Neglect or contempt drives it away","Demolishing or radically changing its room destroys it"],
+      culturalNote:"Traditional inns (ryokan) in Iwate often claim a resident Zashiki-warashi as a prized attraction. The Hotel Kozuya in Ichinoseki became famous for its reported Zashiki-warashi sightings.",
+      famousExample:"The Konjaku Zoku Hyaku Monogatari records a family whose fortune dramatically reversed after witnesses saw their Zashiki-warashi departing down the road."
+    },
+    {
+      id:"shuten-doji", name:"Shuten-dōji", kanji:"酒呑童子", reading:"しゅてんどうじ", type:"yokai", category:"demon", dangerLevel:5,
+      habitat:"Mount Ōe (Kyoto Prefecture), Mount Ibuki", region:"Kinai region (Kansai)",
+      era:"Heian Period",
+      description:"Shuten-dōji ('drunken boy demon lord') is the most powerful Oni in Japanese mythology — a towering demon standing approximately five meters tall, with five horns, fifteen eyes, and skin the color of red lacquer. He led an army of oni retainers from his fortress on Mount Ōe, abducting aristocratic women and feasting on human flesh and sake. He was finally defeated by the hero Minamoto no Yorimitsu through the use of sacred sake and divine disguise.",
+      powers:["Immense supernatural strength beyond any other Oni","Near-invulnerability to weapons","Command over entire armies of oni","Magical sake that robs victims of all will","Multiple eyes granting 360-degree vision"],
+      weaknesses:["The sacred sake 'shinpen kidoku no sake' from the four guardian kings weakens his supernatural invulnerability when consumed","Deception — he is undone by trusting disguised warriors"],
+      culturalNote:"Shuten-dōji's defeat is one of Japan's most celebrated demon-slaying tales, depicted in the magnificent illustrated scroll 'Ōeyama Ekotoba' (a national treasure).",
+      famousExample:"The great expedition to Mount Ōe, led by Minamoto no Yorimitsu and his four loyal retainers (the Shitennō), depicted in the Ōeyama Ekotoba scroll."
+    },
+    {
+      id:"yamata-no-orochi", name:"Yamata no Orochi", kanji:"八岐大蛇", reading:"やまたのおろち", type:"yokai", category:"serpent-god", dangerLevel:5,
+      habitat:"Koshi province river valleys", region:"Izumo region (Shimane Prefecture)",
+      era:"Age of the Gods (mythological)",
+      description:"Yamata no Orochi is an eight-headed, eight-tailed divine serpent of unimaginable proportions — so vast that its body spans eight valleys and eight mountains. Each head possessed different destructive powers. It demanded a yearly tribute of virgin daughters from the Kushi-nadahime clan. The storm god Susanoo, exiled from the heavens, defeated it by getting all eight heads simultaneously drunk on sake, then destroyed each with the legendary Sword of Kusanagi found in its eighth tail.",
+      powers:["Eight heads each with different devastating powers","Body spanning multiple valleys and mountains","Near-invulnerable scale armor","Control of weather and flooding"],
+      weaknesses:["Sake — all eight heads drink simultaneously and can be paralyzed at once","The sacred Sword of Totsuka-no-Tsurugi wielded by Susanoo"],
+      culturalNote:"One of Japan's oldest myths, recorded in the Kojiki (712 AD) and Nihon Shoki (720 AD). The Kusanagi-no-Tsurugi sword found in its eighth tail became one of the three Imperial Treasures of Japan.",
+      famousExample:"The defeat of Yamata no Orochi by Susanoo, god of storms — a foundational myth of Japanese identity in the Kojiki, Japan's oldest written chronicle."
+    },
+    {
+      id:"kirin", name:"Kirin", kanji:"麒麟", reading:"きりん", type:"yokai", category:"celestial", dangerLevel:1,
+      habitat:"Sacred groves, righteous rulers' gardens", region:"Nationwide (extremely rare)",
+      era:"Ancient (from Chinese tradition)",
+      description:"The Kirin is a celestial chimeric creature combining a dragon's scales, a deer's grace, an ox's hooves, and a lion's mane — appearing only near wise and virtuous rulers or to herald the birth of a great sage. So gentle is the Kirin that it does not bend a blade of grass beneath its hooves, does not harm a single insect, and exhales a sacred fire that burns only the corrupt. It is the ultimate omen of benevolent governance.",
+      powers:["Perfect gentleness — cannot harm any living being","Appearance as divine omen for great leaders","Walking on water and through air","Breathing sacred fire that affects only the corrupt","Longevity of thousands of years"],
+      weaknesses:["Will not manifest in troubled or unjust times","Disappears immediately upon witnessing injustice"],
+      culturalNote:"The Kirin gave its name to Japan's famous Kirin Brewery. The giraffe is called 'kirin' in Japanese because early travelers thought the African animal was the legendary creature.",
+      famousExample:"The appearance of a Kirin to Confucius' mother before his birth, and the sighting that foretold the end of the Zhou dynasty — tales that entered Japan through Chinese literary tradition."
+    },
+    {
+      id:"kuchisake-onna", name:"Kuchisake-onna", kanji:"口裂け女", reading:"くちさけおんな", type:"yokai", category:"vengeful-spirit", dangerLevel:4,
+      habitat:"Night streets, empty alleys, school routes", region:"Nationwide (originated Gifu, 1979)",
+      era:"Modern (1979 – Present)",
+      description:"The Kuchisake-onna ('slit-mouth woman') is a modern urban legend that rapidly became folkloric — a woman in a surgical mask who approaches travelers at night and asks 'Am I beautiful?' If answered no, she kills them with her scissors. If answered yes, she removes her mask to reveal her mouth slit ear to ear, and asks again. She is said to run faster than a car and cannot be outpaced — only tricked through specific responses.",
+      powers:["Supernatural speed — cannot be outrun","Scissors or sickle weapons","Forcing impossible choices leading to death","Terror paralysis from her revealed face"],
+      weaknesses:["Answering 'average' or 'so-so' confuses her","Throwing candy — she must stop to pick it up","Saying 'pomade' three times","Hard boiled sweets she cannot resist gathering"],
+      culturalNote:"This legend spread through Japan in 1979 causing mass panic and school closures — a documented social contagion. Scholars study it as a case of modern folklore creation and mass hysteria.",
+      famousExample:"The 1979 panic that swept Japan: reports spread from Gifu nationwide, causing parents to escort children to school and schools to close temporarily."
+    },
+
+    // ===================== YUREI =====================
+    {
+      id:"onryo", name:"Onryō", kanji:"怨霊", reading:"おんりょう", type:"yurei", category:"onryo", dangerLevel:5,
+      habitat:"Places of death, wells, water, old houses", region:"Nationwide",
+      era:"Heian Period to present",
+      description:"The Onryō is the quintessential vengeful ghost — the spirit of a person (almost always a woman) who died consumed by extreme negative emotions: jealousy, sorrow, hatred, or a grievance left unresolved. Recognized by their white burial kimono, long disheveled black hair hiding the face, corpse-pale skin, and crab-like contorted movements, Onryō are uniquely dangerous because their curse spreads like a contagion — killing anyone who encounters them.",
+      powers:["Causing fatal illness and natural catastrophes","Spreading lethal curses to anyone who witnesses them","Telekinesis and poltergeist activity","Appearing in dreams and reflective surfaces","Indestructible — cannot be killed, only appeased"],
+      weaknesses:["Having their specific grievance resolved or avenged","Buddhist memorial rites performed precisely correctly","Being properly mourned with sincere compassion"],
+      culturalNote:"The Onryō archetype defines modern J-horror. Sadako from 'Ring,' Kayako from 'Ju-On,' and dozens of horror films descend from this tradition. White burial kimono and loose black hair are universal horror icons derived from traditional funerary practice.",
+      famousExample:"Lady Rokujō in Genji Monogatari — driven by jealousy for Prince Genji, her spirit possesses and kills his wives and lovers, even while she herself is still alive."
+    },
+    {
+      id:"funayurei", name:"Funayūrei", kanji:"船幽霊", reading:"ふなゆうれい", type:"yurei", category:"sea-ghost", dangerLevel:4,
+      habitat:"Open ocean, harbors at night, during storms", region:"Coastal Japan (all regions)",
+      era:"Ancient to present",
+      description:"The Funayūrei are the ghosts of those who drowned at sea — eternally wandering the ocean and dragging the living down to join them. They rise from the water at night or in storms as pale figures in white burial robes, beckoning to sailors. They demand ladles from ships, and if given one, scoop seawater into the vessel until it sinks. Sailors must carry ladles with holes bored in the bottom as a safeguard.",
+      powers:["Capsizing ships by pouring seawater","Weather manipulation to create storms","Swarming in great numbers","Drawing victims into the water","Appearing as drowned loved ones"],
+      weaknesses:["Ladles with holes bored in the bottom — water runs out before it can sink the ship","Gongs and drums played loudly","Specific prayers recited over the sea at dusk"],
+      culturalNote:"The tradition of keeping perforated ladles on fishing boats persists in some coastal communities. The Funayūrei of the Shimonoseki Strait are linked to the drowned Heike warriors of 1185.",
+      famousExample:"The drowned Heike clan after the Battle of Dan-no-ura (1185) — the mass drowning created the most famous Funayūrei haunting; fishermen in the Shimonoseki Strait still speak of it today."
+    },
+    {
+      id:"ubume", name:"Ubume", kanji:"産女", reading:"うぶめ", type:"yurei", category:"maternal-spirit", dangerLevel:2,
+      habitat:"Riverbanks, crossroads at night, near maternity wards", region:"Nationwide",
+      era:"Ancient to present",
+      description:"The Ubume is the ghost of a woman who died during childbirth or leaving an infant behind, consumed by maternal love she cannot relinquish. She appears at night, sometimes carrying her baby, seeking to buy sweets from shops for the child — paying with coins that turn to leaves by morning. The baby she hands to strangers grows heavier and heavier until it is immovable — it becomes a stone, a manifestation of petrified maternal grief.",
+      powers:["Carrying a child that becomes supernaturally heavy","Paying with leaves that appear as valid coins","Crossing rivers (always associated with water)","Appearing in guise of a living woman"],
+      weaknesses:["Compassion — a person who truly cares for the child can break the cycle","Properly mourning and burying her alongside her infant"],
+      culturalNote:"The Ubume connects Buddhist ideas about attachment in death with deeply held cultural anxieties about maternal loss. Natsuhiko Kyogoku's novel 'Ubume no Natsu' (Summer of the Ubume) made her famous in modern fiction.",
+      famousExample:"Countless folk tales of travelers buying candy from a mysterious woman at night, only to find the coins are leaves in the morning and the grave of a recently-deceased mother nearby."
+    },
+    {
+      id:"goryo", name:"Goryō", kanji:"御霊", reading:"ごりょう", type:"yurei", category:"noble-spirit", dangerLevel:4,
+      habitat:"Imperial capital, old shrine grounds, political centers", region:"Kyoto (Heian-kyō)",
+      era:"Heian Period",
+      description:"The Goryō are the vengeful spirits of aristocrats, imperial princes, and high officials who died after suffering political injustice, exile, or execution. Their accumulated resentment was believed to cause epidemics, droughts, and national catastrophes. To appease them and transform their wrath into protection, they were deified and given their own shrines. The most powerful Goryō became legitimate protective deities — their anger transformed into divine power through sincere worship.",
+      powers:["Causing nationwide epidemics and natural disasters","Tormenting political opponents who wronged them","Once properly appeased, becoming powerful protective deities","Appearing in storms and lightning"],
+      weaknesses:["Being properly deified and given a dedicated shrine","Ceremonial Goryō-e festivals of formal appeasement"],
+      culturalNote:"The Goryō cult gave rise to the Gion Matsuri — Kyoto's most famous festival — which began as a plague-appeasement ritual for angry noble spirits in 869 AD.",
+      famousExample:"Sugawara no Michizane (845–903) — demoted and exiled by political rivals, he died in humiliation. Afterward his enemies died suddenly, lightning struck the palace, and floods ravaged the land. He was deified as Tenjin-sama, patron god of scholarship."
+    },
+    {
+      id:"gaki", name:"Gaki", kanji:"餓鬼", reading:"がき", type:"yurei", category:"hungry-ghost", dangerLevel:2,
+      habitat:"Buddhist hell realm (Gakidō); near food and water in the living world", region:"Nationwide (Buddhist concept)",
+      era:"Ancient (from Buddhist tradition)",
+      description:"The Gaki ('hungry ghost') is a spirit from Buddhist cosmology representing the soul of a person who lived a life of extreme greed, selfishness, and craving. Their punishment is an eternal insatiable hunger — their bodies expand enormously while their necks become too thin to swallow, and their mouths breathe fire that incinerates all food before it reaches them. They roam the earth during Obon, the Festival of the Dead, and can possess the living with overwhelming hunger.",
+      powers:["Spreading hunger and famine in areas they inhabit","Causing insatiable appetite when they possess the living","Multiplying in areas of waste and excess"],
+      weaknesses:["Buddhist sutras and memorial ceremonies","The ritual Segaki ceremony feeds and releases them during Obon","Generous giving (the opposite of their sin in life)"],
+      culturalNote:"Obon festival includes Segaki rites to feed and appease the Gaki. The 12th-century 'Gaki Zōshi' scroll (national treasure) depicts the Gaki realms in vivid, disturbing detail.",
+      famousExample:"The Gaki Zōshi (Scroll of Hungry Ghosts) — a late Heian period illustrated scroll showing the various categories of Gaki and the torments of the hungry ghost realm."
+    },
+    {
+      id:"ikiryo", name:"Ikiryō", kanji:"生霊", reading:"いきりょう", type:"yurei", category:"living-spirit", dangerLevel:3,
+      habitat:"The location of the person they haunt", region:"Nationwide",
+      era:"Heian Period to present",
+      description:"The Ikiryō ('living spirit') is uniquely terrifying — it is the unconsciously projected soul of a living person, released by extreme negative emotions: jealousy, obsession, hatred, or unrequited love. Unlike a ghost, the person is still alive and completely unaware their spirit is wandering and causing harm. The targeted person suffers mysterious illness, misfortune, and haunting visions. Even the sender cannot control or recall their own Ikiryō.",
+      powers:["Appearing physically present at distant locations","Causing illness and misfortune to targeted individuals","Entering dreams and creating nightmares","Possessing people with the sender's obsessive emotions"],
+      weaknesses:["The source person being made aware of their obsession and genuinely resolving it","Exorcism targeting the living person, not just their spirit"],
+      culturalNote:"One of Japanese folklore's most psychologically sophisticated concepts. Lady Rokujō in Genji Monogatari is the most famous example — her Ikiryō kills those she envies while she remains unaware.",
+      famousExample:"Lady Rokujō in The Tale of Genji — her spirit, driven by jealousy over Prince Genji's other lovers, possesses and kills his wives while she herself is alive and horrified when she discovers what she has done."
+    },
+    {
+      id:"dorotabo", name:"Dorotabō", kanji:"泥田坊", reading:"どろたぼう", type:"yurei", category:"land-spirit", dangerLevel:3,
+      habitat:"Rice paddies, abandoned or neglected farmland", region:"Rural Japan",
+      era:"Edo Period",
+      description:"The Dorotabō is the ghost of a farmer who devoted his entire life to cultivating a beloved rice paddy with tender care, only to have his descendants sell or neglect the land after his death. His spirit rises from the muddy water — a one-eyed figure with three grasping fingers — screaming into the night: 'Give back my field!' (Ore no tanbo wo kaese!). He is a spirit of agricultural grief, embodying Japan's profound spiritual connection to the cultivated land.",
+      powers:["Rising from rice paddy mud","Screaming curse bringing misfortune to those who neglect agricultural land","Driving away livestock and agricultural animals","Appearing to descendants in dreams"],
+      weaknesses:["Properly cultivating and caring for the land he once loved","Genuine apology and proper memorial rites at the paddy"],
+      culturalNote:"The Dorotabō reflects traditional Japanese agricultural values and the spiritual bond between farmers and their land. As Japan's rural population declined, the figure became newly resonant.",
+      famousExample:"Shigeru Mizuki's sympathetic Dorotabō from 'GeGeGe no Kitarō' — depicted not as a villain but as a heartbroken old farmer whose only desire is to see his rice paddies properly tended."
+    },
+    {
+      id:"oiwa", name:"Oiwa", kanji:"お岩", reading:"おいわ", type:"yurei", category:"onryo", dangerLevel:5,
+      habitat:"Old houses, wells, lanterns, reflective surfaces", region:"Edo (Tokyo)",
+      era:"Edo Period (1825 play)",
+      description:"Oiwa is Japan's most famous and feared individual ghost — the spirit of a devoted wife who was slowly poisoned by her treacherous husband Iemon so he could marry into wealth. The poison caused her hair to fall out in clumps, her face to swell grotesquely, and her left eye to droop. She died in anguish and became a devastating Onryō whose curse destroyed everyone connected to her murderer.",
+      powers:["Appearing as her disfigured form in lanterns and mirrors","Cursing all who participated in her betrayal","Causing hallucinations and madness in her killer","Haunting across locations and generations","Inescapable — her curse cannot be outrun"],
+      weaknesses:["Her curse ends only with true justice and memorial rites at her grave"],
+      culturalNote:"From the Kabuki play 'Yotsuya Kaidan' (1825), considered Japan's greatest ghost story. Actors traditionally visit her grave (Myōgyōji temple, Tokyo) before performing to avoid her curse.",
+      famousExample:"Yotsuya Kaidan — still performed in Kabuki today, the famous scene of Oiwa's disfigured face appearing in a paper lantern is one of the most iconic images in all of Japanese horror."
+    },
+    {
+      id:"okiku", name:"Okiku", kanji:"お菊", reading:"おきく", type:"yurei", category:"onryo", dangerLevel:4,
+      habitat:"Wells, old estates, ancestral residences", region:"Himeji, Harima (Hyogo Prefecture)",
+      era:"Edo Period",
+      description:"Okiku is the ghost of a servant girl thrown into a well by her cruel master or a rejected suitor, following a dispute over a set of ten precious plates — whether she broke one accidentally or was falsely accused. Every night her spirit descends into the well and counts the plates: 'one... two... three...' up to nine, then lets out an unearthly, blood-curdling shriek as she realizes the tenth is forever missing. Her counting is said to drive listeners to madness.",
+      powers:["Haunting the well and surrounding property","Driving those who hear her counting to madness and despair","Appearing as a pale figure rising from well water","Attaching her curse to the family line"],
+      weaknesses:["Someone shouting 'ten!' when she reaches nine — completing her count confuses and temporarily silences her","Proper memorial and justice for her wrongful death"],
+      culturalNote:"The Okiku story is associated with Himeji Castle's 'Okiku-ido' (Okiku's Well). She directly inspired the character of Sadako in the Ring horror franchise.",
+      famousExample:"Banshū Sara Yashiki (The Plate Mansion of Banshū) — an Edo-period kaidan still performed in theater and recited to children across Japan."
+    }
+  ];
+
+  /* ================================================================
+     STATE
+  ================================================================ */
+  let state = {
+    tab: 'all',
+    search: '',
+    category: 'all',
+    dangerFilter: 0,
+    sort: 'name',
+    modalIndex: -1,
+    studyIndex: 0,
+    studyFlipped: false,
+    studyType: 'all',
+    studyQueue: []
+  };
+
+  /* ================================================================
+     CATEGORY COLORS helper
+  ================================================================ */
+  function getCategoryColor(cat) {
+    return (CATEGORIES[cat] && CATEGORIES[cat].color) || '#888';
+  }
+  function getCategoryLabel(cat) {
+    return (CATEGORIES[cat] && CATEGORIES[cat].label) || cat;
+  }
+  function getDangerColor(level) {
+    return DANGER_COLORS[level] || '#888';
+  }
+  function renderDangerDots(level) {
+    return Array.from({length:5}, (_,i) => {
+      const fill = i < level ? getDangerColor(level) : 'var(--color-border)';
+      return `<div class="danger-dot" style="background:${fill}"></div>`;
+    }).join('');
+  }
+  function renderDangerBar(level) {
+    return Array.from({length:5}, (_,i) => {
+      const fill = i < level ? getDangerColor(level) : 'var(--color-border)';
+      return `<div class="danger-segment" style="background:${fill}"></div>`;
+    }).join('');
+  }
+
+  /* ================================================================
+     FILTER & SORT
+  ================================================================ */
+  function getFiltered() {
+    let result = DATA.slice();
+    if (state.tab !== 'all') result = result.filter(e => e.type === state.tab);
+    if (state.category !== 'all') result = result.filter(e => e.category === state.category);
+    if (state.dangerFilter > 0) result = result.filter(e => e.dangerLevel === state.dangerFilter);
+    if (state.search.trim()) {
+      const q = state.search.toLowerCase();
+      result = result.filter(e =>
+        e.name.toLowerCase().includes(q) ||
+        e.kanji.includes(q) ||
+        e.reading.includes(q) ||
+        e.description.toLowerCase().includes(q) ||
+        e.region.toLowerCase().includes(q) ||
+        e.powers.some(p => p.toLowerCase().includes(q)) ||
+        (e.category && getCategoryLabel(e.category).toLowerCase().includes(q))
+      );
+    }
+    if (state.sort === 'name') result.sort((a,b) => a.name.localeCompare(b.name));
+    else if (state.sort === 'danger-asc') result.sort((a,b) => a.dangerLevel - b.dangerLevel);
+    else if (state.sort === 'danger-desc') result.sort((a,b) => b.dangerLevel - a.dangerLevel);
+    return result;
+  }
+
+  /* ================================================================
+     RENDER GRID
+  ================================================================ */
+  function renderGrid() {
+    const grid = document.getElementById('entry-grid');
+    const filtered = getFiltered();
+    document.getElementById('filter-count').textContent = `${filtered.length} entr${filtered.length === 1 ? 'y' : 'ies'}`;
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="no-results">
+        <div class="no-results-kanji">見つからない</div>
+        <div class="no-results-text">No entries found. Try adjusting your filters.</div>
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map((entry, idx) => {
+      const catColor = getCategoryColor(entry.category);
+      const catLabel = getCategoryLabel(entry.category);
+      const globalIdx = DATA.indexOf(entry);
+      return `<article class="entry-card" role="listitem" onclick="openModal(${globalIdx})" aria-label="View details for ${entry.name}">
+        <div class="card-stripe" style="background:${catColor}"></div>
+        <div class="card-image">
+          <img src="images/${entry.id}.png" alt="${entry.name} illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+        </div>
+        <div class="card-body">
+          <div class="card-header">
+            <div class="card-names">
+              <h3 class="card-name">${entry.name}</h3>
+              <div class="card-kanji">${entry.kanji} · ${entry.reading}</div>
+            </div>
+            <span class="card-type-badge badge-${entry.type}">${entry.type === 'yokai' ? '妖怪' : '幽霊'}</span>
+          </div>
+          <div class="card-category">
+            <div class="cat-dot" style="background:${catColor}"></div>
+            ${catLabel}
+          </div>
+          <p class="card-desc">${entry.description}</p>
+          <div class="card-footer">
+            <div class="danger-dots">${renderDangerDots(entry.dangerLevel)}</div>
+            <span class="card-region">${entry.region}</span>
+          </div>
+        </div>
+        <div class="card-hover-hint" aria-hidden="true">
+          <span class="view-btn-inner">View Details →</span>
+        </div>
+      </article>`;
+    }).join('');
+  }
+
+  /* ================================================================
+     CATEGORY CHIPS
+  ================================================================ */
+  function buildCategoryChips() {
+    const chipsEl = document.getElementById('category-chips');
+    const usedCats = [...new Set(DATA.map(e => e.category))].sort();
+    const html = `<button class="chip ${state.category === 'all' ? 'active' : ''}" data-category="all">All</button>`
+      + usedCats.map(cat => {
+          const active = state.category === cat ? 'active' : '';
+          const col = getCategoryColor(cat);
+          return `<button class="chip ${active}" data-category="${cat}" style="${active ? '' : `border-color:${col}33`}">
+            <div class="chip-dot" style="background:${col}"></div>
+            ${getCategoryLabel(cat)}
+          </button>`;
+        }).join('');
+    chipsEl.innerHTML = html;
+    chipsEl.querySelectorAll('.chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.category = btn.dataset.category;
+        chipsEl.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        renderGrid();
+      });
+    });
+  }
+
+  /* ================================================================
+     TAB
+  ================================================================ */
+  function setTab(tab) {
+    state.tab = tab;
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.getElementById('tab-' + tab);
+    if (btn) btn.classList.add('active');
+    renderGrid();
+    if (tab !== 'study') {
+      document.getElementById('compendium').scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+  }
+
+  /* ================================================================
+     MODAL
+  ================================================================ */
+  function openModal(globalIdx) {
+    const entry = DATA[globalIdx];
+    if (!entry) return;
+    state.modalIndex = globalIdx;
+    const catColor = getCategoryColor(entry.category);
+    document.getElementById('modal-stripe').style.background = catColor;
+    document.getElementById('modal-name').textContent = entry.name;
+    document.getElementById('modal-kanji').textContent = `${entry.kanji} · ${entry.reading}`;
+    document.getElementById('modal-badges').innerHTML = `
+      <span class="card-type-badge badge-${entry.type}">${entry.type === 'yokai' ? '妖怪 Yokai' : '幽霊 Yūrei'}</span>
+      <span class="card-type-badge" style="background:${catColor}22;color:${catColor};border:1px solid ${catColor}44">${getCategoryLabel(entry.category)}</span>
+    `;
+    document.getElementById('modal-body').innerHTML = `
+      <div class="modal-illustration">
+        <img src="images/${entry.id}.png" alt="${entry.name} illustration" onerror="this.parentElement.style.display='none'">
+      </div>
+      <div class="modal-meta-grid">
+        <div class="meta-item"><div class="meta-label">Region</div><div class="meta-value">${entry.region}</div></div>
+        <div class="meta-item"><div class="meta-label">Habitat</div><div class="meta-value">${entry.habitat}</div></div>
+        <div class="meta-item"><div class="meta-label">Era</div><div class="meta-value">${entry.era}</div></div>
+        <div class="meta-item">
+          <div class="meta-label">Danger Level</div>
+          <div class="danger-display"><div class="danger-bar">${renderDangerBar(entry.dangerLevel)}</div></div>
+          <div style="font-size:var(--text-xs);color:${getDangerColor(entry.dangerLevel)};font-family:var(--font-display);letter-spacing:0.06em;margin-top:0.25rem;font-weight:700">${DANGER_LABELS[entry.dangerLevel]}</div>
+        </div>
+      </div>
+      <div>
+        <div class="modal-section-title">Overview</div>
+        <p class="modal-description">${entry.description}</p>
+      </div>
+      <div>
+        <div class="modal-section-title">Powers & Abilities</div>
+        <ul class="power-list">${entry.powers.map(p => `<li class="power-item"><div class="power-dot" style="background:var(--color-accent)"></div>${p}</li>`).join('')}</ul>
+      </div>
+      <div>
+        <div class="modal-section-title">Weaknesses</div>
+        <ul class="power-list">${entry.weaknesses.map(w => `<li class="power-item weakness-item"><div class="power-dot" style="background:var(--color-teal)"></div>${w}</li>`).join('')}</ul>
+      </div>
+      <div>
+        <div class="modal-section-title">Cultural Significance</div>
+        <div class="culture-box">${entry.culturalNote}</div>
+      </div>
+      <div class="famous-box">
+        <div class="famous-label">Famous Example</div>
+        <div class="famous-text">${entry.famousExample}</div>
+      </div>
+      <div class="modal-nav">
+        <button class="modal-nav-btn" onclick="modalNav(-1)" id="modal-prev" ${globalIdx === 0 ? 'disabled' : ''}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          Previous
+        </button>
+        <button class="modal-nav-btn" onclick="modalNav(1)" id="modal-next" ${globalIdx === DATA.length-1 ? 'disabled' : ''}>
+          Next
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    `;
+    const overlay = document.getElementById('modal-overlay');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('modal').scrollTop = 0;
+  }
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function modalNav(dir) {
+    const next = state.modalIndex + dir;
+    if (next >= 0 && next < DATA.length) openModal(next);
+  }
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.getElementById('modal-overlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+
+  /* ================================================================
+     STUDY MODE
+  ================================================================ */
+  function buildStudyQueue() {
+    let q = DATA.slice();
+    if (state.studyType !== 'all') q = q.filter(e => e.type === state.studyType);
+    state.studyQueue = q;
+    state.studyIndex = 0;
+    state.studyFlipped = false;
+  }
+  function openStudy() {
+    buildStudyQueue();
+    renderFlashcard();
+    document.getElementById('study-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeStudy() {
+    document.getElementById('study-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function setStudyType(type) {
+    state.studyType = type;
+    document.querySelectorAll('.study-type-btn').forEach(b => b.classList.toggle('active', b.dataset.stype === type));
+    buildStudyQueue();
+    renderFlashcard();
+  }
+  function renderFlashcard() {
+    const q = state.studyQueue;
+    if (!q.length) return;
+    const entry = q[state.studyIndex];
+    const fc = document.getElementById('flashcard-inner');
+    fc.classList.remove('flipped');
+    state.studyFlipped = false;
+    const fcImg = document.getElementById('fc-image');
+    fcImg.src = 'images/' + entry.id + '.png';
+    fcImg.alt = entry.name + ' illustration';
+    fcImg.parentElement.style.display = '';
+    document.getElementById('fc-kanji').textContent = entry.kanji;
+    document.getElementById('fc-name').textContent = entry.name;
+    document.getElementById('fc-reading').textContent = entry.reading;
+    document.getElementById('fc-type').innerHTML = `<span class="card-type-badge badge-${entry.type}">${entry.type === 'yokai' ? '妖怪 Yokai' : '幽霊 Yūrei'}</span>`;
+    document.getElementById('fc-back-name').textContent = entry.name;
+    document.getElementById('fc-back-badges').innerHTML = `
+      <span class="card-type-badge badge-${entry.type}">${entry.type === 'yokai' ? '妖怪' : '幽霊'}</span>
+      <span class="card-type-badge" style="background:${getCategoryColor(entry.category)}22;color:${getCategoryColor(entry.category)};border:1px solid ${getCategoryColor(entry.category)}44">${getCategoryLabel(entry.category)}</span>
+    `;
+    document.getElementById('fc-desc').textContent = entry.description;
+    document.getElementById('fc-powers').innerHTML = entry.powers.map(p => `<li class="back-power">${p}</li>`).join('');
+    document.getElementById('fc-weaknesses').innerHTML = entry.weaknesses.map(w => `<li class="back-power" style="color:var(--color-teal)">${w}</li>`).join('');
+    const total = q.length;
+    const current = state.studyIndex + 1;
+    document.getElementById('study-counter').textContent = `${current} / ${total}`;
+    document.getElementById('study-progress-fill').style.width = `${(current/total)*100}%`;
+    document.getElementById('study-prev').disabled = state.studyIndex === 0;
+    document.getElementById('study-next').disabled = state.studyIndex === q.length - 1;
+  }
+  function flipCard() {
+    const fc = document.getElementById('flashcard-inner');
+    state.studyFlipped = !state.studyFlipped;
+    fc.classList.toggle('flipped', state.studyFlipped);
+  }
+  function studyNav(dir) {
+    state.studyIndex = Math.max(0, Math.min(state.studyQueue.length - 1, state.studyIndex + dir));
+    renderFlashcard();
+  }
+  function studyRandom() {
+    state.studyIndex = Math.floor(Math.random() * state.studyQueue.length);
+    renderFlashcard();
+  }
+
+  /* ================================================================
+     SEARCH & FILTERS
+  ================================================================ */
+  document.getElementById('search-input').addEventListener('input', e => {
+    state.search = e.target.value;
+    renderGrid();
+  });
+  document.getElementById('sort-select').addEventListener('change', e => {
+    state.sort = e.target.value;
+    renderGrid();
+  });
+  document.getElementById('danger-filter').addEventListener('click', e => {
+    const btn = e.target.closest('.danger-level-btn');
+    if (!btn) return;
+    state.dangerFilter = parseInt(btn.dataset.danger);
+    document.querySelectorAll('.danger-level-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.danger === btn.dataset.danger);
+      b.setAttribute('aria-pressed', b.dataset.danger === btn.dataset.danger ? 'true' : 'false');
+    });
+    renderGrid();
+  });
+
+  /* ================================================================
+     THEME TOGGLE
+  ================================================================ */
+  (function() {
+    const toggle = document.querySelector('[data-theme-toggle]');
+    const root = document.documentElement;
+    let dark = true;
+    root.setAttribute('data-theme', 'dark');
+    toggle && toggle.addEventListener('click', () => {
+      dark = !dark;
+      root.setAttribute('data-theme', dark ? 'dark' : 'light');
+      toggle.setAttribute('aria-label', 'Switch to ' + (dark ? 'light' : 'dark') + ' mode');
+      toggle.innerHTML = dark
+        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+        : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+    });
+  })();
+
+  /* ================================================================
+     FIREFLIES
+  ================================================================ */
+  (function() {
+    const container = document.getElementById('fireflies');
+    for (let i = 0; i < 22; i++) {
+      const ff = document.createElement('div');
+      ff.className = 'firefly';
+      const size = Math.random() * 4 + 2;
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      const dx = (Math.random() - 0.5) * 200;
+      const dy = (Math.random() - 0.5) * 200;
+      const dur = Math.random() * 8 + 6;
+      const delay = Math.random() * -10;
+      const hue = Math.random() > 0.5 ? 50 : 0;
+      ff.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${x}%; top:${y}%;
+        background:${hue === 0 ? '#e63946' : '#ffd166'};
+        box-shadow:0 0 ${size*3}px ${hue === 0 ? '#e6394688' : '#ffd16688'};
+        --dx:${dx}px; --dy:${dy}px;
+        animation-duration:${dur}s;
+        animation-delay:${delay}s;
+      `;
+      container.appendChild(ff);
+    }
+  })();
+
+  /* ================================================================
+     KEYBOARD
+  ================================================================ */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeModal();
+      closeStudy();
+    }
+    if (document.getElementById('modal-overlay').classList.contains('open')) {
+      if (e.key === 'ArrowLeft') modalNav(-1);
+      if (e.key === 'ArrowRight') modalNav(1);
+    }
+    if (document.getElementById('study-overlay').classList.contains('open')) {
+      if (e.key === 'ArrowLeft') studyNav(-1);
+      if (e.key === 'ArrowRight') studyNav(1);
+      if (e.key === ' ') { e.preventDefault(); flipCard(); }
+    }
+  });
+
+  /* ================================================================
+     INIT
+  ================================================================ */
+  buildCategoryChips();
+  renderGrid();
+  </script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>
