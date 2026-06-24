@@ -993,12 +993,13 @@ h3 {
 
   .gumroad-hero::after {
     background:
-      linear-gradient(180deg, rgba(16, 13, 11, 0.62), rgba(16, 13, 11, 0.84)),
-      linear-gradient(90deg, rgba(16, 13, 11, 0.58), rgba(16, 13, 11, 0.2));
+      linear-gradient(180deg, rgba(16, 13, 11, 0.38), rgba(16, 13, 11, 0.68)),
+      linear-gradient(90deg, rgba(16, 13, 11, 0.42), rgba(16, 13, 11, 0.08));
   }
 
   .gumroad-hero-media img {
     object-position: 68% center;
+    filter: saturate(1.06) contrast(1.02) brightness(1.12);
   }
 
   .gumroad-hero h1 {
