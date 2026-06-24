@@ -712,7 +712,8 @@ h3 {
 .gumroad-cover-wall {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-auto-rows: 172px;
+  grid-auto-flow: dense;
+  grid-auto-rows: 220px;
   gap: 14px;
   max-width: 1400px;
   margin: 0 auto;
@@ -720,7 +721,7 @@ h3 {
 
 .gumroad-product {
   position: relative;
-  min-height: 172px;
+  min-height: 220px;
   overflow: hidden;
   border: 1px solid rgba(62, 44, 37, 0.86);
   border-radius: var(--radius);
@@ -734,9 +735,8 @@ h3 {
   grid-column: span 2;
 }
 
-.gumroad-product.tall,
-.gumroad-product.big {
-  grid-row: span 2;
+.gumroad-product.panoramic {
+  grid-column: span 4;
 }
 
 .gumroad-product img {
@@ -775,7 +775,8 @@ h3 {
 }
 
 .gumroad-product.big .product-overlay strong,
-.gumroad-product.wide .product-overlay strong {
+.gumroad-product.wide .product-overlay strong,
+.gumroad-product.panoramic .product-overlay strong {
   font-size: 1.65rem;
 }
 
@@ -962,14 +963,16 @@ h3 {
   .gumroad-product,
   .gumroad-product.wide,
   .gumroad-product.tall,
-  .gumroad-product.big {
+  .gumroad-product.big,
+  .gumroad-product.panoramic {
     grid-column: span 1;
     grid-row: span 1;
   }
 
   .product-overlay strong,
   .gumroad-product.big .product-overlay strong,
-  .gumroad-product.wide .product-overlay strong {
+  .gumroad-product.wide .product-overlay strong,
+  .gumroad-product.panoramic .product-overlay strong {
     font-size: 1.22rem;
   }
 
