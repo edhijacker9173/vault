@@ -1,0 +1,197 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dream Ledger | The Vault by hijacker9173</title>
+    <meta
+      name="description"
+      content="Dream Ledger is a short-video archive for vivid remembered dreams in The Vault by hijacker9173."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#dream-collections">Skip to dream collections</a>
+
+    <header class="site-header">
+      <a class="brand" href="../index.html" aria-label="The Vault by hijacker9173 home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 10.5h10.5c3 0 5.5 2.4 5.5 5.5v18c0-3.1-2.5-5.5-5.5-5.5H9z" />
+            <path d="M33 10.5H22.5c-3 0-5.5 2.4-5.5 5.5v18c0-3.1 2.5-5.5 5.5-5.5H33z" />
+          </svg>
+        </span>
+        <span>
+          <strong>The Vault</strong>
+          <small>by hijacker9173</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <button
+          class="browse-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="vault-drawer"
+          data-drawer-open
+        >
+          <span class="desktop-label">Browse the Vault</span>
+          <span class="mobile-label">Browse</span>
+        </button>
+        <a class="nav-link" href="../about.html">About</a>
+        <a class="nav-link" href="../gumroad.html">Codices</a>
+        <a class="nav-link" href="index.html" aria-current="page">Dream Ledger</a>
+      </nav>
+    </header>
+
+    <div class="drawer-backdrop" data-drawer-close></div>
+
+    <aside class="vault-drawer" id="vault-drawer" aria-labelledby="vault-drawer-title" aria-hidden="true">
+      <div class="drawer-head">
+        <div>
+          <p class="eyebrow">Archive index</p>
+          <h2 id="vault-drawer-title">Browse the Vault</h2>
+        </div>
+        <button class="drawer-close" type="button" data-drawer-close>Close</button>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Collections</p>
+        <a href="../stephenking-bibliography/index.html" data-drawer-link>
+          <span>The King Shelf</span>
+          <small>Stephen King bibliography</small>
+        </a>
+        <a href="../grhplovecraftmythos08/index.html" data-drawer-link>
+          <span>The Mythos Concordance</span>
+          <small>Lovecraft Mythos map</small>
+        </a>
+        <a href="../templar-timeline-atlas/index.html" data-drawer-link>
+          <span>Templar Timeline Atlas</span>
+          <small>Crusades and treasure legends</small>
+        </a>
+        <a href="../The Franklin Expedition 1845%E2%80%931848/index.html" data-drawer-link>
+          <span>The Franklin Expedition</span>
+          <small>Arctic route and discoveries</small>
+        </a>
+        <a href="../YokaiStudies/index.html" data-drawer-link>
+          <span>Yokai Studies</span>
+          <small>Japanese folklore compendium</small>
+        </a>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Codices</p>
+        <a href="../gumroad.html" data-drawer-link>
+          <span>Codices Catalog</span>
+          <small>E-books from the cabinet</small>
+        </a>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Dream Ledger</p>
+        <a href="index.html" data-drawer-link>
+          <span>Dream Ledger</span>
+          <small>Short videos of remembered dreams</small>
+        </a>
+        <a href="cosmos/index.html" data-drawer-link>
+          <span>Cosmos</span>
+          <small>First dream collection</small>
+        </a>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Elsewhere</p>
+        <a href="../about.html" data-drawer-link>
+          <span>About The Vault</span>
+          <small>Why this exists</small>
+        </a>
+      </div>
+    </aside>
+
+    <main id="dream-ledger-main" class="dream-ledger-page">
+      <section class="dream-ledger-hero" aria-labelledby="dream-ledger-title">
+        <div class="dream-ledger-hero-media" aria-hidden="true">
+          <video src="cosmos/cosmos.mp4" poster="cosmos/img1.png" autoplay muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="dream-ledger-hero-copy">
+          <p class="eyebrow">Dream Ledger</p>
+          <h1 id="dream-ledger-title">Catch the dream before it thins.</h1>
+          <p>
+            A vivid short-video ledger for remembered dreams: moving fragments,
+            still afterimages, mood notes, and symbols that might matter later.
+          </p>
+        </div>
+      </section>
+
+      <section id="dream-collections" class="dream-collections" aria-labelledby="dream-collections-title">
+        <div class="section-heading">
+          <p class="eyebrow">Dream collections</p>
+          <h2 id="dream-collections-title">Filed dreams</h2>
+        </div>
+
+        <div class="dream-collection-grid">
+          <a class="dream-collection-card" href="cosmos/index.html" aria-label="Open Cosmos dream collection">
+            <span class="dream-collection-media">
+              <img src="cosmos/img1.png" alt="Cosmic dream still for the Cosmos dream collection." />
+              <span class="dream-play-mark" aria-hidden="true">Play</span>
+            </span>
+            <span class="dream-collection-body">
+              <span class="card-kicker">
+                <span>Dream file 001</span>
+                <span>Cosmos</span>
+              </span>
+              <strong>Cosmos</strong>
+              <span class="dream-collection-copy">
+                A luminous dream sequence of scale, silence, drifting light, and impossible distance.
+              </span>
+              <span class="dream-collection-meta">1 feature video / 7 clips / 7 stills</span>
+            </span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 hijacker9173. All rights reserved.</p>
+    </footer>
+
+    <script>
+      (() => {
+        const drawer = document.getElementById("vault-drawer");
+        const openButton = document.querySelector("[data-drawer-open]");
+        const closeTargets = document.querySelectorAll("[data-drawer-close], [data-drawer-link]");
+
+        function setDrawerState(isOpen) {
+          document.body.classList.toggle("drawer-open", isOpen);
+          drawer.setAttribute("aria-hidden", String(!isOpen));
+          openButton.setAttribute("aria-expanded", String(isOpen));
+
+          if (isOpen) {
+            drawer.querySelector("[data-drawer-close]").focus();
+          } else {
+            openButton.focus();
+          }
+        }
+
+        openButton.addEventListener("click", () => setDrawerState(true));
+
+        closeTargets.forEach((target) => {
+          target.addEventListener("click", () => setDrawerState(false));
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && document.body.classList.contains("drawer-open")) {
+            setDrawerState(false);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
+
