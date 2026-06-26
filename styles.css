@@ -901,18 +901,12 @@ video {
   z-index: 0;
 }
 
-.dream-ledger-hero-media video,
-.dream-ledger-hero-media iframe {
+.dream-ledger-hero-media video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   filter: saturate(1.18) contrast(1.08) brightness(0.76);
-}
-
-.dream-ledger-hero-media iframe {
-  border: 0;
-  pointer-events: none;
 }
 
 .dream-ledger-hero-copy {
@@ -1094,18 +1088,13 @@ video {
   background: #000;
 }
 
-.dream-player-panel video,
-.dream-player-panel iframe {
+.dream-player-panel video {
   width: 100%;
   aspect-ratio: 1 / 1;
   height: auto;
   max-height: min(660px, calc(100dvh - 140px));
   background: #000;
   object-fit: contain;
-}
-
-.dream-player-panel iframe {
-  border: 0;
 }
 
 .dream-info-panel {
@@ -1297,8 +1286,7 @@ video {
       linear-gradient(90deg, rgba(16, 13, 11, 0.56), rgba(16, 13, 11, 0.1));
   }
 
-  .dream-ledger-hero-media video,
-  .dream-ledger-hero-media iframe {
+  .dream-ledger-hero-media video {
     object-position: center;
     filter: saturate(1.16) contrast(1.02) brightness(1.02);
   }
@@ -1616,6 +1604,8 @@ video {
     transition-duration: 0.01ms !important;
   }
 }
+
+
 
 
 
