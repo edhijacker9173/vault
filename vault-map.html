@@ -1,0 +1,253 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Category Atlas | The Vault by hijacker9173</title>
+    <meta
+      name="description"
+      content="Category Atlas is the site map for The Vault by hijacker9173, grouping research archives, Codices, and Dream Ledger files by shelf."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#category-atlas">Skip to Category Atlas</a>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="The Vault by hijacker9173 home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 10.5h10.5c3 0 5.5 2.4 5.5 5.5v18c0-3.1-2.5-5.5-5.5-5.5H9z" />
+            <path d="M33 10.5H22.5c-3 0-5.5 2.4-5.5 5.5v18c0-3.1 2.5-5.5 5.5-5.5H33z" />
+          </svg>
+        </span>
+        <span>
+          <strong>The Vault</strong>
+          <small>by hijacker9173</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <button
+          class="browse-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="vault-drawer"
+          data-drawer-open
+        >
+          <span class="desktop-label">Browse the Vault</span>
+          <span class="mobile-label">Browse</span>
+        </button>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="gumroad.html">Codices</a>
+        <a class="nav-link" href="dreamledger/index.html">Dream Ledger</a>
+      </nav>
+    </header>
+
+    <div class="drawer-backdrop" data-drawer-close></div>
+
+    <aside class="vault-drawer" id="vault-drawer" aria-labelledby="vault-drawer-title" aria-hidden="true">
+      <div class="drawer-head">
+        <div>
+          <p class="eyebrow">Archive index</p>
+          <h2 id="vault-drawer-title">Browse the Vault</h2>
+        </div>
+        <button class="drawer-close" type="button" data-drawer-close>Close</button>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Collections</p>
+        <a href="stephenking-bibliography/index.html" data-drawer-link>
+          <span>The King Shelf</span>
+          <small>Stephen King bibliography</small>
+        </a>
+        <a href="grhplovecraftmythos08/index.html" data-drawer-link>
+          <span>The Mythos Concordance</span>
+          <small>Lovecraft Mythos map</small>
+        </a>
+        <a href="templar-timeline-atlas/index.html" data-drawer-link>
+          <span>Templar Timeline Atlas</span>
+          <small>Crusades and treasure legends</small>
+        </a>
+        <a href="The Franklin Expedition 1845%E2%80%931848/index.html" data-drawer-link>
+          <span>The Franklin Expedition</span>
+          <small>Arctic route and discoveries</small>
+        </a>
+        <a href="YokaiStudies/index.html" data-drawer-link>
+          <span>Yokai Studies</span>
+          <small>Japanese folklore compendium</small>
+        </a>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Codices</p>
+        <a href="gumroad.html" data-drawer-link>
+          <span>Codices Catalog</span>
+          <small>E-books from the cabinet</small>
+        </a>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Dream Ledger</p>
+        <a href="dreamledger/index.html" data-drawer-link>
+          <span>Dream Ledger</span>
+          <small>Short videos of remembered dreams</small>
+        </a>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Site map</p>
+        <a href="vault-map.html" data-drawer-link>
+          <span>Category Atlas</span>
+          <small>Find the Vault by shelf</small>
+        </a>
+      </div>
+
+      <div class="drawer-section">
+        <p class="drawer-label">Elsewhere</p>
+        <a href="about.html" data-drawer-link>
+          <span>About The Vault</span>
+          <small>Why this exists</small>
+        </a>
+      </div>
+    </aside>
+
+    <main id="category-atlas" class="vault-map-page">
+      <section class="vault-map-hero" aria-labelledby="vault-map-title">
+        <div>
+          <p class="eyebrow">Site map</p>
+          <h1 id="vault-map-title">Category Atlas</h1>
+          <p>
+            A shelf-by-shelf map of the Vault: research archives, published Codices, and Dream Ledger files gathered into one navigable surface.
+          </p>
+        </div>
+        <div class="atlas-stats" aria-label="Vault map counts">
+          <span><strong>5</strong> Research archives</span>
+          <span><strong>12</strong> Codices</span>
+          <span><strong>2</strong> Dream files</span>
+        </div>
+      </section>
+
+      <section class="category-atlas-board" aria-label="Category Atlas shelves">
+        <article class="atlas-lane">
+          <div class="atlas-lane-head">
+            <p class="eyebrow">Shelf 01</p>
+            <h2>Research Archives</h2>
+            <p>Interactive reference works, maps, timelines, concordances, and folklore studies.</p>
+          </div>
+
+          <a class="atlas-card" href="stephenking-bibliography/index.html">
+            <img src="stephenking-bibliography/assets/king-shelf-hero.png" alt="Worn paperbacks on a dark shelf lit by a red lamp." />
+            <span><strong>The King Shelf</strong><small>Stephen King bibliography and searchable reading shelf.</small></span>
+          </a>
+          <a class="atlas-card" href="grhplovecraftmythos08/index.html">
+            <img src="grhplovecraftmythos08/assets/cthulhu-mythos-hero.png" alt="Cthulhu rising over a dark coastal ruin." />
+            <span><strong>The Mythos Concordance</strong><small>Lovecraft entities, settings, tales, and recurring links.</small></span>
+          </a>
+          <a class="atlas-card" href="templar-timeline-atlas/index.html">
+            <img src="templar-timeline-atlas/assets/templar-map-hero.png" alt="A medieval parchment map with route lines and candlelight." />
+            <span><strong>Templar Timeline Atlas</strong><small>Crusades, finance, suppression, and treasure legends.</small></span>
+          </a>
+          <a class="atlas-card" href="The Franklin Expedition 1845%E2%80%931848/index.html">
+            <img src="The Franklin Expedition 1845%E2%80%931848/franklin_banner.png" alt="Ships trapped in Arctic ice during the Franklin Expedition." />
+            <span><strong>The Franklin Expedition</strong><small>Route map, search expeditions, sightings, and wreck discoveries.</small></span>
+          </a>
+          <a class="atlas-card" href="YokaiStudies/index.html">
+            <img src="YokaiStudies/images/kitsune.png" alt="A kitsune fox spirit before a red torii gate under the moon." />
+            <span><strong>Yokai Studies</strong><small>Japanese spirits, tricksters, demons, and household presences.</small></span>
+          </a>
+        </article>
+
+        <article class="atlas-lane">
+          <div class="atlas-lane-head">
+            <p class="eyebrow">Shelf 02</p>
+            <h2>Codices</h2>
+            <p>Finished essays and visual studies, collected for the public publication shelf.</p>
+          </div>
+
+          <a class="atlas-card" href="gumroad.html">
+            <img src="assets/nuclear_sq.jpg" alt="A nuclear-themed codex cover with atomic imagery." />
+            <span><strong>Half-Life</strong><small>A comparative study of two nuclear disasters.</small></span>
+          </a>
+          <a class="atlas-card" href="gumroad.html">
+            <img src="assets/TemplarRect.jpg" alt="A medieval Templar scene." />
+            <span><strong>Knights Templar</strong><small>The order's rise, fall, and afterlife as legend.</small></span>
+          </a>
+          <a class="atlas-card" href="gumroad.html">
+            <img src="assets/ly6Ml-G1J8Urv9ER3zfvD.jpg" alt="A cosmic ritual scene with tentacles and a glowing book." />
+            <span><strong>Lovecraft Guide</strong><small>A complete guide to H. P. Lovecraft and the Cthulhu Mythos.</small></span>
+          </a>
+          <a class="atlas-card" href="gumroad.html">
+            <img src="assets/oiwiU8rxEqJoumB8zxBpv.png" alt="A blue cosmic landscape with distant galaxies and glowing trails." />
+            <span><strong>Invisible Universe</strong><small>Dark matter, cosmology, and unseen structure.</small></span>
+          </a>
+        </article>
+
+        <article class="atlas-lane">
+          <div class="atlas-lane-head">
+            <p class="eyebrow">Shelf 03</p>
+            <h2>Dream Ledger</h2>
+            <p>Short video dreams, still-image afterimages, mood notes, and symbolic fragments.</p>
+          </div>
+
+          <a class="atlas-card" href="dreamledger/metroid/index.html">
+            <img src="dreamledger/metroid/met01.png" alt="A neon sci-fi still from the Metroid dream collection." />
+            <span><strong>Metroid</strong><small>Neon pursuit, alien corridors, and survival instinct.</small></span>
+          </a>
+          <a class="atlas-card" href="dreamledger/cosmos/index.html">
+            <img src="dreamledger/cosmos/img1.png" alt="A cosmic dream still from the Cosmos collection." />
+            <span><strong>Cosmos</strong><small>Scale, silence, drifting light, and impossible distance.</small></span>
+          </a>
+          <a class="atlas-card" href="dreamledger/index.html">
+            <img src="dreamledger/cosmos/img6.png" alt="A still preview from the Cosmos dream collection." />
+            <span><strong>Dream Ledger Hub</strong><small>The index for remembered short-video dreams.</small></span>
+          </a>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 hijacker9173. All rights reserved.</p>
+    </footer>
+
+    <script>
+      (() => {
+        const drawer = document.getElementById("vault-drawer");
+        const openButton = document.querySelector("[data-drawer-open]");
+        const closeTargets = document.querySelectorAll("[data-drawer-close], [data-drawer-link]");
+
+        function setDrawerState(isOpen) {
+          document.body.classList.toggle("drawer-open", isOpen);
+          drawer.setAttribute("aria-hidden", String(!isOpen));
+          openButton.setAttribute("aria-expanded", String(isOpen));
+
+          if (isOpen) {
+            drawer.querySelector("[data-drawer-close]").focus();
+          } else {
+            openButton.focus();
+          }
+        }
+
+        openButton.addEventListener("click", () => setDrawerState(true));
+
+        closeTargets.forEach((target) => {
+          target.addEventListener("click", () => setDrawerState(false));
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && document.body.classList.contains("drawer-open")) {
+            setDrawerState(false);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
+
+
