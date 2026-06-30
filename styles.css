@@ -533,6 +533,15 @@ h1 {
   display: grid;
   grid-template-rows: 150px 1fr;
 }
+.recent-mini.recent-wide {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(220px, 0.74fr) minmax(0, 1fr);
+  grid-template-rows: minmax(190px, 1fr);
+}
+
+.recent-mini.recent-wide strong {
+  font-size: clamp(1.9rem, 3vw, 2.7rem);
+}
 
 .recent-image {
   display: block;
@@ -1541,7 +1550,7 @@ video {
 
 .atlas-stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -1566,7 +1575,7 @@ video {
 
 .category-atlas-board {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
   width: min(1480px, calc(100% - 40px));
   margin: clamp(38px, 6vw, 72px) auto 0;
@@ -1728,6 +1737,12 @@ video {
   }
 
   .recent-mini {
+    grid-template-rows: 220px 1fr;
+  }
+
+  .recent-mini.recent-wide {
+    grid-column: auto;
+    grid-template-columns: 1fr;
     grid-template-rows: 220px 1fr;
   }
 
@@ -1982,6 +1997,9 @@ video {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+
 
 
 
