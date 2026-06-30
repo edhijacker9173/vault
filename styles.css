@@ -937,7 +937,7 @@ video {
 
 .dream-collection-grid {
   display: grid;
-  grid-template-columns: minmax(0, 580px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 540px), 1fr));
   gap: 18px;
 }
 
@@ -1190,6 +1190,10 @@ video {
   box-shadow: 0 24px 66px rgba(0, 0, 0, 0.32);
 }
 
+.dream-comic-strip.is-metroid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .dream-comic-panel {
   position: relative;
   min-width: 0;
@@ -1272,6 +1276,10 @@ video {
 
   .dream-comic-panel {
     scroll-snap-align: start;
+  }
+
+  .dream-comic-strip.is-metroid {
+    grid-template-columns: none;
   }
 }
 
@@ -1605,6 +1613,12 @@ video {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+
+
+
+
 
 
 
