@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --bg: #100d0b;
   --surface: #191310;
   --surface-2: #241a16;
@@ -683,6 +683,10 @@ h2 {
   border-color: var(--red);
 }
 
+.odyssey-card:hover {
+  border-color: var(--amber);
+}
+
 .card-media {
   display: block;
   height: 230px;
@@ -705,6 +709,10 @@ h2 {
 
 .yokai-card .card-media img {
   object-position: center 42%;
+}
+
+.odyssey-card .card-media img {
+  object-position: center 50%;
 }
 
 .site-card:hover .card-media img {
@@ -747,6 +755,10 @@ h2 {
 
 .yokai-card .card-kicker span:last-child {
   color: var(--red);
+}
+
+.odyssey-card .card-kicker span:last-child {
+  color: var(--amber);
 }
 
 h3 {
@@ -1997,6 +2009,7 @@ video {
     transition-duration: 0.01ms !important;
   }
 }
+
 
 
 
