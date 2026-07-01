@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --font-display: 'Cinzel', serif;
   --font-body: 'Crimson Text', serif;
   --color-bg: #0a0906;
@@ -63,7 +63,37 @@ body {
   isolation: isolate;
 }
 #splash.hidden { opacity: 0; pointer-events: none; }
-#splash > :not(.stars-bg) { position: relative; z-index: 1; }
+#splash > :not(.stars-bg):not(.splash-vault-link) { position: relative; z-index: 1; }
+.splash-vault-link {
+  position: absolute;
+  z-index: 4;
+  top: var(--space-6);
+  left: var(--space-6);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 var(--space-4);
+  border: 1px solid rgba(240,184,48,0.34);
+  border-radius: var(--radius-sm);
+  background: rgba(10,9,6,0.58);
+  color: var(--color-text-muted);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+}
+.splash-vault-link:hover,
+.splash-vault-link:focus-visible {
+  color: var(--color-gold-light);
+  border-color: var(--color-gold);
+  background: rgba(200,150,10,0.14);
+  outline: none;
+}
 
 .stars-bg {
   position: absolute; inset: 0;
@@ -277,7 +307,8 @@ body {
   transition: var(--transition);
   white-space: nowrap;
 }
-.journey-map-btn {
+.journey-map-btn,
+.vault-home-btn {
   text-decoration: none;
 }
 .restart-quiz-btn:hover,
@@ -848,6 +879,12 @@ body {
     background-position: 58% center;
     padding: var(--space-6);
   }
+  .splash-vault-link {
+    top: var(--space-4);
+    left: var(--space-4);
+    min-height: 34px;
+    padding-inline: var(--space-3);
+  }
 }
 
 @media (max-width: 600px) {
@@ -857,6 +894,12 @@ body {
   .stop-card { flex-wrap: wrap; }
   .stop-badges { align-self: flex-start; justify-content: flex-start; min-width: auto; width: 100%; }
 }
+
+
+
+
+
+
 
 
 
