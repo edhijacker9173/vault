@@ -1,0 +1,744 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Odyssey: The Long Journey Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="stars-bg"></div>
+  <div class="trireme-icon">OD</div>
+  <div class="splash-title">ODYSSEY</div>
+  <div class="splash-sub">The Long Journey Home</div>
+  <p class="splash-desc">
+    "Tell me, O Muse, of that ingenious hero who travelled far and wide after he had sacked the famous town of Troy."
+  </p>
+  <button class="btn-start" onclick="startGame()">Begin the Journey</button>
+</div>
+
+<!-- FEEDBACK -->
+<div class="feedback-flash" id="feedback"></div>
+
+<!-- GAME -->
+<div id="game">
+  <!-- Header -->
+  <header class="game-header">
+    <button class="game-logo" type="button" onclick="showLanding()" aria-label="Back to Odyssey landing page">
+      <span class="game-logo-icon">OD</span>
+      <span class="game-logo-text">Odyssey</span>
+    </button>
+    <div class="progress-bar-wrap">
+      <span class="progress-label">Journey Progress</span>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+    <div class="header-actions">
+      <a class="restart-quiz-btn journey-map-btn" href="odyssey-journey-map.html">Journey Map</a>
+      <button class="restart-quiz-btn" type="button" onclick="restartGame()">Restart Quiz</button>
+      <div class="score-display">
+        <span class="score-num" id="score-display">0</span>
+        points
+      </div>
+    </div>
+  </header>
+  <!-- MAP VIEW -->
+  <div id="map-view" class="active">
+    <h1 class="map-title">Chart Your Course</h1>
+    <p class="map-subtitle">Select a stop on Odysseus's voyage - complete each challenge to proceed</p>
+    <div class="stops-journey" id="stops-list"></div>
+  </div>
+
+  <!-- STOP VIEW -->
+  <div id="stop-view">
+    <div class="stop-scene">
+      <div class="scene-bg" id="scene-bg"></div>
+      <div class="scene-waves"></div>
+      <div class="scene-content">
+        <span class="scene-emoji" id="scene-emoji"></span>
+        <h2 class="scene-stop-title" id="scene-title"></h2>
+        <p class="scene-intro" id="scene-intro"></p>
+      </div>
+    </div>
+    <div class="stop-game-area">
+      <button class="back-btn stop-back-btn" onclick="showMap()">Back to Map</button>
+      <div id="game-container"></div>
+    </div>
+  </div>
+
+  <!-- END VIEW -->
+  <div id="end-view">
+    <div class="end-trophy">ITHACA</div>
+    <h2 class="end-title">Ithaca at Last!</h2>
+    <p class="end-quote">"There is nothing more admirable than when two people who see eye to eye keep house as man and wife."</p>
+    <div class="end-score" id="end-score">0</div>
+    <div class="end-score-label">Total Points Earned</div>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="restartGame()">Sail Again</button>
+      <button class="btn btn-secondary" onclick="showMap()">Review Journey</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// GAME DATA
+// ============================================================
+
+const STOPS = [
+  {
+    id: 'troy',
+    num: 1,
+    emoji: 'TR',
+    name: 'The Fall of Troy',
+    desc: 'The city burns. The wooden horse has done its work.',
+    type: 'quiz',
+    typelabel: 'Quiz',
+    sceneColor: '#2a0a00',
+    intro: 'Ten years of war end in one night of fire and cunning. Before the journey begins, prove you know the final act.',
+    story: 'After ten years of siege, <strong>Odysseus</strong> conceived the masterstroke: a great hollow wooden horse, filled with Greek warriors. The Trojans dragged it inside their own walls as a sacred offering. By night, the Greeks emerged and threw open the city gates. Troy fell.',
+    storyImage: 'assets/story-troy.png',
+    challenge: {
+      type: 'quiz',
+      question: 'What was the name of the clever device Odysseus used to finally defeat Troy?',
+      options: [
+        { text: 'A battering ram made of cedar', correct: false },
+        { text: 'The Trojan Horse - a hollow wooden horse hiding Greek soldiers', correct: true },
+        { text: 'A fleet of fire ships sent into the harbor', correct: false },
+        { text: 'A tunnel dug beneath the city walls', correct: false },
+      ],
+      successText: 'The horse stands tall in your memory! Odysseus\u2019s cunning surpassed any brute force.',
+      failText: 'It was the Trojan Horse \u2014 perhaps the greatest deception in all of ancient legend.',
+    }
+  },
+  {
+    id: 'cicones',
+    num: 2,
+    emoji: 'CI',
+    name: 'The Cicones of Ismarus',
+    desc: 'A raid turns to disaster through greed and delay.',
+    type: 'choice',
+    typelabel: 'Choice',
+    sceneColor: '#1a0d06',
+    intro: 'The first stop after Troy. A quick raid, an easy victory - and then the men refuse to leave.',
+    story: 'Odysseus raided Ismarus, city of the <strong>Cicones</strong>, allies of Troy. He urged the men to leave immediately, sensing danger. But his crew, drunk on captured wine, feasted on the beach. By dawn, the Cicones returned with powerful reinforcements. <strong>Seventy-two men were lost</strong> before the survivors fled to sea.',
+    storyImage: 'assets/story-cicones.png',
+    challenge: {
+      type: 'choice',
+      scenario: 'You have just raided Ismarus successfully. Your men are celebrating, feasting on captured wine and food. You sense danger and urge them to leave. What should Odysseus have done?',
+      choices: [
+        { text: 'Order the men to leave immediately, even by force if needed, before the Cicones can regroup', good: true, feedback: 'Correct instinct! A leader must enforce discipline even when unpopular. Odysseus knew this but could not make it happen. The delay cost 72 lives.' },
+        { text: 'Let the men celebrate a while longer - they have fought hard and deserve a rest', good: false, feedback: 'The cost of delay was 72 men. The Cicones regrouped their allies overnight and attacked at dawn in overwhelming numbers.' },
+        { text: 'Send scouts only, while the main crew keeps feasting', good: false, feedback: 'Scouts alone could not save the fleet once the Cicones returned with horsemen and infantry.' },
+      ]
+    }
+  },
+  {
+    id: 'lotus',
+    num: 3,
+    emoji: 'LO',
+    name: 'The Lotus-Eaters',
+    desc: 'A flower that erases the longing for home.',
+    type: 'quiz',
+    typelabel: 'Quiz',
+    sceneColor: '#0a0d1a',
+    intro: 'On a peaceful shore, the greatest danger is not a monster but forgetting.',
+    story: 'Storms drove the fleet to the land of the <strong>Lotus-Eaters</strong>. Odysseus sent three scouts ahead. The peaceful inhabitants offered them <strong>the Lotus Flower</strong> - whoever ate it lost all desire to return home. Odysseus dragged his men back by force and tied them to the ships, setting sail at once.',
+    storyImage: 'assets/story-lotus.png',
+    challenge: {
+      type: 'quiz',
+      question: 'What was the effect of eating the Lotus Flower on Odysseus\'s scouts?',
+      options: [
+        { text: 'It turned them into animals', correct: false },
+        { text: 'It made them violently aggressive and dangerous', correct: false },
+        { text: 'It made them forget home and lose all desire to return', correct: true },
+        { text: 'It caused them to fall into a deep and deadly sleep', correct: false },
+      ],
+      successText: 'The lotus represents the temptation of forgetting - one of the poem\u2019s deepest themes.',
+      failText: 'The lotus did not transform them physically. It erased their purpose and longing for home.',
+    }
+  },
+  {
+    id: 'cyclops',
+    num: 4,
+    emoji: 'CY',
+    name: 'Polyphemus the Cyclops',
+    desc: 'Trapped by a giant - and a name reveals all.',
+    type: 'quiz',
+    typelabel: 'Quiz',
+    sceneColor: '#0d0f06',
+    intro: 'Odysseus\'s greatest triumph of wit - and his most catastrophic boast.',
+    story: 'The Cyclops <strong>Polyphemus</strong>, son of Poseidon, trapped Odysseus and his men, eating them two by two. Odysseus blinded him with a sharpened stake, told the giant his name was <strong>"Nobody"</strong>, and escaped under the bellies of sheep. But as they sailed away, Odysseus shouted his real name. <strong>Poseidon\u2019s curse</strong> was born.',
+    storyImage: 'assets/story-cyclops.png',
+    challenge: {
+      type: 'quiz',
+      question: 'Why did Odysseus telling Polyphemus his real name cause such catastrophic consequences?',
+      options: [
+        { text: 'It broke a sacred Greek oath of hospitality', correct: false },
+        { text: 'Polyphemus prayed to his father Poseidon to curse Odysseus, using his real name to target him', correct: true },
+        { text: 'The other Cyclopes heard and came to Polyphemus\'s aid', correct: false },
+        { text: 'It violated the laws of war', correct: false },
+      ],
+      successText: 'Pride was Odysseus\u2019s fatal flaw here. Without a name, Poseidon had no target. With it, the god had his villain.',
+      failText: 'Polyphemus needed a name to curse. By boasting, Odysseus gave Poseidon a target for his wrath.',
+    }
+  },
+  {
+    id: 'aeolus',
+    num: 5,
+    emoji: 'AE',
+    name: 'Aeolus and the Bag of Winds',
+    desc: 'Ithaca in sight - then the worst mistake.',
+    type: 'choice',
+    typelabel: 'Choice',
+    sceneColor: '#060d1a',
+    intro: 'Home was so close the men could see fires burning on shore. And then they destroyed it.',
+    story: '<strong>Aeolus</strong>, keeper of the winds, gave Odysseus a leather bag containing all the harmful winds, with the west wind blowing freely toward Ithaca. For nine days Odysseus stayed awake at the helm. <strong>Ithaca came into view.</strong> He fell asleep. His crew, suspecting treasure in the bag, opened it. Every wind escaped at once and swept the fleet back.',
+    storyImage: 'assets/story-aeolus.png',
+    challenge: {
+      type: 'choice',
+      scenario: 'Ithaca is visible on the horizon. Odysseus has stayed awake for nine days. He is utterly exhausted. The crew wonders about the bag given by Aeolus. What is the fatal decision the crew makes?',
+      choices: [
+        { text: 'They open the bag, believing it contains gold and silver that Odysseus is hiding from them', good: true, feedback: 'Exactly. Mistrust and greed drove the crew to open the bag. All the imprisoned winds burst free and blew the fleet all the way back to Aeolus\u2019s island.' },
+        { text: 'They wake Odysseus and demand he share the contents', good: false, feedback: 'They did not wake him. They opened the bag while he slept, driven by jealousy and suspicion.' },
+        { text: 'They throw the bag overboard to lighten the ship', good: false, feedback: 'They would never discard something given as a gift by a god. Their motive was greed, not practicality.' },
+      ]
+    }
+  },
+  {
+    id: 'laestrygonians',
+    num: 6,
+    emoji: 'LA',
+    name: 'The Laestrygonians',
+    desc: 'Giant cannibals destroy eleven ships in a harbor trap.',
+    type: 'quiz',
+    typelabel: 'Quiz',
+    sceneColor: '#0f0a00',
+    intro: 'What looked like a safe, calm harbor became a killing ground.',
+    story: 'The fleet entered the harbour of the <strong>Laestrygonians</strong> - a race of cannibalistic giants. Only Odysseus kept his ship outside. The giants hurled boulders from the cliffs, smashing the trapped ships, and speared men in the water like fish. <strong>Eleven ships were destroyed.</strong> Only Odysseus\u2019s vessel escaped. He now had one ship.',
+    storyImage: 'assets/story-laestrygonians.png',
+    challenge: {
+      type: 'quiz',
+      question: 'What single decision by Odysseus saved his ship while eleven others were destroyed?',
+      options: [
+        { text: 'He had built a stronger, faster hull than the others', correct: false },
+        { text: 'He moored his own ship outside the harbour while the others entered', correct: true },
+        { text: 'He bribed the Laestrygonian king to spare him', correct: false },
+        { text: 'He used divine armor to protect his vessel', correct: false },
+      ],
+      successText: 'Odysseus\u2019s instinct for caution saved one ship. It is one of the most costly moments in the epic.',
+      failText: 'Odysseus kept his ship outside. Something about the enclosed harbour made him wary \u2014 and that wariness saved the last crew.',
+    }
+  },
+  {
+    id: 'circe',
+    num: 7,
+    emoji: 'CR',
+    name: 'Circe the Enchantress',
+    desc: 'Men turned to pigs - and a year lost to magic.',
+    type: 'quiz',
+    typelabel: 'Quiz',
+    sceneColor: '#0d0620',
+    intro: 'The witch of Aeaea offered comfort. But her wine was poison and her wand was ruin.',
+    story: 'The enchantress <strong>Circe</strong> served Odysseus\u2019s men drugged wine and turned them into pigs. The god <strong>Hermes</strong> gave Odysseus an herb called <strong>moly</strong> to resist her magic. When her spell failed, Circe swore an oath of safety. Odysseus\u2019s men were restored, and they stayed on Aeaea for <strong>one full year</strong> before Circe told him he must first visit the Underworld.',
+    storyImage: 'assets/story-circe.png',
+    challenge: {
+      type: 'quiz',
+      question: 'What herb did Hermes give Odysseus to protect him from Circe\'s transformation spell?',
+      options: [
+        { text: 'Ambrosia', correct: false },
+        { text: 'Moly', correct: true },
+        { text: 'Nepenthe', correct: false },
+        { text: 'Asphodel', correct: false },
+      ],
+      successText: 'Moly \u2014 black-rooted with a white flower. A plant no mortal could pull from the earth unaided.',
+      failText: 'The herb was moly \u2014 given by Hermes and described as impossible for a mortal to uproot alone.',
+    }
+  },
+  {
+    id: 'underworld',
+    num: 8,
+    emoji: 'UW',
+    name: 'The Underworld',
+    desc: 'Odysseus speaks with the dead and learns his fate.',
+    type: 'puzzle',
+    typelabel: 'Order',
+    sceneColor: '#06060a',
+    intro: 'At the edge of the world, the shades of the dead rose to speak. Tiresias delivered the prophecy that would shape everything.',
+    story: 'Following <strong>Circe\u2019s instructions</strong>, Odysseus dug a trench and performed rites to summon the dead. He met <strong>Tiresias</strong>, who warned him about Helios\u2019s cattle and Poseidon\u2019s continued anger. He also encountered the shades of <strong>Achilles, Agamemnon, Ajax</strong>, and his own mother <strong>Anticleia</strong> \u2014 who had died of grief waiting for him.',
+    storyImage: 'assets/story-underworld.png',
+    challenge: {
+      type: 'puzzle',
+      instructions: 'Arrange these shades in the order Odysseus encountered them in the Underworld:',
+      items: [
+        { id: 'elpenor', text: 'Elpenor - a crewman who fell from Circe\'s roof, appearing first', order: 1 },
+        { id: 'tiresias', text: 'Tiresias - the blind prophet who delivers the key prophecy', order: 2 },
+        { id: 'anticleia', text: 'Anticleia - Odysseus\'s own mother, who died of grief', order: 3 },
+        { id: 'agamemnon', text: 'Agamemnon - the commander-in-chief, murdered by his wife', order: 4 },
+        { id: 'achilles', text: 'Achilles - who says he would rather be a living slave than king of the dead', order: 5 },
+      ],
+      successText: 'Well ordered! The sequence matters - Elpenor first because he needed burial, Tiresias to deliver the prophecy, then the great shades of the past.',
+      failText: 'The correct order: Elpenor (first, needing burial), Tiresias (the prophet), Anticleia (his mother), then Agamemnon and Achilles among the heroes.',
+    }
+  },
+  {
+    id: 'sirens',
+    num: 9,
+    emoji: 'SI',
+    name: 'The Sirens',
+    desc: 'A song no mortal could resist - Odysseus found a way.',
+    type: 'choice',
+    typelabel: 'Choice',
+    sceneColor: '#050d0f',
+    intro: 'The Sirens promised knowledge of all things - and death to every ship that drew near.',
+    story: 'The <strong>Sirens</strong> sat on a rocky shore surrounded by the bones of sailors, singing a supernatural song. <strong>Circe had warned Odysseus precisely</strong>: fill the crew\u2019s ears with beeswax, and lash himself to the mast. He heard the song, and it overwhelmed him. He thrashed and begged to be released. His crew, deaf to it all, only rowed harder and tied him tighter.',
+    storyImage: 'assets/story-sirens.png',
+    challenge: {
+      type: 'choice',
+      scenario: 'You are approaching the Sirens\u2019 island and can already hear distant, impossibly beautiful singing. Circe has given you specific instructions. How do you handle both yourself and your crew?',
+      choices: [
+        { text: 'Fill the crew\'s ears with beeswax, and lash yourself to the mast with orders that they must not release you no matter how you beg', good: true, feedback: 'Perfect. This is Odysseus\u2019s solution. He commits in advance to a plan that removes the option of surrender when his willpower fails in the moment.' },
+        { text: 'Rely on your legendary willpower to resist the song and steer the ship safely', good: false, feedback: 'Even Odysseus could not resist the Sirens through willpower alone. He planned to be physically unable to act on his impulse, even when the song overwhelmed him.' },
+        { text: 'Have the crew steer the ship far around the island so no one hears anything', good: false, feedback: 'The route could not be simply avoided. Circe\u2019s instructions required the passage and a deliberate plan of constraint \u2014 not avoidance.' },
+      ]
+    }
+  },
+  {
+    id: 'scylla',
+    num: 10,
+    emoji: 'SC',
+    name: 'Scylla and Charybdis',
+    desc: 'Six heads or a swallowing whirlpool - a choice with no good answer.',
+    type: 'choice',
+    typelabel: 'Choice',
+    sceneColor: '#06080d',
+    intro: 'Two monsters guarded a narrow strait. Odysseus had to choose which horror to accept.',
+    story: '<strong>Scylla</strong> was a six-headed monster who snatched sailors from the deck. <strong>Charybdis</strong> was a whirlpool that could swallow an entire ship three times a day. Circe had advised sailing toward Scylla. Odysseus obeyed. As they passed, Scylla\u2019s heads shot down and took <strong>six men</strong> \u2014 one per head. Odysseus called it the most pitiable sight of his voyage.',
+    storyImage: 'assets/story-scylla.png',
+    challenge: {
+      type: 'choice',
+      scenario: 'Circe has advised you to sail closer to Scylla, losing a few men, rather than risk Charybdis which could destroy the entire ship. As captain, what is the strategically correct decision?',
+      choices: [
+        { text: 'Follow Circe\'s advice and sail toward Scylla - losing six men is devastating but the ship and crew survive', good: true, feedback: 'Correct. It is a brutal calculation but a rational one. Losing six guarantees the rest survive. Charybdis risks total loss. Odysseus makes the hard choice a leader must.' },
+        { text: 'Steer toward Charybdis and attempt to time the crossing between the whirlpool\'s three daily eruptions', good: false, feedback: 'The timing was near-impossible and the risk of total destruction was enormous. On his return journey, Odysseus does narrowly survive Charybdis \u2014 alone, clinging to a fig tree.' },
+        { text: 'Anchor and wait for both monsters to be distracted before attempting the crossing', good: false, feedback: 'There is no anchoring safely in those waters. Delay would not change the monsters or the passage.' },
+      ]
+    }
+  },
+  {
+    id: 'helios',
+    num: 11,
+    emoji: 'HE',
+    name: 'The Cattle of Helios',
+    desc: 'Every warning ignored. The price: everyone.',
+    type: 'quiz',
+    typelabel: 'Quiz',
+    sceneColor: '#0f0a00',
+    intro: 'Both Tiresias and Circe had given the same warning. The crew heard it and still chose to eat.',
+    story: 'Trapped on the island of <strong>Thrinacia</strong> by storms, with food running out, the crew led by <strong>Eurylochus</strong> slaughtered and ate the sacred cattle of <strong>Helios</strong> while Odysseus slept. The sun god demanded justice. Zeus destroyed the ship with a thunderbolt. <strong>Every crew member died.</strong> Only Odysseus survived, clinging to wreckage.',
+    storyImage: 'assets/story-helios.png',
+    challenge: {
+      type: 'quiz',
+      question: 'Both Tiresias and Circe had warned Odysseus about the cattle of Helios. Despite this, what was Eurylochus\'s argument to the starving crew for eating the cattle anyway?',
+      options: [
+        { text: 'He argued the gods were unlikely to notice one small herd missing', correct: false },
+        { text: 'He argued that death by divine punishment was preferable to dying slowly of starvation', correct: true },
+        { text: 'He argued the cattle did not truly belong to Helios', correct: false },
+        { text: 'He argued Odysseus had invented the warning as an excuse to keep food for himself', correct: false },
+      ],
+      successText: 'A grim logic, but the only one that could sway men who faced starvation. Of course, they died either way \u2014 but Eurylochus could not know that.',
+      failText: 'Eurylochus said death by hunger was no better than divine wrath, and at least eating gave them strength to sail. It was a tragic choice.',
+    }
+  },
+  {
+    id: 'calypso',
+    num: 12,
+    emoji: 'CA',
+    name: 'Calypso\'s Island',
+    desc: 'Seven years a prisoner of paradise. Immortality refused.',
+    type: 'quiz',
+    typelabel: 'Quiz',
+    sceneColor: '#060d08',
+    intro: 'Calypso offered everything a mortal might want. Odysseus refused it all for Ithaca.',
+    story: 'The nymph <strong>Calypso</strong> sheltered the shipwrecked Odysseus on her island <strong>Ogygia</strong> for <strong>seven years</strong>. She loved him and offered <strong>immortality and eternal youth</strong> if he would stay. But Odysseus spent his days weeping on the cliffs, staring toward Ithaca. The gods finally ordered Calypso to release him. She helped him build a raft and sent him away, heartbroken.',
+    storyImage: 'assets/story-calypso.png',
+    challenge: {
+      type: 'quiz',
+      question: 'What extraordinary offer did Calypso make to Odysseus that he refused in favor of returning home?',
+      options: [
+        { text: 'The throne of a great kingdom and armies of a thousand men', correct: false },
+        { text: 'Immortality and eternal youth if he would stay with her forever', correct: true },
+        { text: 'The power to control all winds and seas', correct: false },
+        { text: 'A ship made of divine gold that could never be wrecked', correct: false },
+      ],
+      successText: 'Odysseus chose mortal life in Ithaca over immortal life in paradise. His choice defines him as a deeply human hero.',
+      failText: 'Calypso offered immortality itself \u2014 the greatest gift any mortal could receive. Odysseus refused, choosing his wife, his home, and a mortal life.',
+    }
+  },
+  {
+    id: 'phaeacians',
+    num: 13,
+    emoji: 'PH',
+    name: 'The Phaeacians',
+    desc: 'Strangers show kindness. A king offers passage home.',
+    type: 'quiz',
+    typelabel: 'Quiz',
+    sceneColor: '#060a10',
+    intro: 'After Poseidon wrecked his raft, Odysseus swam ashore to Scheria - and found the last gift before home.',
+    story: 'Odysseus washed ashore on <strong>Scheria</strong>, land of the sea-faring <strong>Phaeacians</strong>. The king\u2019s daughter <strong>Nausicaa</strong> found him and brought him to the palace of King <strong>Alcinous</strong>. At a feast, a bard sang of Troy and Odysseus wept, covering his face. Asked who he was, Odysseus narrated his entire decade-long journey. Moved, the Phaeacians provided a magic ship that carried him to Ithaca while he slept.',
+    storyImage: 'assets/story-phaeacians.png',
+    challenge: {
+      type: 'quiz',
+      question: 'How did Odysseus reveal his identity to the Phaeacians?',
+      options: [
+        { text: 'He showed them the scar on his leg that only Ithacans would recognize', correct: false },
+        { text: 'A bard sang of Troy and Odysseus wept, prompting King Alcinous to ask who he was - then Odysseus narrated his full journey', correct: true },
+        { text: 'He proved himself in athletic contests and claimed his name in victory', correct: false },
+        { text: 'He arrived wearing armor engraved with the crest of Ithaca', correct: false },
+      ],
+      successText: 'The revelation is beautiful - tears at a song, a perceptive king\u2019s question, and then the greatest travel narrative in ancient literature.',
+      failText: 'The bard Demodocus sang of Troy; Odysseus wept; Alcinous noticed and asked. Then Odysseus told his whole story, which forms most of the Odyssey.',
+    }
+  },
+  {
+    id: 'ithaca',
+    num: 14,
+    emoji: 'IT',
+    name: 'Return to Ithaca',
+    desc: 'The bow, the suitors, and the unmovable bed.',
+    type: 'quiz',
+    typelabel: 'Quiz',
+    typeBoss: true,
+    sceneColor: '#100604',
+    intro: 'After twenty years, he came home as a beggar. The palace was overrun. The reckoning had come.',
+    story: 'Disguised as a beggar, Odysseus entered his own palace, filled with <strong>over a hundred suitors</strong> competing for Penelope. Penelope announced a contest: string Odysseus\u2019s great bow and shoot through twelve axe-heads. None of the suitors could. The beggar asked to try. He strung it, shot the arrow - then turned the bow on the suitors. Every one was killed. He revealed himself to Penelope, who tested him with the <strong>secret of the olive tree bed</strong>.',
+    storyImage: 'assets/story-ithaca.png',
+    challenge: {
+      type: 'quiz',
+      question: 'How did Penelope finally confirm the returning beggar was truly her husband Odysseus?',
+      options: [
+        { text: 'She recognized the scar on his leg from a childhood wound', correct: false },
+        { text: 'She tested him with the secret of their marriage bed, built around a living rooted olive tree', correct: true },
+        { text: 'She asked him to recite their wedding vows word for word', correct: false },
+        { text: 'His faithful dog Argos recognized him, which she took as divine confirmation', correct: false },
+      ],
+      successText: 'The bed test is one of the great moments of recognition in all literature. Only Odysseus knew it could not be moved. That knowledge proved who he was.',
+      failText: 'The bed was built around a living olive tree rooted in the ground. Only Odysseus knew this secret. When Penelope claimed it had been moved, his angry reaction told her everything.',
+    }
+  }
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let score = 0;
+let completedStops = new Set();
+let currentStop = null;
+let dragSrcIndex = null;
+let puzzleOrder = [];
+
+function startGame() {
+  document.getElementById('splash').classList.add('hidden');
+  setTimeout(() => {
+    document.getElementById('splash').style.display = 'none';
+    document.getElementById('game').classList.add('active');
+  }, 800);
+  renderStopsList();
+  updateProgress();
+}
+
+function showLanding() {
+  document.getElementById('stop-view').classList.remove('active');
+  document.getElementById('end-view').classList.remove('active');
+  document.getElementById('map-view').classList.add('active');
+  document.getElementById('game').classList.remove('active');
+  const splash = document.getElementById('splash');
+  splash.style.display = 'flex';
+  requestAnimationFrame(() => splash.classList.remove('hidden'));
+  renderStopsList();
+  updateProgress();
+}
+
+function renderStopsList() {
+  const list = document.getElementById('stops-list');
+  list.innerHTML = '';
+  STOPS.forEach((stop, i) => {
+    const isCompleted = completedStops.has(stop.id);
+    const isLocked = i > 0 && !completedStops.has(STOPS[i-1].id);
+    const isActive = !isLocked && !isCompleted;
+    const card = document.createElement('div');
+    card.className = 'stop-card' +
+      (isLocked ? ' locked' : '') +
+      (isCompleted ? ' completed' : '') +
+      (isActive ? ' active-stop' : '');
+    const typeClass = stop.typelabel === 'Quiz' ? 'quiz' : stop.typelabel === 'Choice' ? 'choice' : stop.typelabel === 'Order' ? 'puzzle' : '';
+    card.innerHTML = `
+      <span class="stop-num">${stop.num}</span>
+      <span class="stop-emoji">${stop.emoji}</span>
+      <div class="stop-info">
+        <div class="stop-name">${stop.name}</div>
+        <div class="stop-desc">${stop.desc}</div>
+      </div>
+      <div class="stop-badges">
+        ${isCompleted ? '<span class="stop-status">Done</span>' : ''}
+        <span class="stop-type ${typeClass}">${stop.typelabel}</span>
+      </div>
+    `;
+    if (!isLocked) {
+      card.addEventListener('click', () => loadStop(stop.id));
+    }
+    list.appendChild(card);
+  });
+}
+
+function updateProgress() {
+  const pct = (completedStops.size / STOPS.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('score-display').textContent = score;
+}
+
+function showMap() {
+  document.getElementById('map-view').classList.add('active');
+  document.getElementById('stop-view').classList.remove('active');
+  document.getElementById('end-view').classList.remove('active');
+  renderStopsList();
+  updateProgress();
+}
+
+function loadStop(stopId) {
+  currentStop = STOPS.find(s => s.id === stopId);
+  if (!currentStop) return;
+
+  document.getElementById('map-view').classList.remove('active');
+  document.getElementById('stop-view').classList.add('active');
+
+  // Scene
+  document.getElementById('scene-bg').style.background = `linear-gradient(180deg, rgba(10,9,6,0.02), rgba(10,9,6,0.44)), radial-gradient(ellipse at 50% 30%, ${currentStop.sceneColor} 0%, rgba(10,9,6,0.38) 70%), url("assets/odyssey-hero-banner.png") center / cover no-repeat`;
+  document.getElementById('scene-emoji').textContent = currentStop.emoji;
+  document.getElementById('scene-title').textContent = currentStop.name;
+  document.getElementById('scene-intro').textContent = currentStop.intro;
+
+  // Render challenge
+  renderChallenge();
+}
+
+function renderChallenge() {
+  const c = document.getElementById('game-container');
+  const ch = currentStop.challenge;
+  const isCompleted = completedStops.has(currentStop.id);
+
+  const storyImage = currentStop.storyImage || `assets/story-${currentStop.id}.png`;
+  const storyImageAlt = `${currentStop.name} story artwork`;
+
+  let html = `
+    <div class="story-panel">
+      <figure class="story-visual">
+        <img src="${storyImage}" alt="${storyImageAlt}" loading="lazy">
+      </figure>
+      <div class="story-copy">
+        <span class="story-label">The Story</span>
+        <p class="story-text">${currentStop.story}</p>
+      </div>
+    </div>
+  `;
+
+  if (isCompleted) {
+    html += `
+      <div class="result-panel show">
+        <div class="result-icon">OK</div>
+        <div class="result-title success">Stop Completed</div>
+        <p class="result-text">You have already proven your knowledge here. Continue your voyage.</p>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="showMap()">Back to Map</button>
+        </div>
+      </div>
+    `;
+    c.innerHTML = html;
+    return;
+  }
+
+  if (ch.type === 'quiz') {
+    html += `
+      <div class="lore-badge">Challenge: Knowledge Test</div>
+      <div class="quiz-question">${ch.question}</div>
+      <div class="quiz-options" id="quiz-options">
+        ${ch.options.map((opt, i) => `
+          <button class="quiz-option" onclick="answerQuiz(${i})" data-index="${i}">
+            <span class="option-letter">${String.fromCharCode(65+i)}</span>
+            ${opt.text}
+          </button>
+        `).join('')}
+      </div>
+      <div class="result-panel" id="result-panel"></div>
+    `;
+  } else if (ch.type === 'choice') {
+    html += `
+      <div class="lore-badge">Challenge: Commander's Dilemma</div>
+      <p class="choice-scenario">"${ch.scenario}"</p>
+      <div class="choice-buttons" id="choice-buttons">
+        ${ch.choices.map((choice, i) => `
+          <button class="choice-btn" onclick="answerChoice(${i})" data-index="${i}">
+            ${choice.text}
+          </button>
+        `).join('')}
+      </div>
+      <div class="result-panel" id="result-panel"></div>
+    `;
+  } else if (ch.type === 'puzzle') {
+    // Init puzzle order
+    puzzleOrder = [...ch.items].map((item,i) => i);
+    // Shuffle
+    for (let i = puzzleOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i+1));
+      [puzzleOrder[i], puzzleOrder[j]] = [puzzleOrder[j], puzzleOrder[i]];
+    }
+    html += `
+      <div class="lore-badge">Challenge: Order the Events</div>
+      <p class="puzzle-instructions">${ch.instructions} Drag to reorder, then submit.</p>
+      <div class="puzzle-items" id="puzzle-items">
+        ${puzzleOrder.map((itemIndex, pos) => `
+          <div class="puzzle-item" draggable="true" data-pos="${pos}" data-item="${itemIndex}"
+            ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dropItem(event)" ondragleave="dragLeave(event)">
+            <span class="drag-handle">::</span>
+            <span class="puzzle-num">${pos+1}</span>
+            <span class="puzzle-item-text">${ch.items[itemIndex].text}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="btn-group puzzle-submit-actions">
+        <button class="btn btn-primary" onclick="submitPuzzle()">Submit Order</button>
+      </div>
+      <div class="result-panel" id="result-panel"></div>
+    `;
+  }
+
+  c.innerHTML = html;
+}
+
+// QUIZ
+function answerQuiz(index) {
+  const ch = currentStop.challenge;
+  const opts = document.querySelectorAll('.quiz-option');
+  opts.forEach(btn => btn.disabled = true);
+  const correct = ch.options[index].correct;
+  const correctIndex = ch.options.findIndex(o => o.correct);
+  opts[correctIndex].classList.add('correct');
+  if (!correct) opts[index].classList.add('wrong');
+  const points = correct ? 100 : 30;
+  showResult(correct, points, correct ? ch.successText : ch.failText);
+}
+
+// CHOICE
+function answerChoice(index) {
+  const ch = currentStop.challenge;
+  const btns = document.querySelectorAll('.choice-btn');
+  btns.forEach(btn => btn.disabled = true);
+  const chosen = ch.choices[index];
+  btns[index].classList.add(chosen.good ? 'good-choice' : 'bad-choice');
+  const points = chosen.good ? 100 : 20;
+  showResult(chosen.good, points, chosen.feedback);
+}
+
+// PUZZLE DRAG
+function dragStart(e) {
+  dragSrcIndex = parseInt(e.currentTarget.dataset.pos);
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function dragOver(e) {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+  e.dataTransfer.dropEffect = 'move';
+}
+function dragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+function dropItem(e) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  const targetIndex = parseInt(e.currentTarget.dataset.pos);
+  if (dragSrcIndex === null || dragSrcIndex === targetIndex) return;
+  // Swap in puzzleOrder
+  [puzzleOrder[dragSrcIndex], puzzleOrder[targetIndex]] = [puzzleOrder[targetIndex], puzzleOrder[dragSrcIndex]];
+  dragSrcIndex = null;
+  // Re-render items
+  const container = document.getElementById('puzzle-items');
+  container.innerHTML = puzzleOrder.map((itemIndex, pos) => `
+    <div class="puzzle-item" draggable="true" data-pos="${pos}" data-item="${itemIndex}"
+      ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dropItem(event)" ondragleave="dragLeave(event)">
+      <span class="drag-handle">::</span>
+      <span class="puzzle-num">${pos+1}</span>
+      <span class="puzzle-item-text">${currentStop.challenge.items[itemIndex].text}</span>
+    </div>
+  `).join('');
+}
+function submitPuzzle() {
+  const ch = currentStop.challenge;
+  const correct = puzzleOrder.every((itemIndex, pos) => ch.items[itemIndex].order === pos + 1);
+  const points = correct ? 100 : 40;
+  const btn = document.querySelector('.btn-primary[onclick="submitPuzzle()"]');
+  if (btn) btn.disabled = true;
+  showResult(correct, points, correct ? ch.successText : ch.failText);
+}
+
+function showResult(success, points, text) {
+  score += points;
+  completedStops.add(currentStop.id);
+  updateProgress();
+
+  const rp = document.getElementById('result-panel');
+  rp.className = 'result-panel show';
+  const allDone = completedStops.size === STOPS.length;
+
+  rp.innerHTML = `
+    <div class="result-icon">${success ? 'OK' : '!'}</div>
+    <div class="result-title ${success ? 'success' : 'fail'}">${success ? 'Well Sailed!' : 'Lesson Learned'}</div>
+    <p class="result-text">${text}</p>
+    <div class="result-points">+${points} points</div>
+    <div class="btn-group">
+      ${allDone
+        ? `<button class="btn btn-primary" onclick="showEndScreen()">Complete Journey!</button>`
+        : `<button class="btn btn-primary" onclick="showMap()">Continue Voyage</button>`
+      }
+    </div>
+  `;
+  flashFeedback(success ? `+${points} pts - Brilliant!` : `+${points} pts - Keep going!`);
+}
+function flashFeedback(msg) {
+  const el = document.getElementById('feedback');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+function showEndScreen() {
+  document.getElementById('stop-view').classList.remove('active');
+  document.getElementById('map-view').classList.remove('active');
+  document.getElementById('end-view').classList.add('active');
+  document.getElementById('end-score').textContent = score + ' pts';
+}
+
+function restartGame() {
+  score = 0;
+  completedStops = new Set();
+  currentStop = null;
+  showMap();
+}
+
+window.render_game_to_text = function() {
+  return JSON.stringify({
+    score,
+    completed: [...completedStops],
+    total: STOPS.length,
+    currentStop: currentStop ? currentStop.id : null
+  });
+};
+
+window.advanceTime = function() {};
+</script>
+</body>
+</html>
+

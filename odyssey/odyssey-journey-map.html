@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Odyssey Journey Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Crimson+Text:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<style>
+:root{
+  --bg:#0c0a06; --surface:rgba(17,14,10,.94); --surface2:rgba(28,22,14,.96);
+  --border:rgba(201,154,58,.22); --gold:#e4b24a; --gold2:#c48b14;
+  --text:#eadfcf; --muted:#b8a487; --faint:#7d684a; --ok:#69c38b; --danger:#d96b6b;
+  --shadow:0 12px 28px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Crimson Text',serif;background:var(--bg);color:var(--text);overflow:hidden}
+#app{display:grid;grid-template-columns:340px 1fr;height:100dvh}
+@media (max-width:900px){#app{grid-template-columns:1fr}}
+
+aside{position:relative;background:linear-gradient(180deg,rgba(7,6,4,.42) 0%, rgba(9,7,5,.64) 44%, rgba(5,4,3,.86) 100%), url("assets/odyssey-hero-banner.png") center / cover no-repeat;border-right:1px solid var(--border);display:flex;flex-direction:column;min-width:0;min-height:0;z-index:1000;overflow:hidden}
+@media (max-width:900px){aside{display:none}}
+.sidebar-head{position:relative;padding:18px 18px 18px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(9,7,5,.44),rgba(9,7,5,.30));box-shadow:0 16px 34px rgba(0,0,0,.24)}
+.kicker{font:700 11px/1 'Cinzel',serif;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.title{font:700 22px/1.05 'Cinzel',serif;color:var(--gold)}
+.sub{margin-top:8px;color:var(--muted);font-size:14px;line-height:1.35}
+.stop-list{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:10px 0 18px;scrollbar-color:rgba(228,178,74,.65) rgba(255,255,255,.06);scrollbar-width:thin;background:rgba(7,5,3,.44)}.stop-list::-webkit-scrollbar{width:9px}.stop-list::-webkit-scrollbar-track{background:rgba(255,255,255,.05)}.stop-list::-webkit-scrollbar-thumb{background:rgba(228,178,74,.55);border-radius:999px;border:2px solid rgba(10,8,6,.85)}
+.stop-btn{display:grid;grid-template-columns:34px 36px minmax(0,1fr) 30px;gap:10px;align-items:center;width:100%;padding:12px 16px;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;border-left:3px solid transparent;transition:.18s ease}
+.stop-btn:hover{background:rgba(228,178,74,.08);border-left-color:rgba(228,178,74,.45)}
+.stop-btn.active{background:rgba(228,178,74,.12);border-left-color:var(--gold)}
+.num{font:700 12px/1 'Cinzel',serif;color:var(--faint)}
+.emoji{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid rgba(228,178,74,.24);border-radius:999px;background:rgba(228,178,74,.10);font:700 10px/1 'Cinzel',serif;color:var(--gold);letter-spacing:.06em}
+.meta{min-width:0}.meta .name{display:block;font:600 14px/1.15 'Cinzel',serif;color:var(--text);white-space:normal}
+.meta .tag{display:block;font-size:11px;color:var(--muted);margin-top:4px;line-height:1.2}
+.tick{color:var(--ok);opacity:0;transition:.18s ease;font:700 10px/1 'Cinzel',serif;letter-spacing:.08em;text-align:right}
+.stop-btn.visited .tick{opacity:1}
+
+main{position:relative;min-width:0}
+#map{height:100%;width:100%}
+.topbar{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:1100;background:rgba(12,10,6,.84);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:999px;padding:8px 14px;box-shadow:var(--shadow);font:700 11px/1 'Cinzel',serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);pointer-events:none}
+.topbar b{color:var(--gold)}
+.legend{position:absolute;left:14px;top:14px;z-index:1100;background:rgba(12,10,6,.84);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:12px;padding:10px 12px;box-shadow:var(--shadow)}
+.legend .row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.legend .row+.row{margin-top:6px}
+.dot{width:10px;height:10px;border-radius:999px;display:inline-block}
+.controls{position:absolute;right:14px;bottom:48px;z-index:1100;display:grid;grid-template-columns:repeat(3,max-content);justify-content:end;align-items:center;gap:8px;max-width:min(560px,calc(100% - 28px))}
+.ctrl{display:inline-flex;align-items:center;justify-content:center;min-height:38px;background:rgba(12,10,6,.9);border:1px solid var(--border);color:var(--text);border-radius:999px;padding:10px 14px;cursor:pointer;font:700 11px/1 'Cinzel',serif;letter-spacing:.12em;text-transform:uppercase;box-shadow:var(--shadow);text-decoration:none}.home-ctrl{width:38px;padding:10px}.home-ctrl svg{display:block;width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.ctrl:hover{border-color:rgba(228,178,74,.5);color:var(--gold)}
+.mob-open{display:none;position:absolute;left:14px;bottom:14px;z-index:1100}
+@media (max-width:900px){.mob-open{display:block}.legend{display:none}.controls{bottom:18px;left:86px;right:14px;grid-template-columns:repeat(3,max-content)}.ctrl{padding:9px 11px;font-size:10px}.home-ctrl{width:36px;padding:9px}}
+
+.panel{position:absolute;right:14px;top:68px;width:min(420px, calc(100% - 28px));max-height:calc(100% - 140px);overflow:auto;z-index:1100;background:linear-gradient(180deg,var(--surface2),rgba(10,8,6,.98));border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);transform:translateY(16px);opacity:0;pointer-events:none;transition:.24s ease}
+.panel.open{transform:translateY(0);opacity:1;pointer-events:auto}
+.panel-head{padding:18px 18px 12px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start}
+.big-emoji{display:inline-flex;align-items:center;justify-content:center;flex:0 0 52px;width:52px;height:52px;border:1px solid rgba(228,178,74,.28);border-radius:999px;background:rgba(228,178,74,.10);font:700 16px/1 'Cinzel',serif;color:var(--gold);letter-spacing:.06em}
+.small-kicker{font:700 10px/1 'Cinzel',serif;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.panel-title{font:700 24px/1.05 'Cinzel',serif;color:var(--gold)}
+.close{margin-left:auto;background:transparent;border:0;color:var(--muted);font-size:22px;cursor:pointer}
+.panel-body{padding:16px;display:grid;gap:12px}
+.card{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:12px 13px}
+.card h3{font:700 10px/1 'Cinzel',serif;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.card p{font-size:16px;line-height:1.5}
+.tag-pill{display:inline-block;margin-top:10px;padding:4px 8px;border-radius:999px;font:700 10px/1 'Cinzel',serif;letter-spacing:.12em;text-transform:uppercase;border:1px solid transparent}
+.danger{color:#f1b0b0;background:rgba(170,50,50,.12);border-color:rgba(170,50,50,.24)}
+.loss{color:#a9c4e9;background:rgba(55,86,140,.16);border-color:rgba(55,86,140,.3)}
+.divine{color:#f0cc7a;background:rgba(196,139,20,.12);border-color:rgba(196,139,20,.24)}
+.tempt{color:#d5b1e6;background:rgba(114,62,160,.16);border-color:rgba(114,62,160,.28)}
+
+.mobile-sheet{display:none;position:absolute;inset:0;z-index:1200;background:rgba(8,7,5,.98)}
+.mobile-sheet.open{display:block}
+.mobile-head{padding:16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.mobile-list{overflow:auto;height:calc(100% - 58px);padding:8px 0}
+@media (max-width:900px){.panel{left:14px;right:14px;top:auto;bottom:86px;max-height:55%}}
+
+.leaflet-container{background:#102236}
+.leaflet-control-attribution{background:rgba(255,255,255,.72)!important;font-size:10px!important}.leaflet-bottom.leaflet-right{bottom:0}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#14100b;color:var(--text);border:1px solid var(--border)}
+.odyssey-label{background:rgba(12,10,6,.86);border:1px solid var(--border);color:var(--gold);padding:3px 7px;border-radius:999px;font:700 10px/1 'Cinzel',serif;letter-spacing:.12em;text-transform:uppercase;box-shadow:var(--shadow)}
+.route-start,.route-end{filter:drop-shadow(0 0 6px rgba(228,178,74,.45))}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside>
+    <div class="sidebar-head">
+      <div class="kicker">Interactive briefing map</div>
+      <div class="title">Odyssey Journey</div>
+      <div class="sub">Mapped on an English street basemap from Troy to Ithaca, with each stop linked to the earlier briefing notes.</div>
+    </div>
+    <div class="stop-list" id="stopList"></div>
+  </aside>
+  <main>
+    <div id="map"></div>
+    <div class="topbar" id="topbar">Stop <b>1</b> of 14</div>
+    <div class="legend">
+      <div class="row"><span class="dot" style="background:#e4b24a"></span>Voyage route</div>
+      <div class="row"><span class="dot" style="background:#d96b6b"></span>Current stop</div>
+      <div class="row"><span class="dot" style="background:#69c38b"></span>Visited stop</div>
+    </div>
+    <button class="ctrl mob-open" id="mobOpen">Stops</button>
+    <div class="controls">
+      <a class="ctrl home-ctrl" href="od_journey.html" aria-label="Back to Odyssey quiz" title="Back to Odyssey quiz"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11L12 4l9 7"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg></a>
+      <button class="ctrl" id="prevBtn">Prev</button>
+      <button class="ctrl" id="nextBtn">Next</button>
+    </div>
+    <section class="panel" id="panel" aria-live="polite">
+      <div class="panel-head">
+        <div class="big-emoji" id="pEmoji"></div>
+        <div>
+          <div class="small-kicker" id="pKicker"></div>
+          <div class="panel-title" id="pTitle"></div>
+        </div>
+        <button class="close" id="closePanel" aria-label="Close details">X</button>
+      </div>
+      <div class="panel-body" id="panelBody"></div>
+    </section>
+    <section class="mobile-sheet" id="mobileSheet">
+      <div class="mobile-head">
+        <div class="kicker" style="margin:0">All stops</div>
+        <button class="ctrl" id="mobClose" style="padding:8px 10px">Close</button>
+      </div>
+      <div class="mobile-list" id="mobileList"></div>
+    </section>
+  </main>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var stops = [
+    {id:'troy', n:1, em:'TR', name:'Troy (Departure)', lat:39.957, lng:26.238, tag:'Divine Wrath Begins', cls:'divine', what:'After ten years of siege, Odysseus devised the Trojan Horse, a hollow wooden structure hiding Greek soldiers. The Trojans wheeled it inside their walls as a divine offering. By night the Greeks emerged and opened the gates. Troy was sacked and burned.', crew:'Odysseus departed with 12 ships and about 720 men. He would return home alone.', lesson:'The gods were angered by Greek sacrilege during the sack. Many victors, including Odysseus, faced divine punishment on the voyage home.'},
+    {id:'cicones', n:2, em:'CI', name:'Ismarus (Cicones)', lat:40.97, lng:25.35, tag:'72 Men Lost', cls:'loss', what:'Odysseus raided Ismarus, city of the Cicones, former Trojan allies. He urged immediate departure, but his men feasted and refused to leave.', crew:'The Cicones regrouped overnight with cavalry at dawn. Seventy two men were killed, six from each ship.', lesson:'This is the first major example of crew indiscipline. The delay proved fatal.'},
+    {id:'lotus', n:3, em:'LO', name:'Lotus Eaters', lat:33.886, lng:10.857, tag:'Temptation: Forgetting', cls:'tempt', what:'Storms drove the fleet south to the land of the Lotus Eaters. Three scouts tasted the lotus and forgot their desire to return home.', crew:'Odysseus dragged them back by force, bound them to the benches, and ordered immediate departure.', lesson:'The lotus represents the seduction of forgetting and abandoning duty for comfort.'},
+    {id:'cyclops', n:4, em:'CY', name:'Cyclopes Country', lat:37.734, lng:15.004, tag:'Poseidon\'s Curse Begins', cls:'divine', what:'Near Mount Etna in Sicily, Odysseus entered the cave of Polyphemus, a Cyclops and son of Poseidon. The giant trapped the men and devoured several of them.', crew:'Odysseus blinded Polyphemus, escaped under the sheep, then boasted his true name. That pride triggered Poseidon\'s curse.', lesson:'Cleverness won the escape, but arrogance transformed triumph into disaster.'},
+    {id:'aeolus', n:5, em:'AE', name:'Aeolus\' Island', lat:38.554, lng:14.222, tag:'Ithaca Lost Again', cls:'loss', what:'Aeolus, keeper of the winds, sealed every harmful wind into a leather bag and released only the west wind to carry Odysseus home.', crew:'When Ithaca was almost in sight, Odysseus slept and the crew opened the bag, thinking it was treasure. The winds burst out and drove them back.', lesson:'Mistrust and jealousy destroyed their best chance to return home.'},
+    {id:'laestrygonians', n:6, em:'LA', name:'Laestrygonians', lat:40.95, lng:14.27, tag:'11 Ships Destroyed', cls:'danger', what:'The fleet entered a deadly enclosed harbour. Giants on the cliffs smashed ships with boulders and speared the crews.', crew:'Eleven ships were destroyed. Only Odysseus\' ship, moored outside the harbour, escaped.', lesson:'A single cautious decision preserved the last surviving ship.'},
+    {id:'circe', n:7, em:'CR', name:'Aeaea (Circe)', lat:41.23, lng:13.57, tag:'One Year Lost', cls:'divine', what:'Circe drugged Odysseus\' men and turned them into pigs. Hermes gave Odysseus the herb moly so he could resist her magic.', crew:'Circe restored the crew and hosted them for a year. She then gave Odysseus the instructions needed for the rest of his voyage.', lesson:'Circe shifts from danger to ally, and her guidance becomes essential.'},
+    {id:'underworld', n:8, em:'UW', name:'Underworld Approach', lat:40.915, lng:20.718, tag:'Prophecy of Fate', cls:'divine', what:'Odysseus travelled to the edge of the world to summon the dead. Tiresias revealed the prophecy that would govern the rest of the voyage.', crew:'He also met his mother, Agamemnon, Achilles, and Ajax, confronting the emotional cost of war and wandering.', lesson:'The journey deepens into reflection on death, memory, and what makes mortal life meaningful.'},
+    {id:'sirens', n:9, em:'SI', name:'Sirens', lat:40.55, lng:14.22, tag:'Temptation: Knowledge', cls:'tempt', what:'The Sirens sang with irresistible beauty and promised hidden knowledge. Odysseus plugged his crew\'s ears with wax and had himself tied to the mast.', crew:'He begged to be released as they sailed past, but the crew could not hear him and rowed on.', lesson:'Odysseus survives by pre committing restraint before temptation arrives.'},
+    {id:'scylla', n:10, em:'SC', name:'Scylla and Charybdis', lat:38.255, lng:15.65, tag:'Six Men Taken', cls:'danger', what:'The ship had to pass a narrow strait with Scylla on one side and Charybdis on the other. Odysseus steered toward the lesser horror.', crew:'Scylla snatched six men from the deck. Odysseus called it the most terrible sight of his voyage.', lesson:'Leadership sometimes means choosing the smaller catastrophe to avoid total ruin.'},
+    {id:'helios', n:11, em:'HE', name:'Thrinacia (Helios)', lat:37.54, lng:14.17, tag:'All Crew Lost', cls:'loss', what:'Despite repeated warnings, the starving crew slaughtered the sacred cattle of Helios when storms trapped them ashore.', crew:'Helios demanded vengeance. Zeus destroyed the ship with a thunderbolt. Every crewman drowned, and Odysseus alone survived.', lesson:'The crew\'s final act of disobedience ends the shared voyage forever.'},
+    {id:'calypso', n:12, em:'CA', name:'Ogygia (Calypso)', lat:36.043, lng:14.258, tag:'7 Years - Immortality Refused', cls:'tempt', what:'Calypso sheltered Odysseus on Ogygia and offered him immortality if he would stay with her forever.', crew:'Odysseus refused and spent seven years longing for Ithaca until the gods ordered his release.', lesson:'The poem insists that mortal home and human love matter more than endless life without belonging.'},
+    {id:'phaeacians', n:13, em:'PH', name:'Scheria (Phaeacians)', lat:39.624, lng:19.921, tag:'Final Passage Home', cls:'divine', what:'After Poseidon wrecked his raft, Odysseus reached Scheria, where Nausicaa and the Phaeacians received him with perfect hospitality.', crew:'At their court he narrated the story of his wanderings, and they carried him home asleep on a magical ship.', lesson:'Hospitality finally succeeds where force, cleverness, and endurance had failed.'},
+    {id:'ithaca', n:14, em:'IT', name:'Ithaca', lat:38.367, lng:20.72, tag:'Home After 20 Years', cls:'divine', what:'Odysseus returned to Ithaca in disguise, found his palace overrun by suitors, and joined Telemachus in reclaiming the house.', crew:'Penelope\'s final test of the olive tree bed proved his identity. Their reunion ends the twenty year separation.', lesson:'Homecoming is not only arrival, but recognition, memory, and restoration.'}
+  ];
+
+  var visited = {};
+  var activeIndex = 0;
+  var map = L.map('map', { zoomControl:true, minZoom:4, maxZoom:9, worldCopyJump:false }).setView([38.7, 18.2], 5);
+
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19,
+    attribution: 'Tiles &copy; Esri &mdash; Sources: Esri, HERE, Garmin, FAO, NOAA, USGS, OpenStreetMap contributors'
+  }).addTo(map);
+
+  var routeCoords = stops.map(function(s){ return [s.lat, s.lng]; });
+  var routeLine = L.polyline(routeCoords, {color:'#e4b24a', weight:4, opacity:0.85, lineCap:'round'}).addTo(map);
+  var routeGlow = L.polyline(routeCoords, {color:'#fff1c4', weight:9, opacity:0.12, lineCap:'round'}).addTo(map);
+  map.fitBounds(routeLine.getBounds(), {padding:[40,40]});
+
+  function iconHtml(stop, active, wasVisited){
+    var color = active ? '#d96b6b' : (wasVisited ? '#69c38b' : '#e4b24a');
+    var border = active ? '#ffd0d0' : (wasVisited ? '#d7ffe6' : '#fff0bf');
+    var size = active ? 30 : 24;
+    var cls = stop.n === 1 ? 'route-start' : (stop.n === 14 ? 'route-end' : '');
+    return '<div class="'+cls+'" style="width:'+size+'px;height:'+size+'px;border-radius:999px;background:'+color+';border:2px solid '+border+';display:flex;align-items:center;justify-content:center;color:#130f0a;font:700 12px/1 Cinzel,serif;box-shadow:0 0 0 4px rgba(0,0,0,.18)">'+stop.n+'</div>';
+  }
+
+  var markers = stops.map(function(stop, idx){
+    var marker = L.marker([stop.lat, stop.lng], {
+      icon: L.divIcon({className:'', html:iconHtml(stop, idx===0, false), iconSize:[30,30], iconAnchor:[15,15]})
+    }).addTo(map);
+    marker.bindTooltip(stop.name, {direction:'top', offset:[0,-14], className:'odyssey-label'});
+    marker.on('click', function(){ selectStop(idx, true); });
+    return marker;
+  });
+
+  function panelTag(stop){
+    return '<span class="tag-pill '+stop.cls+'">'+stop.tag+'</span>';
+  }
+
+  function renderPanel(stop){
+    document.getElementById('pEmoji').textContent = stop.em;
+    document.getElementById('pKicker').textContent = 'Stop ' + stop.n + ' of 14';
+    document.getElementById('pTitle').textContent = stop.name;
+    document.getElementById('panelBody').innerHTML =
+      '<div class="card"><h3>What happened</h3><p>'+stop.what+'</p></div>'+
+      '<div class="card"><h3>The crew and consequence</h3><p>'+stop.crew+'</p></div>'+
+      '<div class="card"><h3>The lesson</h3><p>'+stop.lesson+'</p>'+panelTag(stop)+'</div>';
+    document.getElementById('panel').classList.add('open');
+  }
+
+  function refreshMarkers(){
+    markers.forEach(function(marker, idx){
+      var s = stops[idx];
+      marker.setIcon(L.divIcon({className:'', html:iconHtml(s, idx===activeIndex, !!visited[s.id]), iconSize:[30,30], iconAnchor:[15,15]}));
+    });
+    var partial = stops.slice(0, activeIndex + 1).map(function(s){ return [s.lat, s.lng]; });
+    if (window.progressLine) map.removeLayer(window.progressLine);
+    if (partial.length > 1) {
+      window.progressLine = L.polyline(partial, {color:'#d96b6b', weight:5, opacity:0.9, lineCap:'round'}).addTo(map);
+    }
+  }
+
+  function renderList(targetId){
+    var el = document.getElementById(targetId);
+    el.innerHTML = stops.map(function(stop, idx){
+      var active = idx === activeIndex ? ' active' : '';
+      var done = visited[stop.id] ? ' visited' : '';
+      return '<button class="stop-btn'+active+done+'" data-idx="'+idx+'">'+
+        '<span class="num">'+stop.n+'</span>'+
+        '<span class="emoji">'+stop.em+'</span>'+
+        '<span class="meta"><span class="name">'+stop.name+'</span><span class="tag">'+stop.tag+'</span></span>'+
+        '<span class="tick">OK</span>'+
+      '</button>';
+    }).join('');
+    Array.prototype.forEach.call(el.querySelectorAll('.stop-btn'), function(btn){
+      btn.addEventListener('click', function(){
+        selectStop(parseInt(this.getAttribute('data-idx'),10), true);
+        document.getElementById('mobileSheet').classList.remove('open');
+      });
+    });
+  }
+
+  function selectStop(idx, fly){
+    activeIndex = idx;
+    visited[stops[idx].id] = true;
+    refreshMarkers();
+    renderList('stopList');
+    renderList('mobileList');
+    renderPanel(stops[idx]);
+    document.getElementById('topbar').innerHTML = 'Stop <b>' + stops[idx].n + '</b> of 14';
+    if (fly) map.flyTo([stops[idx].lat, stops[idx].lng], Math.max(map.getZoom(), 6), {duration:1.1});
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', function(){ if (activeIndex > 0) selectStop(activeIndex - 1, true); });
+  document.getElementById('nextBtn').addEventListener('click', function(){ if (activeIndex < stops.length - 1) selectStop(activeIndex + 1, true); });
+  document.getElementById('closePanel').addEventListener('click', function(){ document.getElementById('panel').classList.remove('open'); });
+  document.getElementById('mobOpen').addEventListener('click', function(){ document.getElementById('mobileSheet').classList.add('open'); });
+  document.getElementById('mobClose').addEventListener('click', function(){ document.getElementById('mobileSheet').classList.remove('open'); });
+
+  renderList('stopList');
+  renderList('mobileList');
+  selectStop(0, false);
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
