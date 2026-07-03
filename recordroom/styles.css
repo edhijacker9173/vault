@@ -24,7 +24,7 @@
   border-bottom: 1px solid var(--border);
   border-radius: 0;
   background:
-    linear-gradient(180deg, rgba(36, 26, 22, 0.88), rgba(13, 10, 9, 0.94)),
+    linear-gradient(180deg, rgba(36, 26, 22, 0.48), rgba(13, 10, 9, 0.68)),
     var(--surface);
   box-shadow: 0 24px 70px var(--shadow);
 }
@@ -36,7 +36,7 @@
   min-width: 0;
   padding: clamp(28px, 6vw, 72px);
   background:
-    linear-gradient(180deg, rgba(16, 12, 10, 0.08), rgba(16, 12, 10, 0.86)),
+    linear-gradient(180deg, rgba(16, 12, 10, 0.02), rgba(16, 12, 10, 0.52)),
     url("assets/record-room-hero.png") center / cover no-repeat;
   position: relative;
   isolation: isolate;
@@ -48,8 +48,8 @@
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(90deg, rgba(13, 10, 9, 0.88), rgba(13, 10, 9, 0.34) 52%, rgba(13, 10, 9, 0.62)), 
-    radial-gradient(circle at 72% 16%, rgba(197, 139, 58, 0.28), transparent 44%);
+    linear-gradient(90deg, rgba(13, 10, 9, 0.58), rgba(13, 10, 9, 0.14) 52%, rgba(13, 10, 9, 0.32)), 
+    radial-gradient(circle at 72% 16%, rgba(197, 139, 58, 0.2), transparent 44%);
 }
 
 .record-feature-copy h1 {
@@ -421,6 +421,7 @@
     bottom: 10px;
   }
 }
+
 
 
 
