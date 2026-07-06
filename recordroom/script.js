@@ -21,6 +21,13 @@
     shelf: "Future archive"
   },
   {
+    title: "5th Element",
+    file: "sounds/5th Element.mp3",
+    cover: "assets/5th-element.png",
+    desc: "A luminous fifth-element cut with cosmic pulse, elemental glow, and a polished sci-fi lounge atmosphere.",
+    shelf: "Elemental archive"
+  },
+  {
     title: "Black Magic",
     file: "sounds/Black Magic.mp3",
     cover: "assets/black-magic.jpg",
@@ -229,3 +236,4 @@ renderTracks();
 loadDurations();
 setActiveTrack(0);
 audio.src = sourceFor(tracks[0]);
+
