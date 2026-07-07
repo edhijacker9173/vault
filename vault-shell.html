@@ -1,0 +1,123 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Vault by hijacker9173</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #080605;
+      }
+
+      .vault-shell-frame {
+        display: block;
+        width: 100%;
+        height: 100dvh;
+        border: 0;
+        background: #080605;
+      }
+
+      .vault-shell-noscript {
+        padding: 24px;
+        color: #f8efe1;
+        font-family: Georgia, serif;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="vault-player.js"></script>
+    <iframe id="vault-shell-frame" class="vault-shell-frame" title="The Vault"></iframe>
+    <noscript><p class="vault-shell-noscript">JavaScript is required for the persistent Vault audio player.</p></noscript>
+    <script>
+      (() => {
+        const frame = document.getElementById("vault-shell-frame");
+        const shellUrl = new URL(window.location.href);
+        const rootUrl = new URL(".", shellUrl.href);
+        let currentPage = "";
+        let navigatingFromHistory = false;
+
+        function cleanPage(value) {
+          const fallback = "index.html";
+          const page = value || fallback;
+
+          if (/^[a-z][a-z0-9+.-]*:/i.test(page)) return fallback;
+          if (page.startsWith("/") || page.includes("..")) return fallback;
+          if (page === "vault-shell.html") return fallback;
+          return page.endsWith("/") ? page + "index.html" : page;
+        }
+
+        function pageFromLocation() {
+          return cleanPage(new URLSearchParams(window.location.search).get("page"));
+        }
+
+        function pageFromFrame() {
+          try {
+            const childUrl = new URL(frame.contentWindow.location.href);
+            const childBase = childUrl.href.split("#")[0].split("?")[0];
+            if (!childBase.startsWith(rootUrl.href)) return null;
+
+            let page = childBase.slice(rootUrl.href.length) || "index.html";
+            if (page.endsWith("/")) page += "index.html";
+            if (childUrl.search) page += childUrl.search;
+            if (childUrl.hash) page += childUrl.hash;
+            return cleanPage(page);
+          } catch {
+            return null;
+          }
+        }
+
+        function urlForPage(page) {
+          const url = new URL(shellUrl.href.split("?")[0]);
+          url.searchParams.set("page", page);
+          return url.href;
+        }
+
+        function writeHistory(page, replace) {
+          const method = replace ? "replaceState" : "pushState";
+          history[method]({ page }, "", urlForPage(page));
+          document.title = "The Vault by hijacker9173";
+        }
+
+        frame.addEventListener("load", () => {
+          const page = pageFromFrame();
+          if (!page) return;
+
+          try {
+            document.title = frame.contentDocument.title || "The Vault by hijacker9173";
+          } catch {
+            document.title = "The Vault by hijacker9173";
+          }
+
+          if (page === currentPage) {
+            navigatingFromHistory = false;
+            return;
+          }
+
+          const replace = !currentPage || navigatingFromHistory;
+          currentPage = page;
+          writeHistory(page, replace);
+          navigatingFromHistory = false;
+        });
+
+        window.addEventListener("popstate", () => {
+          const page = pageFromLocation();
+          if (page === currentPage) return;
+
+          navigatingFromHistory = true;
+          currentPage = page;
+          frame.src = page;
+        });
+
+        currentPage = pageFromLocation();
+        writeHistory(currentPage, true);
+        frame.src = currentPage;
+      })();
+    </script>
+  </body>
+</html>
+
