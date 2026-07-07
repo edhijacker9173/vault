@@ -1040,6 +1040,349 @@ h3 {
   line-height: 1.55;
 }
 
+body.reader-open {
+  overflow: hidden;
+}
+
+.gumroad-product {
+  cursor: zoom-in;
+}
+
+.gumroad-product::before {
+  content: "Preview Codex";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  padding: 7px 10px;
+  border: 1px solid rgba(81, 199, 188, 0.55);
+  border-radius: 999px;
+  color: var(--teal);
+  background: rgba(10, 8, 7, 0.68);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 180ms ease, transform 180ms ease;
+  backdrop-filter: blur(10px);
+}
+
+.gumroad-product:hover::before,
+.gumroad-product:focus-visible::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.codex-reader-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background:
+    radial-gradient(circle at 78% 8%, rgba(197, 139, 58, 0.16), transparent 30%),
+    rgba(5, 4, 3, 0.78);
+  backdrop-filter: blur(14px);
+}
+
+.codex-reader-modal {
+  position: fixed;
+  inset: 24px;
+  z-index: 80;
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid rgba(197, 139, 58, 0.35);
+  border-radius: 14px;
+  background: rgba(24, 18, 15, 0.98);
+  box-shadow: 0 30px 120px rgba(0, 0, 0, 0.68);
+}
+
+.codex-reader-modal[hidden],
+.codex-reader-backdrop[hidden] {
+  display: none;
+}
+
+.codex-reader-spine {
+  display: grid;
+  grid-template-rows: minmax(210px, 0.85fr) auto auto;
+  gap: 20px;
+  min-height: 0;
+  padding: 22px;
+  border-right: 1px solid rgba(197, 139, 58, 0.22);
+  background:
+    linear-gradient(180deg, rgba(197, 139, 58, 0.1), transparent 42%),
+    #100b08;
+}
+
+.codex-reader-cover {
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(197, 139, 58, 0.3);
+  border-radius: 8px;
+  background: #090706;
+}
+
+.codex-reader-cover img {
+  width: 100%;
+  height: 100%;
+  min-height: 210px;
+  object-fit: cover;
+  display: block;
+}
+
+.codex-reader-summary-block h2 {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3.65rem);
+  line-height: 0.92;
+}
+
+.codex-reader-summary-block p:not(.eyebrow) {
+  margin-top: 14px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.codex-reader-limit {
+  display: grid;
+  gap: 5px;
+  padding: 14px;
+  border: 1px solid rgba(81, 199, 188, 0.28);
+  border-radius: 8px;
+  background: rgba(81, 199, 188, 0.08);
+}
+
+.codex-reader-limit span {
+  color: var(--teal);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.codex-reader-limit strong {
+  color: var(--text);
+  font-size: 1.1rem;
+}
+
+.codex-reader-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.codex-reader-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 22px 26px 18px;
+  border-bottom: 1px solid rgba(197, 139, 58, 0.22);
+}
+
+.codex-reader-head h2 {
+  max-width: 860px;
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 4.6rem);
+  line-height: 0.92;
+}
+
+.codex-reader-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: min(360px, 100%);
+}
+
+.codex-reader-file {
+  max-width: 250px;
+  overflow: hidden;
+  padding: 8px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.codex-reader-pages {
+  display: inline-flex;
+  gap: 5px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.codex-reader-pages button,
+.codex-reader-close {
+  min-height: 34px;
+  border: 0;
+  border-radius: 999px;
+  padding: 0 12px;
+  color: var(--muted);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.codex-reader-pages button.active {
+  color: #140f0d;
+  background: var(--amber);
+}
+
+.codex-reader-close {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.codex-reader-stage {
+  min-height: 0;
+  overflow: hidden;
+  padding: 22px 26px;
+  background:
+    radial-gradient(circle at top left, rgba(197, 139, 58, 0.12), transparent 34%),
+    #080706;
+}
+
+.codex-reader-page-pane {
+  position: relative;
+  width: min(920px, 100%);
+  min-height: clamp(560px, 76vh, 860px);
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  background: #252320;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.36), 0 18px 44px rgba(0, 0, 0, 0.24);
+}
+
+.codex-reader-page-label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 7px 10px;
+  border: 1px solid rgba(197, 139, 58, 0.42);
+  border-radius: 999px;
+  color: var(--amber);
+  background: rgba(10, 8, 7, 0.76);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+
+.codex-reader-frame {
+  display: block;
+  width: calc(100% + 28px);
+  max-width: none;
+  height: calc(100% + 28px);
+  min-height: inherit;
+  margin-right: -28px;
+  margin-bottom: -28px;
+  border: 0;
+  background: #252320;
+  pointer-events: none;
+  user-select: none;
+}
+
+.codex-reader-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  padding: 18px 26px;
+  border-top: 1px solid rgba(197, 139, 58, 0.22);
+  background: rgba(15, 10, 8, 0.96);
+}
+
+.codex-reader-foot p {
+  max-width: 720px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 980px) {
+  .codex-reader-modal {
+    grid-template-columns: 1fr;
+    overflow: hidden;
+  }
+
+  .codex-reader-spine {
+    grid-template-rows: auto;
+    border-right: 0;
+    border-bottom: 1px solid rgba(197, 139, 58, 0.22);
+  }
+
+  .codex-reader-cover {
+    display: none;
+  }
+
+  .codex-reader-head,
+  .codex-reader-foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .codex-reader-tools {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .codex-reader-modal {
+    inset: 10px;
+    border-radius: 10px;
+  }
+
+  .codex-reader-spine,
+  .codex-reader-head,
+  .codex-reader-stage,
+  .codex-reader-foot {
+    padding: 16px;
+  }
+
+  .codex-reader-head h2 {
+    font-size: 2.2rem;
+  }
+
+  .codex-reader-file,
+  .codex-reader-pages,
+  .codex-reader-close,
+  .codex-reader-foot .primary-link {
+    width: 100%;
+  }
+
+  .codex-reader-pages button {
+    flex: 1;
+  }
+
+  .codex-reader-page-pane {
+    min-height: 560px;
+  }
+}
 video {
   display: block;
   max-width: 100%;
@@ -2040,6 +2383,16 @@ video {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
