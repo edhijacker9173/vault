@@ -217,13 +217,15 @@
     hidden: true,
     wasPlaying: false,
     currentTime: 0,
-    minimized: false
+    minimized: false,
+    minimizedPosition: null
   };
 
   try {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
     if (stored && Number.isInteger(stored.activeIndex)) {
       state = { ...state, ...stored, hidden: stored.hidden !== false };
+      state.minimizedPosition = normalizePlayerPosition(stored.minimizedPosition);
     }
   } catch {
     state = { ...state };
@@ -233,6 +235,47 @@
   let previewStart = 0;
   let previewEnd = PREVIEW_SECONDS;
   const listeners = new Set();
+
+  function normalizePlayerPosition(position) {
+    if (!position || typeof position !== "object") return null;
+    const x = Number(position.x);
+    const y = Number(position.y);
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
+    return { x, y };
+  }
+
+  function clampPlayerPosition(position) {
+    const margin = 10;
+    const rect = player.getBoundingClientRect();
+    const width = rect.width || 320;
+    const height = rect.height || 58;
+    const maxX = Math.max(margin, window.innerWidth - width - margin);
+    const maxY = Math.max(margin, window.innerHeight - height - margin);
+    return {
+      x: Math.min(Math.max(position.x, margin), maxX),
+      y: Math.min(Math.max(position.y, margin), maxY)
+    };
+  }
+
+  function clearPlayerPosition() {
+    player.style.removeProperty("left");
+    player.style.removeProperty("top");
+    player.style.removeProperty("right");
+    player.style.removeProperty("bottom");
+  }
+
+  function applyMinimizedPosition() {
+    if (!state.minimized || !state.minimizedPosition) {
+      clearPlayerPosition();
+      return;
+    }
+
+    state.minimizedPosition = clampPlayerPosition(state.minimizedPosition);
+    player.style.left = state.minimizedPosition.x + "px";
+    player.style.top = state.minimizedPosition.y + "px";
+    player.style.right = "auto";
+    player.style.bottom = "auto";
+  }
 
   const style = document.createElement("style");
   style.textContent = `
@@ -265,6 +308,13 @@
       grid-template-columns: minmax(0, 1fr) auto auto auto;
       gap: 12px;
       padding: 10px 12px;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+    }
+
+    .vault-audio-player.minimized.dragging {
+      cursor: grabbing;
     }
 
     .vault-player-track {
@@ -317,7 +367,9 @@
 
     .vault-audio-player.minimized .vault-player-track strong {
       font-size: 1.1rem;
-    }    .vault-player-controls {
+    }
+
+    .vault-player-controls {
       display: inline-flex;
       gap: 8px;
       align-items: center;
@@ -469,7 +521,8 @@
         hidden: player.hidden,
         wasPlaying: !audio.paused && !player.hidden,
         currentTime: Number.isFinite(audio.currentTime) ? audio.currentTime : 0,
-        minimized: state.minimized === true
+        minimized: state.minimized === true,
+        minimizedPosition: normalizePlayerPosition(state.minimizedPosition)
       }));
     } catch {
       /* localStorage can be unavailable in some locked-down browser contexts. */
@@ -484,7 +537,8 @@
       mode: mode.textContent,
       currentTime: audio.currentTime,
       duration: audio.duration,
-      minimized: state.minimized === true
+      minimized: state.minimized === true,
+      minimizedPosition: normalizePlayerPosition(state.minimizedPosition)
     };
   }
 
@@ -535,13 +589,56 @@
     player.classList.toggle("minimized", state.minimized);
     minimizeButton.textContent = state.minimized ? "+" : "-";
     minimizeButton.setAttribute("aria-label", state.minimized ? "Expand audio player" : "Minimize audio player");
+    if (state.minimized) {
+      requestAnimationFrame(applyMinimizedPosition);
+    } else {
+      clearPlayerPosition();
+    }
     saveState();
     broadcastState();
   }
   function setVisible(isVisible) {
     player.hidden = !isVisible;
+    if (isVisible && state.minimized) requestAnimationFrame(applyMinimizedPosition);
     saveState();
     broadcastState();
+  }
+
+  let playerDrag = null;
+
+  function startPlayerDrag(event) {
+    if (!state.minimized || player.hidden) return;
+    if (event.button !== undefined && event.button !== 0) return;
+    const dragTarget = event.target;
+    if (!dragTarget || typeof dragTarget.closest !== "function") return;
+    if (dragTarget.closest("button, input, a")) return;
+
+    const rect = player.getBoundingClientRect();
+    playerDrag = {
+      pointerId: event.pointerId,
+      offsetX: event.clientX - rect.left,
+      offsetY: event.clientY - rect.top
+    };
+    player.classList.add("dragging");
+    try { player.setPointerCapture(event.pointerId); } catch {}
+    event.preventDefault();
+  }
+
+  function movePlayerDrag(event) {
+    if (!playerDrag || event.pointerId !== playerDrag.pointerId) return;
+    state.minimizedPosition = clampPlayerPosition({
+      x: event.clientX - playerDrag.offsetX,
+      y: event.clientY - playerDrag.offsetY
+    });
+    applyMinimizedPosition();
+  }
+
+  function endPlayerDrag(event) {
+    if (!playerDrag || event.pointerId !== playerDrag.pointerId) return;
+    try { player.releasePointerCapture(event.pointerId); } catch {}
+    player.classList.remove("dragging");
+    playerDrag = null;
+    saveState();
   }
 
   function loadTrack(index, shouldPlay, modeName) {
@@ -613,7 +710,8 @@
       mode: mode.textContent,
       currentTime: audio.currentTime,
       duration: audio.duration,
-      minimized: state.minimized === true
+      minimized: state.minimized === true,
+      minimizedPosition: normalizePlayerPosition(state.minimizedPosition)
     };
   }
 
@@ -648,6 +746,10 @@
   });
 
   minimizeButton.addEventListener("click", () => setMinimized(!state.minimized));
+  player.addEventListener("pointerdown", startPlayerDrag);
+  player.addEventListener("pointermove", movePlayerDrag);
+  player.addEventListener("pointerup", endPlayerDrag);
+  player.addEventListener("pointercancel", endPlayerDrag);
   player.querySelector("[data-vault-prev]").addEventListener("click", () => playFull(state.activeIndex - 1));
   player.querySelector("[data-vault-next]").addEventListener("click", () => playFull(state.activeIndex + 1));
   player.querySelector("[data-vault-close]").addEventListener("click", closePlayer);
@@ -689,6 +791,11 @@
 
   window.addEventListener("pagehide", saveState);
   window.addEventListener("beforeunload", saveState);
+  window.addEventListener("resize", () => {
+    if (!state.minimized || !state.minimizedPosition) return;
+    applyMinimizedPosition();
+    saveState();
+  });
 
   window.addEventListener("message", (event) => {
     const data = event.data || {};
