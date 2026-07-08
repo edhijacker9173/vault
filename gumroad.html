@@ -446,8 +446,9 @@
         </header>
 
         <div class="codex-reader-stage" id="codex-reader-stage" aria-label="Selected Codex preview">
-          <div class="codex-reader-page-pane" aria-live="polite">
+          <div class="codex-reader-page-pane" id="codex-reader-page-pane" aria-live="polite">
             <iframe id="codex-reader-frame" class="codex-reader-frame" title="Codex PDF preview" scrolling="auto"></iframe>
+            <div id="codex-reader-mobile-preview" class="codex-reader-mobile-preview" hidden></div>
           </div>
         </div>
 
@@ -526,6 +527,8 @@
         const modal = document.querySelector(".codex-reader-modal");
         const backdrop = document.querySelector(".codex-reader-backdrop");
         const frame = document.getElementById("codex-reader-frame");
+        const pagePane = document.getElementById("codex-reader-page-pane");
+        const mobilePreview = document.getElementById("codex-reader-mobile-preview");
         const cover = document.getElementById("codex-reader-cover");
         const title = document.getElementById("codex-reader-title");
         const shortTitle = document.getElementById("codex-reader-short-title");
@@ -535,24 +538,115 @@
         const closeTargets = document.querySelectorAll("[data-reader-close]");
         const products = document.querySelectorAll(".gumroad-product[data-pdf]");
         const mobileReaderQuery = window.matchMedia("(max-width: 640px)");
+        const appleTouchDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+        const pdfJsModuleUrl = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.mjs";
+        const pdfJsWorkerUrl = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.mjs";
         let activeProduct = null;
         let previousFocus = null;
         let readerLoadId = 0;
+        let pdfJsPromise = null;
+
         function getPdfUrl(product, loadId) {
           const fitMode = mobileReaderQuery.matches ? "zoom=page-width" : "zoom=page-fit";
           return `${encodeURI(product.dataset.pdf)}?readerLoad=${loadId}#${fitMode}&toolbar=0&navpanes=0&scrollbar=1`;
         }
 
-        function loadPreviewPdf() {
-          if (!activeProduct) return;
-          const loadId = ++readerLoadId;
+        function shouldUseCanvasPreview() {
+          return mobileReaderQuery.matches || appleTouchDevice;
+        }
+
+        function loadPdfJs() {
+          if (!pdfJsPromise) {
+            pdfJsPromise = import(pdfJsModuleUrl).then((pdfjsLib) => {
+              pdfjsLib.GlobalWorkerOptions.workerSrc = pdfJsWorkerUrl;
+              return pdfjsLib;
+            });
+          }
+          return pdfJsPromise;
+        }
+
+        function showPreviewStatus(message) {
+          mobilePreview.innerHTML = "";
+          const status = document.createElement("p");
+          status.className = "codex-reader-status";
+          status.textContent = message;
+          mobilePreview.appendChild(status);
+        }
+
+        function loadIframePreview(product, loadId) {
+          pagePane.classList.remove("use-canvas-preview");
+          mobilePreview.hidden = true;
+          mobilePreview.innerHTML = "";
+          frame.hidden = false;
           frame.src = "about:blank";
           frame.setAttribute("scrolling", "auto");
           requestAnimationFrame(() => {
-            if (activeProduct && loadId === readerLoadId) {
-              frame.src = getPdfUrl(activeProduct, loadId);
+            if (activeProduct === product && loadId === readerLoadId) {
+              frame.src = getPdfUrl(product, loadId);
             }
           });
+        }
+
+        async function loadCanvasPreview(product, loadId) {
+          frame.removeAttribute("src");
+          frame.hidden = true;
+          pagePane.classList.add("use-canvas-preview");
+          mobilePreview.hidden = false;
+          showPreviewStatus("Preparing preview...");
+
+          try {
+            const pdfjsLib = await loadPdfJs();
+            if (activeProduct !== product || loadId !== readerLoadId) return;
+
+            const pdf = await pdfjsLib.getDocument({ url: encodeURI(product.dataset.pdf) }).promise;
+            if (activeProduct !== product || loadId !== readerLoadId) return;
+
+            mobilePreview.innerHTML = "";
+            const pageCount = Math.min(3, pdf.numPages);
+            for (let pageNumber = 1; pageNumber <= pageCount; pageNumber += 1) {
+              const page = await pdf.getPage(pageNumber);
+              if (activeProduct !== product || loadId !== readerLoadId) return;
+
+              const shell = document.createElement("section");
+              shell.className = "codex-reader-canvas-page";
+
+              const label = document.createElement("span");
+              label.textContent = `Page ${pageNumber}`;
+
+              const canvas = document.createElement("canvas");
+              shell.append(label, canvas);
+              mobilePreview.appendChild(shell);
+
+              const baseViewport = page.getViewport({ scale: 1 });
+              const availableWidth = Math.max(280, mobilePreview.clientWidth - 24);
+              const cssWidth = Math.min(860, availableWidth);
+              const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+              const viewport = page.getViewport({ scale: (cssWidth / baseViewport.width) * pixelRatio });
+              const context = canvas.getContext("2d");
+
+              canvas.width = Math.floor(viewport.width);
+              canvas.height = Math.floor(viewport.height);
+              canvas.style.width = `${Math.floor(viewport.width / pixelRatio)}px`;
+              canvas.style.height = `${Math.floor(viewport.height / pixelRatio)}px`;
+
+              await page.render({ canvasContext: context, viewport }).promise;
+            }
+          } catch (error) {
+            if (activeProduct === product && loadId === readerLoadId) {
+              showPreviewStatus("Inline preview could not load in this browser. Continue to Gumroad for the full Codex.");
+            }
+          }
+        }
+
+        function loadPreviewPdf() {
+          if (!activeProduct) return;
+          const loadId = ++readerLoadId;
+
+          if (shouldUseCanvasPreview()) {
+            loadCanvasPreview(activeProduct, loadId);
+          } else {
+            loadIframePreview(activeProduct, loadId);
+          }
         }
 
         function openReader(product) {
@@ -581,7 +675,12 @@
           backdrop.hidden = true;
           modal.setAttribute("aria-hidden", "true");
           document.body.classList.remove("reader-open");
+          readerLoadId += 1;
           frame.removeAttribute("src");
+          frame.hidden = false;
+          pagePane.classList.remove("use-canvas-preview");
+          mobilePreview.hidden = true;
+          mobilePreview.innerHTML = "";
           activeProduct = null;
 
           if (previousFocus && typeof previousFocus.focus === "function") {

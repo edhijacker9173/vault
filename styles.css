@@ -1273,6 +1273,67 @@ body.reader-open {
   user-select: none;
 }
 
+.codex-reader-mobile-preview {
+  display: none;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+  background: #201d19;
+}
+
+.codex-reader-page-pane.use-canvas-preview .codex-reader-frame {
+  display: none;
+}
+
+.codex-reader-page-pane.use-canvas-preview .codex-reader-mobile-preview {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+}
+
+.codex-reader-status {
+  align-self: center;
+  justify-self: center;
+  max-width: 32rem;
+  margin: auto;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.codex-reader-canvas-page {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.codex-reader-canvas-page span {
+  justify-self: start;
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.codex-reader-canvas-page canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: #f5efe5;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+}
+
 .codex-reader-foot {
   display: flex;
   justify-content: space-between;
@@ -1358,10 +1419,17 @@ body.reader-open {
     width: 100%;
   }
 
-
   .codex-reader-stage {
     padding: 12px;
     overscroll-behavior: contain;
+  }
+
+  .codex-reader-mobile-preview {
+    padding: 10px;
+  }
+
+  .codex-reader-page-pane.use-canvas-preview .codex-reader-mobile-preview {
+    gap: 14px;
   }
 
   .codex-reader-page-pane {
@@ -1369,7 +1437,6 @@ body.reader-open {
     height: 74dvh;
     min-height: 520px;
   }
-
 }
 
 @media (max-width: 420px) {
