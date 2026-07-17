@@ -1,4 +1,4 @@
-﻿# The Vault by hijacker9173
+# The Vault by hijacker9173
 
 The Vault is a static, hand-curated cabinet of curiosities: research archives, published Codices, dream-video files, soundtracks, essays, and interactive experiments gathered into one navigable personal site.
 
@@ -72,7 +72,7 @@ When adding a new Vault item, update the relevant source page and the discovery 
 The Category Atlas currently tracks:
 
 - 6 research archives
-- 13 Codices
+- 14 Codices
 - 2 Dream Ledger files
 - 7 soundtracks
 - 2 Marginalia notes
