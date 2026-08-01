@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Break Me Open cover art</title>
+  <desc id="desc">Abstract record cover with a cracked luminous center and dark red, teal, and amber light.</desc>
+  <defs>
+    <radialGradient id="core" cx="52%" cy="46%" r="58%">
+      <stop offset="0" stop-color="#fff4d7"/>
+      <stop offset="0.16" stop-color="#f2c46e"/>
+      <stop offset="0.34" stop-color="#c74738"/>
+      <stop offset="0.68" stop-color="#161013"/>
+      <stop offset="1" stop-color="#050406"/>
+    </radialGradient>
+    <linearGradient id="rift" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4fb5a8"/>
+      <stop offset="0.38" stop-color="#f2e6d2"/>
+      <stop offset="0.68" stop-color="#e45745"/>
+      <stop offset="1" stop-color="#101316"/>
+    </linearGradient>
+    <filter id="glow" x="-35%" y="-35%" width="170%" height="170%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0.35 0 1 0 0 0.18 0 0 1 0 0.12 0 0 0 0.72 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="1200" fill="#080607"/>
+  <path d="M0 0h1200v1200H0z" fill="url(#core)" opacity="0.92"/>
+  <g opacity="0.22" fill="none" stroke="#f2e6d2" stroke-width="2">
+    <circle cx="600" cy="600" r="448"/>
+    <circle cx="600" cy="600" r="362"/>
+    <circle cx="600" cy="600" r="276"/>
+    <circle cx="600" cy="600" r="190"/>
+  </g>
+  <g filter="url(#glow)">
+    <path d="M558 86 636 348 590 509 698 636 614 792 676 1116 536 774 604 624 487 492 539 336z" fill="url(#rift)"/>
+    <path d="M646 364 906 246 735 468 1011 516 722 590 901 853 657 696 612 806 640 602 533 493z" fill="#4fb5a8" opacity="0.42"/>
+    <path d="M548 506 291 372 482 568 209 654 512 652 344 901 585 710 612 806 599 624 688 638z" fill="#e45745" opacity="0.44"/>
+  </g>
+  <g opacity="0.34" fill="none" stroke-linecap="round">
+    <path d="M202 1004c152-122 283-150 398-84 129 73 266 39 410-102" stroke="#4fb5a8" stroke-width="5"/>
+    <path d="M126 285c176 92 321 105 433 38 124-74 276-41 456 98" stroke="#f2c46e" stroke-width="4"/>
+    <path d="M188 770c155-36 277-21 366 44 115 83 267 89 456 17" stroke="#e45745" stroke-width="5"/>
+  </g>
+  <rect x="42" y="42" width="1116" height="1116" fill="none" stroke="#c58b3a" stroke-opacity="0.42" stroke-width="3"/>
+</svg>
