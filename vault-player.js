@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   if (window.VaultAudioPlayer) return;
 
   const PREVIEW_SECONDS = 15;
@@ -7,6 +7,13 @@
   const rootUrl = new URL(".", script ? script.src : window.location.href);
   const shellUrl = new URL("vault-shell.html", rootUrl);
   const rawTracks = [
+    {
+      title: "Break Me Open",
+      file: "recordroom/sounds/Break Me Open.mp3",
+      cover: "recordroom/assets/break-me-open.svg",
+      desc: "A raw, open-hearted sound file with shadowed pulse, fracture, release, and late-night motion.",
+      shelf: "Soundroom single"
+    },
     {
       title: "Cosmos",
       file: "recordroom/sounds/Cosmos.mp3",

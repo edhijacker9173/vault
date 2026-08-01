@@ -1777,6 +1777,10 @@ video {
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
+.dream-comic-strip.is-storm {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .dream-comic-panel {
   position: relative;
   min-width: 0;
@@ -1861,7 +1865,8 @@ video {
     scroll-snap-align: start;
   }
 
-  .dream-comic-strip.is-metroid {
+  .dream-comic-strip.is-metroid,
+  .dream-comic-strip.is-storm {
     grid-template-columns: none;
   }
 }

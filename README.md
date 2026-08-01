@@ -73,9 +73,9 @@ The Category Atlas currently tracks:
 
 - 6 research archives
 - 14 Codices
-- 2 Dream Ledger files
-- 7 soundtracks
-- 2 Marginalia notes
+- 3 Dream Ledger files
+- 8 soundtracks
+- 3 Marginalia notes
 
 Update these counts in `vault-map.html` when new shelves are added.
 
