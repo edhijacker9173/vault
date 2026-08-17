@@ -687,6 +687,10 @@ h2 {
   border-color: var(--amber);
 }
 
+.mallory-card:hover {
+  border-color: var(--ice);
+}
+
 .card-media {
   display: block;
   height: 230px;
@@ -713,6 +717,10 @@ h2 {
 
 .odyssey-card .card-media img {
   object-position: center 50%;
+}
+
+.mallory-card .card-media img {
+  object-position: center 38%;
 }
 
 .site-card:hover .card-media img {
@@ -759,6 +767,10 @@ h2 {
 
 .odyssey-card .card-kicker span:last-child {
   color: var(--amber);
+}
+
+.mallory-card .card-kicker span:last-child {
+  color: var(--ice);
 }
 
 h3 {

@@ -18,6 +18,7 @@ The first screen is not a landing page in the marketing sense. It is the working
 - `grhplovecraftmythos08/` - Lovecraft Mythos concordance.
 - `templar-timeline-atlas/` - Templar timeline and atlas.
 - `The Franklin Expedition 1845-1848/` - Franklin Expedition route archive.
+- `Mallory/` - Mallory and Irvine Everest 1924 evidence atlas.
 - `YokaiStudies/` - Japanese folklore compendium.
 
 ## Project Structure
@@ -71,7 +72,7 @@ When adding a new Vault item, update the relevant source page and the discovery 
 
 The Category Atlas currently tracks:
 
-- 6 research archives
+- 7 research archives
 - 14 Codices
 - 3 Dream Ledger files
 - 8 soundtracks

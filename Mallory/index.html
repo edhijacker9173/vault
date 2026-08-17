@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <title>Mallory & Irvine — Everest 1924</title>
+  <meta name="description" content="An evidence-led interactive chronology of George Mallory and Andrew Irvine’s final Everest expedition." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#chronology">Skip to chronology</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span class="brand-mark">▲</span><span><strong>Mallory & Irvine</strong><small>Everest · 1924</small></span></a>
+    <nav><a href="#route">Route</a><a href="#chronology">Chronology</a><a href="#casefile">Case file</a><a class="vault-link" href="../index.html">Back to Vault</a></nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img src="assets/everest-north-face.jpg" alt="Mount Everest’s north face seen from Rongbuk in Tibet" />
+      <div class="hero-shade"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">The third British Everest expedition</p>
+        <h1>Into the<br /><em>vanishing point</em></h1>
+        <p class="lede">On 8 June 1924, two figures climbed into cloud beneath Everest’s summit. One brief sighting and a century of evidence are all that remain.</p>
+        <div class="hero-stats"><span><b>8,849 m</b>Everest</span><span><b>12:50</b>last sighting</span><span><b>100 years</b>unresolved</span></div>
+      </div>
+      <p class="photo-credit">North face from Rongbuk · Carsten.nebel · CC BY-SA 3.0</p>
+    </section>
+
+    <section id="route" class="route-section">
+      <div class="section-head"><p class="eyebrow">The north side</p><h2>A route into thin air</h2><p>The expedition approached through Tibet, climbed the East Rongbuk Glacier to the North Col, then followed the North Ridge toward the three Steps.</p></div>
+      <div class="route-card">
+        <svg viewBox="0 0 1000 500" role="img" aria-label="Schematic profile of the 1924 north ridge route">
+          <defs><linearGradient id="ice" x1="0" y1="1" x2="0" y2="0"><stop stop-color="#17242b"/><stop offset="1" stop-color="#b8c8c9"/></linearGradient></defs>
+          <path d="M0 470 L80 440 175 425 265 380 350 365 430 305 520 280 600 225 675 205 735 150 790 137 830 95 865 110 900 62 940 44 975 10 1000 16 1000 500 0 500Z" fill="url(#ice)"/>
+          <path class="route-line" d="M100 438 C240 425 335 370 430 305 S610 220 690 185 S825 120 975 15" />
+          <g id="campPins"></g>
+        </svg>
+        <aside id="campDetail" class="camp-detail">
+          <figure class="camp-photo">
+            <img src="assets/everest-north-face.jpg" alt="Everest’s north face from Rongbuk" />
+            <figcaption>North face from Rongbuk</figcaption>
+          </figure>
+          <div class="camp-copy"><span>1924 line</span><strong>Choose a camp</strong><p>Explore the approximate progression from Rongbuk to the summit ridge.</p></div>
+        </aside>
+      </div>
+      <p class="map-note">Schematic only; positions and elevations are approximate. The 1924 route ran from the East Rongbuk Glacier to the North Col and northeast ridge.</p>
+    </section>
+
+    <section id="chronology" class="chronology">
+      <div class="section-head"><p class="eyebrow">Evidence ledger</p><h2>The mountain, hour by hour</h2><p>Filter the record by what was written, witnessed, recovered, or inferred. Selecting an entry opens its evidence note.</p></div>
+      <div class="filters" role="group" aria-label="Filter timeline by evidence type">
+        <button class="active" data-filter="all">All evidence</button><button data-filter="document">Documents</button><button data-filter="testimony">Sightings</button><button data-filter="artifact">Recovered</button><button data-filter="inference">Inferred</button>
+      </div>
+      <div class="timeline-shell"><ol id="timeline" class="timeline"></ol><article id="eventDetail" class="event-detail" aria-live="polite"></article></div>
+    </section>
+
+    <section id="casefile" class="casefile">
+      <div class="section-head"><p class="eyebrow">The unresolved case</p><h2>What the evidence can and cannot say</h2></div>
+      <div class="case-grid">
+        <article><span class="case-no">01</span><h3>Odell’s “step”</h3><p>Odell first placed the pair at a prominent step high on the ridge. Whether this was the First, Second or Third Step changes the implied pace dramatically. His wording and identification evolved; the sighting remains real, its location contested.</p></article>
+        <article><span class="case-no">02</span><h3>The Second Step</h3><p>The crux rises near 8,610 metres. Modern reconstructions show it was climbable in period clothing, but not whether Mallory and Irvine climbed it that day—or whether they bypassed it through the Norton Couloir.</p></article>
+        <article><span class="case-no">03</span><h3>Camera & photograph</h3><p>Irvine probably carried a Kodak Vest Pocket camera. It has not been recovered. Mallory had promised to leave Ruth’s photograph on the summit; it was not among the effects found with him, but absence is not proof.</p></article>
+        <article><span class="case-no">04</span><h3>The fall</h3><p>Mallory’s injuries and waist rope mark suggest a roped fall. His goggles were found in a pocket, often read as evidence of descent after dark, though they may simply have been spare or removed in cloud.</p></article>
+      </div>
+      <div class="verdict"><p class="eyebrow">Responsible conclusion</p><h3>No summit can be confirmed.</h3><p>The evidence supports a high, determined attempt and a fatal fall. It does not establish whether either climber stood on the summit. Hillary and Tenzing’s 1953 ascent remains the first confirmed ascent.</p></div>
+    </section>
+
+    <section id="sources" class="sources">
+      <div class="section-head"><p class="eyebrow">Reading room</p><h2>Sources & documentary trail</h2></div>
+      <div class="source-grid">
+        <a href="https://www.merton.ox.ac.uk/everest-timeline" target="_blank" rel="noreferrer"><b>Merton College</b><span>Andrew Irvine’s papers and the RGS-supported Everest timeline</span></a>
+        <a href="https://www.alpinejournal.org.uk/Contents/Contents_1924.html" target="_blank" rel="noreferrer"><b>Alpine Journal, 1924</b><span>Contemporary expedition dispatches and memorials</span></a>
+        <a href="https://www.pbs.org/wgbh/nova/everest/lost/" target="_blank" rel="noreferrer"><b>NOVA: Lost on Everest</b><span>1999 search expedition and evidence overview</span></a>
+        <a href="https://www.si.edu/newsdesk/releases/wildest-dream-conquest-everest-opens-national-museum-natural-historys-johnson" target="_blank" rel="noreferrer"><b>The Wildest Dream</b><span>2007 route reconstruction and documentary context</span></a>
+        <a href="https://apnews.com/article/2081dc55cb79316a1c90bce0eb1e5cba" target="_blank" rel="noreferrer"><b>Associated Press, 2024</b><span>Reported discovery believed to be Irvine’s partial remains</span></a>
+        <a href="https://commons.wikimedia.org/wiki/File:Mount_Everest_North_Face.jpg" target="_blank" rel="noreferrer"><b>Hero image license</b><span>Carsten.nebel, Wikimedia Commons, CC BY-SA 3.0</span></a>
+      </div>
+    </section>
+  </main>
+  <footer><p>Mallory & Irvine · An interactive archive in The Vault</p><a href="../index.html">Return to the Vault</a></footer>
+  <script src="data.js"></script><script src="app.js"></script>
+</body>
+</html>
