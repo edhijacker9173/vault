@@ -73,7 +73,7 @@ When adding a new Vault item, update the relevant source page and the discovery 
 The Category Atlas currently tracks:
 
 - 7 research archives
-- 14 Codices
+- 15 Codices
 - 3 Dream Ledger files
 - 8 soundtracks
 - 3 Marginalia notes
